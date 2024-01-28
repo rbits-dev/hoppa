@@ -77,11 +77,11 @@ export default class Wallet extends Phaser.Scene {
                 .setOrigin(0.5);
         }
 
-        this.line2 = this.add.bitmapText(width * 0.5, height / 2 + 190, 'press_start', 'Unlimited play only for Moonshot and Ra8bits holders', 22)
+        this.line2 = this.add.bitmapText(width * 0.5, height / 2 + 190, 'press_start', 'Unlimited play only for RBITS holders', 22)
             .setTint(0xffffff)
             .setOrigin(0.5); 
 
-        this.line3 =this.add.bitmapText(width * 0.5, height / 2 + 240, 'press_start', 'And MoonBoxes.io NFT holders', 22)
+        this.line3 =this.add.bitmapText(width * 0.5, height / 2 + 240, 'press_start', 'And Ra8bit NFT holders', 22)
             .setTint(0xffffff)
             .setOrigin(0.5); 
 
@@ -130,7 +130,7 @@ export default class Wallet extends Phaser.Scene {
                 
             });    
 
-        this.line5 = this.add.bitmapText(width * 0.5 + 256, height / 2 + 320, 'press_start', 'Give me free $MSHOT!', 16)
+        this.line5 = this.add.bitmapText(width * 0.5 + 256, height / 2 + 320, 'press_start', 'Give me free $RBITS!', 16)
             .setTint(0xffffff)
             .setDropShadow(2,2,0xff0000)
             .setOrigin(0.5);
