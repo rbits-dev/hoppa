@@ -405,7 +405,7 @@ export function preload(ctx) {
     ctx.load.spritesheet('coin', 'assets/coin.webp', { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5 });
     ctx.load.spritesheet('carrot', 'assets/carrot.webp', { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5 });
     ctx.load.spritesheet('lab', 'assets/lab.webp', { frameWidth: 64, frameHeight: 136, startFrame: 0, endFrame: 3 });
-    ctx.load.spritesheet('billboards', 'assets/billboards.webp', { frameWidth: 192, frameHeight: 220, startFrame: 0, endFrame: 34 });
+    ctx.load.spritesheet('billboards', 'assets/billboards.webp', { frameWidth: 192, frameHeight: 220, startFrame: 0, endFrame: 28 });
     ctx.load.spritesheet('lightswitch', 'assets/lightswitch.webp', { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1 });
     ctx.load.spritesheet('fireball', 'assets/fireball.webp', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 3 });
 
