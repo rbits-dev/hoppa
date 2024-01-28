@@ -50,7 +50,7 @@ export default class HoppaScreen extends Phaser.Scene {
         
         this.add.image(width / 2, height / 2 - 172, 'logo').setDisplaySize(460, 196).setOrigin(0.5, 0.5);
 
-        this.text = this.add.bitmapText(width * 0.5, height / 2, 'press_start', 'A Ra8bits Production', 48)
+        this.text = this.add.bitmapText(width * 0.5, height / 2, 'press_start', 'A RBITS Production', 48)
             .setTint(0xc0c0c0)
             .setOrigin(0.5)
             .setAlpha(0);
@@ -253,9 +253,9 @@ export default class HoppaScreen extends Phaser.Scene {
     }
 
     private continueGame() {
-        WalletHelper.init();
-        WalletHelper.getCurrentAccount();
-        WalletHelper.getMyNFTCollections();
+      //  WalletHelper.init();
+      //  WalletHelper.getCurrentAccount();
+      //  WalletHelper.getMyNFTCollections();
         this.scene.stop();
         this.scene.start('hoppa-select');
     }
