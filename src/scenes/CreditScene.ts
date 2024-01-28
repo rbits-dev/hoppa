@@ -37,9 +37,9 @@ export default class CreditScreen extends Phaser.Scene {
         "",
         "",
         "",
-        "MOONSHOT presents",
+        "RBITS presents",
         "",
-        "a RA8BITS production",
+        "a RBITS production",
         "",
         "HOPPA!",
         "",
@@ -166,8 +166,7 @@ export default class CreditScreen extends Phaser.Scene {
         "Hussam",
         "Anastasia",
         "",
-        "$MSHOT",
-        "$RABITS",
+        "$RBITS",
         "",
 
     ];
