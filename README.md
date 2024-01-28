@@ -2,7 +2,7 @@
 
 # Introduction 
 
-Hoppa is a 2D Classic Platform game in arcade style developed and published by Moonshot & Ra8bits. 
+Hoppa is a 2D Classic Platform game in arcade style developed and published by RBITS (previously Moonshot & Ra8bits)
 
 # Storyline
 
@@ -14,7 +14,7 @@ There’s this box and when you get closer, squeaky noises are coming from insid
 
 What the f….?! They’ve landed! They’re on the moon! 
 The first Ra8bit ever on the moon! Do you hear thát Miss Baker!?
-They totally lost control in a way that resulted in 10.000 NFT Male Ra8bits.
+They totally lost control in a way that resulted in 20.000 NFT Rabbits.
 
 Now they are eager to meet some girls!
 Ra8bit is on a journey to reproduce motherfuckers!
@@ -23,7 +23,7 @@ Take a carrot and head to the lobby, it starts right here!
 Pick up your balls and go get the ladies in distress.
 The reward is greater than the risk here!
 
-Find the Ra8bithole, Ra8bits very own breedingroom!
+Find the Rbithole, RBITS very own breedingroom!
 
 # Running
 
@@ -37,11 +37,6 @@ All sources released as MIT open source
 # Join us!
 
 Contributions welcome!
-
-Have a chat!
-
-- https://t.me/MoonShotChat
-- https://t.me/ra8bits
 
 
 # Getting started
