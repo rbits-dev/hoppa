@@ -7,7 +7,7 @@ export default class LogoScreen extends Phaser.Scene {
 
     preload() {
         SceneFactory.preload(this);
-        this.load.image('moonshot', 'assets/moonshot.webp');
+        this.load.image('rbits', 'assets/rbits.webp');
 
         globalThis.adReturn = 'hoppa';
     }
@@ -18,9 +18,9 @@ export default class LogoScreen extends Phaser.Scene {
 
         this.input.setDefaultCursor('none');
 
-        this.add.image(width / 2, height / 2, 'moonshot').setOrigin(0.5, 0.5);
+        this.add.image(width / 2, height / 2, 'rbits').setOrigin(0.5, 0.5);
 
-        this.add.bitmapText(width * 0.5, height / 2 + 96, 'press_start', 'presents', 22)
+        this.add.bitmapText(width * 0.5, height / 2 + 148, 'press_start', 'presents', 22)
             .setTint(0xffffff)
             .setOrigin(0.5);
 
