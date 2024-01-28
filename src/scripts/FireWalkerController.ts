@@ -69,7 +69,7 @@ export default class FireWalkerController {
     private moveLeftOnUpdate(deltaTime: number) {
         this.moveTime += deltaTime;
         this.sprite.flipX = false;
-          this.sprite.setVelocityX(-1 * this.velocityX);
+        this.sprite.setVelocityX(-1 * this.velocityX);
         if (this.moveTime > this.myMoveTime) {
             this.stateMachine.setState('move-right');
         }
@@ -82,7 +82,7 @@ export default class FireWalkerController {
     private moveRightOnUPdate(deltaTime: number) {
         this.moveTime += deltaTime;
         this.sprite.flipX = true;
-            this.sprite.setVelocityX(this.velocityX);
+        this.sprite.setVelocityX(this.velocityX);
 
         if (this.moveTime > this.myMoveTime) {
             this.stateMachine.setState('move-left');
