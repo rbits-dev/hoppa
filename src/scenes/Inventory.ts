@@ -322,7 +322,8 @@ export default class Inventory extends Phaser.Scene {
     }
     
     openItem(id) {
-        let url = "https://moonsea.io/details/0xb8eb97a1d6393b087eeacb33c3399505a3219d3d/" + id + "/1";
+        //let url = "0xb8eb97a1d6393b087eeacb33c3399505a3219d3d/" + id + "/1";
+        let url = "https://rbits.xyz/boxes/"
         window.open(url, '_blank')?.focus();
     }
 

@@ -13,7 +13,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/moonshot-platform/hoppa.git"
+		"url": "https://github.com/rbits-dev/hoppa.git"
 	},
 	"homepage": "#",
 	"devDependencies": {

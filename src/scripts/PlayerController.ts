@@ -242,7 +242,7 @@ export default class PlayerController {
                 this.scene.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
                     events.emit(ev);
                     this.scene.scene.stop();
-                    if( (globalThis.noWallet || (globalThis.moonshotBalance == 0 && globalThis.ra8bitBalance == 0 && !globalThis.hasNFT)) && room !== 'bonus'  ) {
+                    if( (globalThis.noWallet || (globalThis.rabbitBalance == 0 && !globalThis.hasNFT)) && room !== 'bonus'  ) {
                         SceneFactory.stopSound(this.scene);
                         this.scene.scene.start( 'hoppa');
                     }
@@ -542,7 +542,7 @@ export default class PlayerController {
                 }
                 case 'billboard': {
                     SceneFactory.playSound(this.sounds, 'click');
-                    sprite.setFrame(Phaser.Math.Between(0, 34));
+                    sprite.setFrame(Phaser.Math.Between(0, 28));
                     break;
                 }
                 case 'lightswitch': {
@@ -755,8 +755,13 @@ export default class PlayerController {
 
                 }
             }
+            const ttl = turd.getData('ttl');
+            if(  this.scene.game.loop.frame > ttl ) {
+                this.trashcan.set(turd.name, turd);
+            }
         });
-
+        if( this.scene.scene.key === 'warp' )
+            return;
         this.updateSpawnlocation();
         
     }
@@ -989,7 +994,7 @@ export default class PlayerController {
         dropping.setName(name);
         dropping.setData('type', 'dropping');
         dropping.setData('spawned', this.scene.game.loop.frame);
-
+        dropping.setData('ttl', this.scene.game.loop.frame + (60*5) );
         this.lastThrow = this.scene.game.loop.frame;
 
         dropping.setOnCollide((data: MatterJS.ICollisionPair) => {
@@ -1279,7 +1284,7 @@ export default class PlayerController {
 
         this.isDead = true;
 
-        SceneFactory.resetSpawnPoint(this.scene);
+
 
         console.log("Player died! ");
 
@@ -1305,6 +1310,7 @@ export default class PlayerController {
         if (this.stats.livesRemaining == 0) {
             const bite = SceneFactory.krasotaSays(2,"");
             const s = this.sounds.get(bite);
+            SceneFactory.resetSpawnPoint(this.scene);
             if(s !== undefined ) {
                 s.on( 'complete', () => {
                     SceneFactory.krasotaUnlock();

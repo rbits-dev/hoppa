@@ -3,8 +3,7 @@ import { ethers, BigNumber } from "ethers";
 const ERR_NO_WALLET = "No wallet found or permission denied";
 
 declare global {
-    var moonshotBalance: number;
-    var ra8bitBalance: number;
+    var rabbitBalance: number;
     var hasNFT: boolean;
     var selectedAddress: string;
     var provider: ethers.providers.Web3Provider;
@@ -22,12 +21,8 @@ declare global {
     }
 }
 
-const hoppaTournamentContract = "0x4898e671d3d976fcE233d8C016278d493F99Cee3";
-const moonshotTokenContract   = "0x5298ad82dd7c83eeaa31dda9deb4307664c60534";
 const rabbitTokenContract     = "0x27424eE307488cA414f430b84A10483344E6d80a";
 const hoppaCardsContract      = "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D";
-const rabbitFaucetContract    = "0x5620AF88096762868150100FA21797eCB49c5759";
-const moonshotFaucetContract  = "0x23737b74C1026a8F3A038Af0F9752b7cbd75A76C";
 const hallOfFameContract      = "0x9d811D1600236cE2874A1f3cA2E7318cABe2DB7d";
 
 export function init() {
@@ -50,7 +45,6 @@ export function init() {
         getCurrentAccount();
         getMyNFTCollections();
         findCards();
-        isArenaPlayer();
         globalThis.changeEvent ++;
       }
     });
@@ -60,7 +54,6 @@ export function init() {
         getCurrentAccount();
         getMyNFTCollections();
         findCards();
-        isArenaPlayer();
         globalThis.changeEvent ++;
       }
     });
@@ -71,7 +64,6 @@ export function init() {
     });
 
     findCards();
-    isArenaPlayer();
 }
 
 export async function requestAccounts() {
@@ -124,32 +116,9 @@ export async function getCurrentAccount() {
         "function balanceOf(address account) external view returns (uint256)",
     ];
     
-    // save the current balances of Moonshot and Ra8bit tokens
-    const moonshotContract = new ethers.Contract(moonshotTokenContract, abi , globalThis.signer );     
-    globalThis.moonshotBalance = await moonshotContract.balanceOf( globalThis.selectedAddress );
-
-    const ra8bitContract = new ethers.Contract(rabbitTokenContract, abi , globalThis.signer );    
-    globalThis.ra8bitBalance = await ra8bitContract.balanceOf( globalThis.selectedAddress );
+    const rabbitContract = new ethers.Contract(rabbitTokenContract, abi , globalThis.signer );    
+    globalThis.ra8bitBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
     
-}
-
-export async function getMSHOTBalanceOfTournamentContract(): Promise<string> {
-  if( globalThis.noWallet ) {
-     return ERR_NO_WALLET;
-  }
-
-  await requestAccounts();
-
-  
-  const abi = [
-      "function balanceOf(address account) external view returns (uint256)",
-  ];
-  
-  // save the current balances of Moonshot and Ra8bit tokens
-  const moonshotContract = new ethers.Contract(moonshotTokenContract, abi , globalThis.signer );     
-  let val = await moonshotContract.balanceOf( hoppaTournamentContract );
-  val = uint256Tonumber(val);
-  return val;
 }
 
 export async function findCards() {
@@ -175,71 +144,6 @@ export async function findCards() {
   window.localStorage.setItem( 'ra8bit.cards', data );
 }
 
-export async function getSomeRa8bitTokens() {
-
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return ERR_NO_WALLET;
-  
-  const abi = [
-      "function canWithdraw(address addr) public view returns (bool)",
-      "function getFreeRa8bit() external"
-  ];
-
-  const faucetContract = new ethers.Contract(rabbitFaucetContract, abi , globalThis.signer );     
-  const canWithdraw = await faucetContract.canWithdraw( globalThis.selectedAddress );
-
-  if( canWithdraw ) {
-
-    try {
-
-      const tx = await faucetContract.getFreeRa8bit();
-      await tx.wait();
-    
-      await getCurrentAccount();
-    }
-    catch( error: any ) {
-      return error.reason;
-    }
-  }
-
-  return "You received $RA8BIT tokens";
-}
-
-export async function getSomeMoonshotTokens(): Promise<string> {
- 
-  await requestAccounts();
-
-  if( globalThis.noWallet ) {
-    return "No wallet found";
-  }
- 
-  const abi = [
-      "function canWithdraw(address addr) public view returns (bool)",
-      "function getFreeMoonshot() external"
-  ];
-
-  const faucetContract = new ethers.Contract(moonshotFaucetContract, abi , globalThis.signer );     
-  const canWithdraw = await faucetContract.canWithdraw( globalThis.selectedAddress );
-
-  if( canWithdraw ) {
-
-    try {
-
-      const tx = await faucetContract.getFreeMoonshot();
-      await tx.wait();
-
-      await getCurrentAccount();
-    }
-    catch( error: any ) {
-      return error.reason;
-    }
-  }
-
-  return "You received $MSHOT tokens";
-
-}
 
 export async function updateHighscore( name, score ): Promise<string> {
   
@@ -273,7 +177,7 @@ export async function getHighscores(): Promise<string> {
   await requestAccounts();
 
   if( globalThis.noWallet )
-    return ERR_NO_WALLET;
+    return "";
   
  
   const hallOfFame = new ethers.Contract(hallOfFameContract, hallOfFameABI , globalThis.signer );
@@ -285,10 +189,9 @@ export async function getHighscores(): Promise<string> {
   }
   catch( error: any ) {
     console.log( "error " + error.reason );
-    return error.reason;
   }
 
-  return "OK";
+  return "";
 }
 
 export async function hasNewHighScore(score): Promise<boolean> {
@@ -354,280 +257,6 @@ export async function getMyNFTCollections() {
     globalThis.hasNFT = true;
 }
 
-const hoppaTournamentABI = 
-     [{"inputs":[{"internalType":"address","name":"_tokenContract","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"ApprovedTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newPenaltyPercentage","type":"uint256"}],"name":"DeserterPenaltyChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"buyer","type":"address"}],"name":"EnterArena","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"gamemaker","type":"address"}],"name":"GameMakerAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"gamemaker","type":"address"}],"name":"GameMakerRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"player","type":"address"}],"name":"LeaveArena","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"player","type":"address"}],"name":"PlayerRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"winner","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SelectWinner","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"newTokenContract","type":"address"}],"name":"SetTokenAddress","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"endAt","type":"uint256"}],"name":"TournamentOpenUntil","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newWinnerPercentage","type":"uint256"}],"name":"WinnerPercentageChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"WithdrawBNB","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"tokenContractAddress","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"WithdrawTokens","type":"event"},{"inputs":[{"internalType":"address","name":"_gameMaker","type":"address"}],"name":"addGameMaker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"closeArena","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"enterArena","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"estimateReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"estimateUnstakeAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"gameEndTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"gameMakers","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getClosingDate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getCurrentStake","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getPenaltyPercentage","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTotalAmountStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTotalPlayers","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWinningsPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"hasJoined","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isGameMaker","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isUnderPenalty","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"leaveArena","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"daysDuration","type":"uint256"}],"name":"openArena","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"penaltyPercentage","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"playerHasJoined","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_gameMaker","type":"address"}],"name":"removeGameMaker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"player","type":"address"}],"name":"removePlayer","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_winner","type":"address"}],"name":"selectWinner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"winners","type":"address[]"}],"name":"selectWinners","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint8","name":"penalty","type":"uint8"}],"name":"setPenaltyPercentage","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newTokenContract","type":"address"}],"name":"setTokenAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"winnings","type":"uint256"}],"name":"setWinnerPercentage","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakedTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenContract","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalPlayers","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalTokensStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"winnerPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdrawBNB","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenContractAddress","type":"address"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-
-export async function isArenaPlayer(): Promise<boolean> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return false;
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let v = await hoppaTournament.hasJoined( );
-    if(v) {
-      globalThis.hasNFT = true; // to allow user in, if entire balance is staked
-    }
-    return v;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return false;
-  }
-}
-
-export async function isArenaUnderPenalty(): Promise<boolean> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return false;
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    return await hoppaTournament.isUnderPenalty( );
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return false;
-  }
-}
-
-export async function getGameEndTime(): Promise<number> {
-
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return 0;
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let val = await hoppaTournament.gameEndTime();
-    val = parseInt( val.toString() );
-    return val;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return 0;
-  }
-}
-
-export async function getTotalAmountStaked(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let val = await hoppaTournament.getTotalAmountStaked();
-    val = uint256Tonumber(val);
-    globalThis.totalTokensStaked = val;
-    return val;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return "";
-  }
-}
-
-export async function getMyStake(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let val = await hoppaTournament.getCurrentStake();
-    val = uint256Tonumber(val);
-    return val;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return "";
-  }
-}
-
-
-export async function getPenaltyPercentage(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let val = await hoppaTournament.getPenaltyPercentage();
-    globalThis.leavePenalty = val;
-    return val;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return "";
-  }
-}
-
-
-
-export async function getEstimatedReward(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let staked = await hoppaTournament.getTotalAmountStaked();
-    staked = uint256Tonumber(staked);
-    if( staked > 0 ) {
-        let val = await hoppaTournament.estimateReward();
-        val = uint256Tonumber(val);
-        return val;
-    }
-    return "0";
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return "";
-  }
-}
-
-export async function getEstimatedUnstakedAmount(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let val = await hoppaTournament.estimateUnstakeAmount();
-    val = uint256Tonumber(val);
-    return val;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return "";
-  }
-}
-
-export async function getTotalPlayers(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-    
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    let val = await hoppaTournament.getTotalPlayers();
-    return val;
-  }
-  catch( error: any ) {
-    console.log( "error " + error.reason );
-    return "";
-  }
-}
-
-export async function enterArena( amount ): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    const bigAmount = numberToUint256( amount );   
-    const tx = await hoppaTournament.enterArena( bigAmount );
-    await tx.wait();
-  }
-  catch( error: any ) {
-    return error.reason;
-  }
-
-  return "OK";
-}
-
-export async function leaveArena(): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-
-  const hoppaTournament = new ethers.Contract(hoppaTournamentContract, hoppaTournamentABI , globalThis.signer );
-
-  try {
-    const tx = await hoppaTournament.leaveArena();
-    await tx.wait();
-  }
-  catch( error: any ) {
-    return error.reason;
-  }
-
-  return "OK";
-}
-
-export async function isArenaApproved(amount): Promise<boolean> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return false;
-
-  const abi = [
-    "function balanceOf(address account) external view returns (uint256)",
-    "function allowance(address owner, address spender) external view returns (uint256)",
-    "function approve(address spender, uint256 amount) external returns (bool)"
-  ];
-  const moonshotContract = new ethers.Contract("0x5298ad82dd7c83eeaa31dda9deb4307664c60534", abi , globalThis.signer );     
-
-
-  try {
-    const allowance = await moonshotContract.allowance( globalThis.selectedAddress, hoppaTournamentContract );
-    globalThis.allowance =  uint256Tonumber(allowance);
-    if( allowance < numberToUint256(amount) ) {
-      return false;
-    }
-    return true; 
-  }
-  catch( error: any ) {
-    return error.reason;
-  }
-}
-
-export async function approveForArena(amount): Promise<string> {
-  await requestAccounts();
-
-  if( globalThis.noWallet )
-    return "";
-
-  const abi = [
-    "function balanceOf(address account) external view returns (uint256)",
-    "function allowance(address owner, address spender) external view returns (uint256)",
-    "function approve(address spender, uint256 amount) external returns (bool)"
-  ];
-  const moonshotContract = new ethers.Contract(moonshotTokenContract, abi , globalThis.signer );     
-
-
-  try {
-
-    const tx = await moonshotContract.approve( hoppaTournamentContract, numberToUint256(amount) );
-    await tx.wait();
-  }
-  catch( error: any ) {
-    return error.reason;
-  }
-
-  return "OK";
-}
 
 
 function numberToUint256(value: number): BigNumber {
@@ -643,7 +272,7 @@ function uint256Tonumber(big: BigNumber): number {
 
 export async function newRequest() {
   const { chainId }  = await provider.getNetwork();
-  const url = 'https://moonboxes.io/api/api/userNftData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress;
+  const url = 'https://rbits.xyz/boxes/api/api/userNftData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress;
   const response = await fetch( url, {
     method: 'GET',
     mode: 'cors',

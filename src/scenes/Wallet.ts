@@ -7,8 +7,6 @@ export default class Wallet extends Phaser.Scene {
     private line1!: Phaser.GameObjects.BitmapText;
     private line2!: Phaser.GameObjects.BitmapText;
     private line3!: Phaser.GameObjects.BitmapText;
-    private line4!: Phaser.GameObjects.BitmapText;
-    private line5!: Phaser.GameObjects.BitmapText;
     private status!: Phaser.GameObjects.BitmapText;
     private delayedRun!: Phaser.Time.TimerEvent;
     private countdownActive = true;
@@ -93,10 +91,7 @@ export default class Wallet extends Phaser.Scene {
             this.status.setText("Your wallet is not connected to the Binance Smart Chain!");
         }
 
-        this.line4 = this.add.bitmapText(width * 0.5 - 256, height / 2 + 320, 'press_start', 'Give me free $RA8BIT!', 16)
-            .setTint(0xffffff)
-            .setDropShadow(2,2,0xff0000)
-            .setOrigin(0.5);
+     
 
         let statusText = "Please confirm the TX and standby";
         if( globalThis.chainId != 56 ) {
@@ -105,60 +100,6 @@ export default class Wallet extends Phaser.Scene {
         else if( globalThis.noWallet ) {
             statusText = "Please install MetaMask or TrustWallet first";
         }
-
-        this.line4.setInteractive({ cursor: 'pointer' })
-            .on('pointerup', () => {
-                this.line5.setTint(0x222b5c);
-                this.status.setText(statusText);
-
-                if( globalThis.chainId == 56 && !globalThis.noWallet) {
-                    this.txLock = true;
-
-                    const faucet = async() => {
-                        const msg = await  WalletHelper.getSomeRa8bitTokens();
-                        this.status.setText(msg);
-                        this.txLock = false;
-                        this.delayedStart();
-                    };
-
-                    faucet();
-                }
-               
-            })
-            .on('pointerdown', () => {
-                this.line4.setTint(0x99b0be);
-                
-            });    
-
-        this.line5 = this.add.bitmapText(width * 0.5 + 256, height / 2 + 320, 'press_start', 'Give me free $RBITS!', 16)
-            .setTint(0xffffff)
-            .setDropShadow(2,2,0xff0000)
-            .setOrigin(0.5);
-
-        this.line5.setInteractive({ cursor: 'pointer' })
-            .on('pointerup', () => {
-                this.delayedRun?.remove(false);
-                this.line5.setTint(0x222b5c);
- 
-                this.status.setText(statusText);
-
-                if(globalThis.chainId == 56 && !globalThis.noWallet ) {
-                    this.txLock = true;
-
-                    const faucet = async() => {
-                        const msg = await WalletHelper.getSomeMoonshotTokens();
-                        this.status.setText(msg);
-                        this.txLock = false;
-                        this.delayedStart();
-                    };
-
-                    faucet();
-                }
-            })
-            .on('pointerdown', () => {
-                this.line5.setTint(0x99b0be);   
-            }); 
-
 
         this.image = this.add.image(width / 2, height / 2, 'bg').setOrigin(0.5, 0.5).setVisible(true);
 
@@ -183,8 +124,6 @@ export default class Wallet extends Phaser.Scene {
         this.line1.destroy();
         this.line2.destroy();
         this.line3.destroy();
-        this.line4.destroy();
-        this.line5.destroy();
         this.status.destroy();
         this.image.destroy();
         this.countdownText.destroy();

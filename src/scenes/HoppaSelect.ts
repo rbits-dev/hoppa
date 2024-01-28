@@ -11,7 +11,6 @@ export default class HoppaSelect extends Phaser.Scene {
     private rotate!: Phaser.GameObjects.BitmapText;
 
     private startSinglePlayerLabel!: Phaser.GameObjects.BitmapText;
-    private tournamentLabel!: Phaser.GameObjects.BitmapText;
     private disconnectLabel!: Phaser.GameObjects.BitmapText;
     private text!:Phaser.GameObjects.BitmapText;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -50,7 +49,7 @@ export default class HoppaSelect extends Phaser.Scene {
         
         this.add.image(width / 2, height / 2 - 172, 'logo').setDisplaySize(460, 196).setOrigin(0.5, 0.5);
 
-        this.text = this.add.bitmapText(width * 0.5, height / 2, 'press_start', 'A Ra8bits Production', 48)
+        this.text = this.add.bitmapText(width * 0.5, height / 2, 'press_start', 'A RBITS Production', 48)
             .setTint(0xc0c0c0)
             .setOrigin(0.5);
 
@@ -63,11 +62,8 @@ export default class HoppaSelect extends Phaser.Scene {
             .setTint(0xffffff)
             .setOrigin(0.5);
 
-        this.tournamentLabel = this.add.bitmapText(width * 0.5, height / 2 + 176, 'press_start', 'Tournament', 48)
-            .setTint(0xffffff)
-            .setOrigin(0.5);
 
-        this.disconnectLabel = this.add.bitmapText(width * 0.5, height / 2 + 244, 'press_start', 'Disconnect', 48)
+        this.disconnectLabel = this.add.bitmapText(width * 0.5, height / 2 + 176, 'press_start', 'Disconnect', 48)
             .setTint(0xffffff)
             .setOrigin(0.5);
 
@@ -77,16 +73,6 @@ export default class HoppaSelect extends Phaser.Scene {
             }).on('pointerdown', () => {
                 this.highlightActive(0);
              });
-            
-
-        this.tournamentLabel.setInteractive({ cursor: 'pointer' })
-            .on('pointerup', () => {
-                this.scene.stop();
-                this.scene.start('tournament-intro');
-            }).on('pointerdown', () => {
-                this.highlightActive(1);
-             });
-            
 
         this.disconnectLabel.setInteractive({ cursor: 'pointer' })
             .on('pointerup', () => {
@@ -102,7 +88,6 @@ export default class HoppaSelect extends Phaser.Scene {
         }
 
         if( globalThis.noWallet ) {
-            this.tournamentLabel.setTint(0xc0c0c0);
             this.disconnectLabel.setText("Quit");
         }
 
@@ -128,17 +113,14 @@ export default class HoppaSelect extends Phaser.Scene {
         switch(active) {
             case 0:
                 this.startSinglePlayerLabel?.setTint(0xff7300);
-                this.tournamentLabel?.setTint(0xffffff);
                 this.disconnectLabel?.setTint(0xffffff);
                 break;
             case 1:
                 this.startSinglePlayerLabel?.setTint(0xffffff);
-                this.tournamentLabel?.setTint(0xff7300);
                 this.disconnectLabel?.setTint(0xffffff);
                 break;
             case 2:
                 this.startSinglePlayerLabel?.setTint(0xffffff);
-                this.tournamentLabel?.setTint(0xffffff);
                 this.disconnectLabel?.setTint(0xff7300);
                 break;
         }
@@ -170,12 +152,6 @@ export default class HoppaSelect extends Phaser.Scene {
                     this.continueGame();
                     break;    
                 case 1:
-                    if(!globalThis.noWallet) {
-                        this.scene.stop();
-                        this.scene.start('tournament-intro');
-                    }
-                    break;
-                case 2:
                     this.scene.stop();
                     this.scene.start('hoppa-select');
                     break;
@@ -201,7 +177,6 @@ export default class HoppaSelect extends Phaser.Scene {
     }
 
     destroy() {
-        this.tournamentLabel.destroy();
         this.startSinglePlayerLabel.destroy();
         this.rotate?.destroy();
         this.text.destroy();
