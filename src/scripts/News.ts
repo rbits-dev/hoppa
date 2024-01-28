@@ -73,7 +73,7 @@ export default class News {
 
     this.banner6 = new NewsBanner( scene, {
       background: [0x363535],
-      text: 'MSHOT NEWSROOM',
+      text: 'RBITS NEWSROOM',
       textColor: 0xacacac,
       textSize: 16,
       margin: 8,
