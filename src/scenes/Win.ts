@@ -111,7 +111,7 @@ export default class Win extends CreditScene {
             emitZone: { type: 'random', source: logoSource }
         });
 
-        this.shoutout = this.add.bitmapText(width * 0.5, 96, 'press_start', 'YOU ARE A TRUE RA8BIT!', 48)
+        this.shoutout = this.add.bitmapText(width * 0.5, 96, 'press_start', 'YOU ARE A TRUE RABBIT!', 48)
             .setTint(0xff7300)
             .setOrigin(0.5, 0.1);
 
