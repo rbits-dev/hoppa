@@ -2,7 +2,7 @@
 
 # Introduction 
 
-Hoppa is a 2D Classic Platform game in arcade style developed and published by RBITS (previously Moonshot & Ra8bits)
+Hoppa is a 2D Classic Platform game in arcade style developed and published by RBITS
 
 # Storyline
 
@@ -103,7 +103,7 @@ Audio files must be in mp3 and in m4a format
 
 # Metamask integration
 
-If you have Metamask installed, the game will attempt to check your Moonshot and Ra8it balances and allow you access to Level 2 and above if you have more than 0 tokens or more than 0 NFTs.
+If you have Metamask installed, the game will attempt to check your balance and allow you access to Level 2 and above if you have more than 0 tokens or more than 0 NFTs.
 
 
 # Dependencies

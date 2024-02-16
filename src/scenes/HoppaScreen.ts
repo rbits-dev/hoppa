@@ -66,6 +66,8 @@ export default class HoppaScreen extends Phaser.Scene {
             delay = 1000;
         }
 
+        WalletHelper.init();
+
         this.time.delayedCall(delay, () => {
 
             this.input.setDefaultCursor('url(assets/hand.cur), pointer');
@@ -145,7 +147,7 @@ export default class HoppaScreen extends Phaser.Scene {
             this.scene.stop();
             const n = Phaser.Math.Between(0,5);
             let scene = 'ad';
-            if( !globalThis.noWallet && globalThis.chainId == 56 && n < 2 ) {
+            if( !globalThis.noWallet && globalThis.chainId == 1 && n < 2 ) {
                 scene = 'halloffame';
             }
             this.scene.start(scene);
@@ -253,8 +255,7 @@ export default class HoppaScreen extends Phaser.Scene {
     }
 
     private continueGame() {
-      //  WalletHelper.init();
-      //  WalletHelper.getCurrentAccount();
+        WalletHelper.getCurrentAccount();
       //  WalletHelper.getMyNFTCollections();
         this.scene.stop();
         this.scene.start('hoppa-select');

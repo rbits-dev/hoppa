@@ -167,7 +167,7 @@ export default class Win extends CreditScene {
             this.info = obj as PlayerStats;
         }
 
-        if(globalThis.chainId == 56 && !globalThis.noWallet ) {
+        if(globalThis.chainId == 1 && !globalThis.noWallet ) {
             let hs = this.info?.highScorePoints || 0;
             let score = this.info?.scorePoints || 0;
             if( hs > score )

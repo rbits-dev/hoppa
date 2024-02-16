@@ -124,9 +124,7 @@ export default class WarpLevel extends BaseScene {
         SceneFactory.preload(this);
         
         this.load.image('clouds2', 'assets/clouds2.webp');
-        this.load.atlas('neon', 'assets/neon.webp', 'assets/neon.json');
-        this.load.atlas('neon2', 'assets/neon2.webp', 'assets/neon2.json');
-
+        this.load.atlas('neon', 'assets/neon2.webp', 'assets/neon2.json');
         this.load.tilemapTiledJSON('tilemap8', 'assets/map8.json');
     }
 

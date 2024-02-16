@@ -120,7 +120,7 @@ export default class MovingPlatform {
                 this.vy = this.sprite.body.velocity.y;
                 this.vx = dx;
 
-                this.player?.changePosition( this.vx, this.vy, this.sprite );
+                if(this.vx != 0 ) this.sprite.setData('relpos' + this.id, { x: this.vx, y: this.vy });
 
                 this.lastX = this.sprite.body.position.x;
                 this.lastY = this.sprite.body.position.y;

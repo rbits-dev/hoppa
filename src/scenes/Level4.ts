@@ -126,8 +126,7 @@ export default class Level4 extends BaseScene {
 
 	preload() {
 
-        this.load.atlas('neon', 'assets/neon.webp', 'assets/neon.json');
-        this.load.atlas('neon2', 'assets/neon2.webp', 'assets/neon2.json');
+        this.load.atlas('neon', 'assets/neon2.webp', 'assets/neon2.json');
         this.load.image('g_1', 'assets/bg-battery.webp');
      //   this.load.image('g_2', 'assets/grave2.webp');
      //   this.load.image('g_3', 'assets/grave3.webp');

@@ -143,8 +143,7 @@ export default class Level7 extends BaseScene {
 
         this.load.spritesheet('family', 'assets/ra8bittiles128-bg.webp', { frameWidth: 128, frameHeight: 128, startFrame: 0, endFrame: 299 });
         
-        this.load.atlas('neon', 'assets/neon.webp', 'assets/neon.json');
-        this.load.atlas('neon2', 'assets/neon2.webp', 'assets/neon2.json');
+        this.load.atlas('neon', 'assets/neon2.webp', 'assets/neon2.json');
 
         this.load.audio('demon1', [ 'assets/demon_1.mp3', 'assets/demon_1.m4a']);
         this.load.audio('demon2', [ 'assets/demon_2.mp3', 'assets/demon_2.m4a']);

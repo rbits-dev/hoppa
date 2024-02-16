@@ -75,11 +75,11 @@ export default class Wallet extends Phaser.Scene {
                 .setOrigin(0.5);
         }
 
-        this.line2 = this.add.bitmapText(width * 0.5, height / 2 + 190, 'press_start', 'Unlimited play only for RBITS holders', 22)
+        this.line2 = this.add.bitmapText(width * 0.5, height / 2 + 190, 'press_start', 'Unlimited play only', 22)
             .setTint(0xffffff)
             .setOrigin(0.5); 
 
-        this.line3 =this.add.bitmapText(width * 0.5, height / 2 + 240, 'press_start', 'And Ra8bit NFT holders', 22)
+        this.line3 =this.add.bitmapText(width * 0.5, height / 2 + 240, 'press_start', 'for RBITS holders', 22)
             .setTint(0xffffff)
             .setOrigin(0.5); 
 
@@ -87,15 +87,15 @@ export default class Wallet extends Phaser.Scene {
             .setTint(0xff7300)
             .setOrigin(0.5); 
 
-        if( globalThis.chainId != 56 && !globalThis.noWallet) {
-            this.status.setText("Your wallet is not connected to the Binance Smart Chain!");
+        if( globalThis.chainId != 1 && !globalThis.noWallet) {
+            this.status.setText("Your wallet is not connected to the Ethereum Chain!");
         }
 
      
 
         let statusText = "Please confirm the TX and standby";
-        if( globalThis.chainId != 56 ) {
-            statusText = "You are not connected to the Binance Smart Chain";
+        if( globalThis.chainId != 1 ) {
+            statusText = "You are not connected to the Ethereum Chain";
         }
         else if( globalThis.noWallet ) {
             statusText = "Please install MetaMask or TrustWallet first";

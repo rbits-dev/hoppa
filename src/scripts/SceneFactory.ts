@@ -708,7 +708,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
 
     switch (name) {
         case 'neon': {
-            const variation = objData.properties.find((p)=>p.name === 'taste')?.value || 'neon';
+            const variation = 'neon';
             const neon = ctx.matter.add.sprite( x + (width * 0.5), y + (height * 0.5), variation, undefined, { 
                 isStatic: true,
                 label: 'neon',

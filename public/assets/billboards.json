@@ -5,7 +5,7 @@
 			"format": "RGBA8888",
 			"size": {
 				"w": 1344,
-				"h": 1100
+				"h": 880
 			},
 			"scale": 1,
 			"frames": [
@@ -596,153 +596,6 @@
 						"w": 192,
 						"h": 220
 					}
-				},
-				{
-					"filename": "Billboard29.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 0,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
-				},
-				{
-					"filename": "Billboard30.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 192,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
-				},
-				{
-					"filename": "Billboard31.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 384,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
-				},
-				{
-					"filename": "Billboard32.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 576,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
-				},
-				{
-					"filename": "Billboard33.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 768,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
-				},
-				{
-					"filename": "Billboard34.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 960,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
-				},
-				{
-					"filename": "Billboard35.webp",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 192,
-						"h": 220
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 192,
-						"h": 220
-					},
-					"frame": {
-						"x": 1152,
-						"y": 880,
-						"w": 192,
-						"h": 220
-					}
 				}
 			]
 		}
@@ -750,6 +603,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:5a1bdef549fc6cffff3d1ec253818ddd:04d648b8adc833570119401db7b86bcf:dd3995bac6cdab6328d15619c87ae5a2$"
+		"smartupdate": "$TexturePacker:SmartUpdate:3e0fcf7ceda7e3b8cc0fe45d7630a1c4:97f383ee0d22e687626014d350a80d99:a627d21804cdb47ee6a55efc9daaa37d$"
 	}
 }

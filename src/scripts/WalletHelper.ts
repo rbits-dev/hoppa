@@ -21,9 +21,9 @@ declare global {
     }
 }
 
-const rabbitTokenContract     = "0x27424eE307488cA414f430b84A10483344E6d80a";
-const hoppaCardsContract      = "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D";
-const hallOfFameContract      = "0x9d811D1600236cE2874A1f3cA2E7318cABe2DB7d";
+const rabbitTokenContract     = "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE";
+const hoppaCardsContract      = "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D"; //FIXME
+const hallOfFameContract      = "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7";
 
 export function init() {
 
@@ -34,11 +34,10 @@ export function init() {
     }
 
     globalThis.provider = new ethers.providers.Web3Provider(window.ethereum);
-    globalThis.moonshotBalance = 0;
-    globalThis.ra8bitBalance = 0;
+    globalThis.rabbitsBalance = 0;
     globalThis.changeEvent = 0;
     globalThis.adReturn = "hoppa";
-    globalThis.selectedAddress = "0x000000000000000000000000000000000000dead";
+    globalThis.selectedAddress = "";
     
     (window.ethereum as any).on( 'accountsChanged', function(accounts) {
       if( accounts.length > 0 ) {
@@ -50,7 +49,7 @@ export function init() {
     });
 
     (window.ethereum as any).on( 'network', (newNet,oldNet) => {
-      if(newNet.chainId == 56) {
+      if(newNet.chainId == 1) {
         getCurrentAccount();
         getMyNFTCollections();
         findCards();
@@ -62,6 +61,8 @@ export function init() {
       if( globalThis.provider && globalThis.provider.close )
           globalThis.provider.close();
     });
+
+    console.log("Connected");
 
     findCards();
 }
@@ -101,8 +102,8 @@ export async function getCurrentAccount() {
 
     globalThis.chainId = chainId;
 
-    if(globalThis.chainId != 56) {
-      console.log("Wallet is not connected with Binance Smart Chain: ", chainId);
+    if(globalThis.chainId != 1) {
+      console.log("Wallet is not connected with the Ethereum Chain: ", chainId);
       return;
     }
 
@@ -117,12 +118,12 @@ export async function getCurrentAccount() {
     ];
     
     const rabbitContract = new ethers.Contract(rabbitTokenContract, abi , globalThis.signer );    
-    globalThis.ra8bitBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
+    globalThis.rabbitsBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
     
 }
 
 export async function findCards() {
-  
+ /* 
   await requestAccounts();
   
   const abi = [
@@ -139,7 +140,12 @@ export async function findCards() {
     let bn = "" + balance;
     cards[i]= bn;
   }
-  
+  */
+  let cards: string[] = new Array(10);
+  for( let i = 1; i < 10; i ++ ) {
+    cards[i] = "0";
+  }
+
   const data = JSON.stringify(cards);
   window.localStorage.setItem( 'ra8bit.cards', data );
 }
@@ -225,11 +231,11 @@ export async function hasNewHighScore(score): Promise<boolean> {
 }
 
 export function isNotEligible(): boolean {
-    return globalThis.noWallet || (globalThis.moonshotBalance == 0 && globalThis.ra8bitBalance == 0 && !globalThis.hasNFT );
+    return globalThis.noWallet || (globalThis.rabbitsBalance == 0);
 }
 
 export async function getMyNFTCollections() {
-  let numCollections = 0;
+  /*let numCollections = 0;
   const nftAddress = [
     '0x82A3E038048CF02C19e60856564bE209899d4F12',
     '0x0CBd80abc67d403E4258894E62235DbaF93F2779',
@@ -255,6 +261,7 @@ export async function getMyNFTCollections() {
 
   if(numCollections > 0)
     globalThis.hasNFT = true;
+  */
 }
 
 
@@ -272,7 +279,7 @@ function uint256Tonumber(big: BigNumber): number {
 
 export async function newRequest() {
   const { chainId }  = await provider.getNetwork();
-  const url = 'https://rbits.xyz/boxes/api/api/userNftData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress;
+  const url = 'https://rbits.xyz/boxes/api/userNftData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress;
   const response = await fetch( url, {
     method: 'GET',
     mode: 'cors',

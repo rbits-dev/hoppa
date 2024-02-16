@@ -11,6 +11,7 @@ export default class HoppaSelect extends Phaser.Scene {
     private rotate!: Phaser.GameObjects.BitmapText;
 
     private startSinglePlayerLabel!: Phaser.GameObjects.BitmapText;
+    private addressLabel!: Phaser.GameObjects.BitmapText;
     private disconnectLabel!: Phaser.GameObjects.BitmapText;
     private text!:Phaser.GameObjects.BitmapText;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -21,6 +22,7 @@ export default class HoppaSelect extends Phaser.Scene {
     private arrowX: number = 300;
 
     private lastUpdate: number = 0;
+    private currentAddress: string = "";
 
     constructor() {
         super('hoppa-select');
@@ -46,6 +48,7 @@ export default class HoppaSelect extends Phaser.Scene {
     create() {
         const { width, height } = this.scale;
 
+        this.input.setDefaultCursor('url(assets/hand.cur), pointer');
         
         this.add.image(width / 2, height / 2 - 172, 'logo').setDisplaySize(460, 196).setOrigin(0.5, 0.5);
 
@@ -53,7 +56,11 @@ export default class HoppaSelect extends Phaser.Scene {
             .setTint(0xc0c0c0)
             .setOrigin(0.5);
 
-        this.input.setDefaultCursor('url(assets/hand.cur), pointer');
+        this.currentAddress = globalThis.selectedAddress;
+
+        this.addressLabel = this.add.bitmapText(width * 0.5, height / 2 + 256, 'press_start', this.formatEthAddress(globalThis.selectedAddress), 24)
+            .setTint(WalletHelper.isNotEligible() ?  0xc0c0c0: 0x00ff00)
+            .setOrigin(0.5);
 
 
         this.createArrow();
@@ -95,7 +102,7 @@ export default class HoppaSelect extends Phaser.Scene {
             this.scene.stop();
             const n = Phaser.Math.Between(0,5);
             let scene = 'ad';
-            if( !globalThis.noWallet && globalThis.chainId == 56 && n < 2 ) {
+            if( !globalThis.noWallet && globalThis.chainId == 1 && n < 2 ) {
                 scene = 'halloffame';
             }
             this.scene.start(scene);
@@ -126,6 +133,18 @@ export default class HoppaSelect extends Phaser.Scene {
         }
                 this.activeItem = active;
     }
+
+    private formatEthAddress(address: string): string {
+        if (address.length < 8) {
+            return "";
+        }
+        
+        const firstPart: string = address.substring(0, 4);
+        const lastPart: string = address.substring(address.length - 4);
+        
+        return `${firstPart}...${lastPart}`;
+    }
+    
 
     update(time: number, deltaTime: number) {
 
@@ -174,6 +193,16 @@ export default class HoppaSelect extends Phaser.Scene {
             this.arrow?.setVisible(false);
         }
     
+        if( globalThis.selectedAddress !== this.currentAddress ) {
+            console.log("update!");
+            const { width, height } = this.scale;
+            this.addressLabel.destroy();
+            this.addressLabel = this.add.bitmapText(width * 0.5, height / 2 + 256, 'press_start', this.formatEthAddress(globalThis.selectedAddress), 24)
+                .setTint(WalletHelper.isNotEligible() ?  0xc0c0c0: 0x00ff00 )
+                .setOrigin(0.5);
+            this.currentAddress = globalThis.selectedAddress;
+        }
+
     }
 
     destroy() {
@@ -182,6 +211,7 @@ export default class HoppaSelect extends Phaser.Scene {
         this.text.destroy();
         this.disconnectLabel.destroy(); 
         this.arrow?.destroy();
+        this.addressLabel.destroy();
 
         SceneFactory.stopSound(this);
         SceneFactory.removeAllSounds(this);
@@ -194,7 +224,7 @@ export default class HoppaSelect extends Phaser.Scene {
     }
 
     private continueGame() {
-        WalletHelper.init();
+        //WalletHelper.init();
         WalletHelper.getCurrentAccount();
         WalletHelper.getMyNFTCollections();
         this.scene.stop();

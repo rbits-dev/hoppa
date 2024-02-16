@@ -127,8 +127,7 @@ export default class Level8 extends BaseScene {
         SceneFactory.preload(this);
         
         this.load.image('chart', 'assets/chart.webp');
-        this.load.atlas('neon', 'assets/neon.webp', 'assets/neon.json');
-        this.load.atlas('neon2', 'assets/neon2.webp', 'assets/neon2.json');
+        this.load.atlas('neon', 'assets/neon2.webp', 'assets/neon2.json');
         this.load.image('rockTiles', 'assets/rocks.webp');
         this.load.image('mushyTiles', 'assets/mushrooms.webp');
         this.load.tilemapTiledJSON('tilemap9', 'assets/map9.json');

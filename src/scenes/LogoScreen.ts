@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import * as SceneFactory from '../scripts/SceneFactory';
 export default class LogoScreen extends Phaser.Scene {
     constructor() {
-        super('moonshot')
+        super('rbits')
     }
 
     preload() {

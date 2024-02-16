@@ -118,7 +118,7 @@ export default class Loader extends Phaser.Scene {
     }
 
     nextScene() {
-        this.scene.start('moonshot');
+        this.scene.start('rbits');
     }
 
     typewriteText(text) {

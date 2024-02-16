@@ -426,8 +426,6 @@ var filesToCache = [
 '/hoppa/assets/demon_4.mp3',
 '/hoppa/assets/stoplight.json',
 '/hoppa/assets/stoplight.webp',
-'/hoppa/assets/neon.json',
-'/hoppa/assets/neon.webp',
 '/hoppa/assets/doors.json',
 '/hoppa/assets/doors.webp',
 '/hoppa/assets/trashcan.webp',
