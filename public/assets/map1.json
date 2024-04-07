@@ -2904,13 +2904,13 @@
                 {
                  "class":"",
                  "height":78,
-                 "id":589,
+                 "id":590,
                  "name":"player-spawn",
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":16592,
-                 "y":2151
+                 "x":426,
+                 "y":3031
                 }],
          "opacity":1,
          "properties":[
@@ -3108,7 +3108,7 @@
          "y":0
         }],
  "nextlayerid":18,
- "nextobjectid":590,
+ "nextobjectid":591,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
