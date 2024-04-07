@@ -36,6 +36,9 @@ export default class GameSettingsMenu extends Phaser.Scene {
             this.stats = obj as PlayerStats;
             this.nextScene = 'level' + this.stats.currLevel;
         }
+
+        //this.nextScene = 'warp';
+        
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
             this.destroy();
         });
