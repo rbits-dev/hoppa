@@ -1,5 +1,5 @@
-var cacheName = 'hoppa-moonshot-v1.9';
-var cacheWhiteList = [ "hoppa-moonshot-v1.9" ];
+var cacheName = 'hoppa-v2';
+var cacheWhiteList = [ "hoppa-v2" ];
 
 var filesToCache = [
 '/hoppa/assets/01_main_screen_trailer.m4a',
