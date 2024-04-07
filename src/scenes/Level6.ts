@@ -154,8 +154,8 @@ export default class Level6 extends BaseScene {
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
         const grasTiles = this.map.addTilesetImage('gras-purple', 'grasPurpleTiles', 64, 64, 0, 2);
         
-        this.ground1 = this.map.createLayer('ground', [groundTiles,grasTiles]);
-        this.layer1 = this.map.createLayer('layer1', [groundTiles,grasTiles]);
+        this.ground1 = this.map.createLayer('ground', [groundTiles,grasTiles,propTiles]);
+        this.layer1 = this.map.createLayer('layer1', [groundTiles,grasTiles,propTiles]);
      
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
        

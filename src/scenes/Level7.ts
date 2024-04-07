@@ -181,8 +181,8 @@ export default class Level7 extends BaseScene {
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
         const ra8bitTiles = this.map.addTilesetImage('ra8bits-64', 'ra8bits-64-tiles', 64, 64, 0, 0);
         
-        this.ground1 = this.map.createLayer('ground', [groundTiles, ra8bitTiles,stonesTiles]);
-        this.layer1 = this.map.createLayer('layer1', [groundTiles, ra8bitTiles,stonesTiles]);
+        this.ground1 = this.map.createLayer('ground', [groundTiles, ra8bitTiles,stonesTiles,propTiles]);
+        this.layer1 = this.map.createLayer('layer1', [groundTiles, ra8bitTiles,stonesTiles,propTiles]);
      
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
        

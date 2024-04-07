@@ -173,8 +173,8 @@ export default class Level4 extends BaseScene {
         this.map = this.make.tilemap({ key: 'tilemap6', tileWidth: 64, tileHeight: 64 });
         const groundTiles = this.map.addTilesetImage('ground', 'groundTiles', 64, 64, 0, 2);
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
-        this.ground1 = this.map.createLayer('ground', [ groundTiles ]);
-        this.layer1 = this.map.createLayer('layer1', [ groundTiles ]);
+        this.ground1 = this.map.createLayer('ground', [ groundTiles,propTiles ]);
+        this.layer1 = this.map.createLayer('layer1', [ groundTiles,propTiles ]);
 
       
         this.ground1.setCollisionByProperty({ collides: true,recalculateFaces: false });
