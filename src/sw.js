@@ -287,6 +287,8 @@ var filesToCache = [
 '/hoppa/assets/stomped.mp3',
 '/hoppa/assets/stomped2.m4a',
 '/hoppa/assets/stomped2.mp3',
+'/hoppa/assets/bounce.m4a',
+'/hoppa/assets/bounce.mp3',
 '/hoppa/assets/story1.webp',
 '/hoppa/assets/story2.webp',
 '/hoppa/assets/story3.webp',

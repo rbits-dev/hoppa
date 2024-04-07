@@ -226,6 +226,7 @@ export function setupSounds(ctx: Phaser.Scene): Map<string, Phaser.Sound.BaseSou
         'pickupdropping',
         'stomped',
         'hit',
+        'bounce',
         'bonustile',
         'rubber1',
         'rubber2',
@@ -440,6 +441,7 @@ export function preload(ctx) {
     ctx.load.audio('pickuphealth', ['assets/pickuphealth.mp3', 'assets/pickuphealth.m4a']);
     ctx.load.audio('pickupdropping', ['assets/pickupdropping.mp3', 'assets/pickupdropping.m4a']);
     ctx.load.audio('stomped', ['assets/stomped2.mp3', 'assets/stomped2.m4a']);
+    ctx.load.audio('bounce', ['assets/bounce.mp3', 'assets/bounce.m4a']);
     ctx.load.audio('hit', ['assets/hit.mp3', 'assets/hit.m4a']);
     ctx.load.audio('bonustile', ['assets/bonustile.mp3', 'assets/bonustile.m4a']);
     ctx.load.audio('rubber1', ['assets/rubber1.mp3', 'assets/rubber1.m4a']);
@@ -826,7 +828,6 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             ObjectHelper.createCrate(ctx, x, y, width, height);
             break;
         }
-
         case 'trashcan': {
             ObjectHelper.createTrashcan(ctx,x,y,width,height);
             break;
@@ -1009,6 +1010,20 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
         case 'player':
         case 'player-spawn':
             break;
+
+        case 'bounce': {
+            const boiunce = ctx.matter.add.rectangle(x + (width * 0.5), y + (height * 0.5), width, height, {
+                vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
+                isStatic: true,
+                label: 'bounce',
+            });
+           
+            //const amp = objData.properties.find((p) => p.name === 'atmp').value;
+
+            controller.addWithValues('bounce',undefined, boiunce, { "amp": 4});
+
+            break;
+        }
 
         case '':
             console.log("Object " + objData.id + " has no name");

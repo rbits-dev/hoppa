@@ -24,6 +24,7 @@ export default class PlayerController {
     private health = 100;
     private playerSpeed = 5;
     private playerJump = 15;
+    private bouncePower = 50;
 
     private lastHitBy?: Phaser.Physics.Matter.Sprite;
     public sensors_bottom;
@@ -160,6 +161,10 @@ export default class PlayerController {
                 onEnter: this.throwOnEnter,
                 onUpdate: this.throwOnUpdate
             })
+            .addState('bouncing', {
+                onEnter: this.bounceOnEnter,
+                onUpdate: this.bounceOnUpdate
+            })
             .setState('idle');
 
 
@@ -251,6 +256,11 @@ export default class PlayerController {
                         this.scene.scene.start(room);
                     }
                 });
+            }
+
+            
+            if (this.obstacles.isType('bounce', body)) {
+                this.stateMachine.setState('bouncing');
             }
 
             if (this.obstacles.isType('return', body)) {
@@ -576,6 +586,9 @@ export default class PlayerController {
 
                     break;
                 }
+                case 'bounce': {
+                    break;
+                }
                 default:
                     break;
             }
@@ -867,6 +880,12 @@ export default class PlayerController {
         return false;
     }
 
+    private playerBounces(): boolean {
+       
+
+        return false;
+    }
+
     private playerThrows() {
         const fireJustDown = this.isShift();
         if (fireJustDown) {
@@ -909,6 +928,21 @@ export default class PlayerController {
         }
     }
 
+    private bounceOnEnter() {
+        this.changeAction();
+
+        this.scene.events.emit("player-jumped");
+        this.sprite.play(this.getEventName('jump')); // super jump
+        this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            this.stateMachine.setState('idle');
+        });
+        this.jumpCount = 0;
+        this.sprite.setVelocityY((this.jumpCount == 1 ? -1 * this.bouncePower : -1 * (this.bouncePower * 0.75)));
+        this.jumpActionValidUntil = this.scene.game.loop.frame + this.LEANWAY; // invalidate
+        SceneFactory.playSound(this.sounds, 'bounce');
+                    
+    }
+
     private jumpOnEnter() {
 
         this.changeAction();
@@ -933,6 +967,13 @@ export default class PlayerController {
 
         this.playerJumps();
         this.updateVelocities('jump');
+    }
+
+    private bounceOnUpdate() {
+        if(!this.cannotThrow) {
+            this.throwOnEnter();
+        }
+        this.playerBounces();
     }
 
     private walkOnEnter() {
