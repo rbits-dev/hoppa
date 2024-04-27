@@ -131,7 +131,7 @@ export function createCreatureCrow(ctx, x, y, width, height, enemyCat, collideWi
     return new CrowController(ctx, crow, crow.name);
 }
 
-export function createCreatureFly(ctx, x, y, width, height, enemyCat, collideWith, controller) {
+export function createCreatureFly(ctx, x, y, width, height, enemyCat, collideWith, controller, player) {
     const fly = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'fly', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
         label: 'fly'
@@ -147,7 +147,7 @@ export function createCreatureFly(ctx, x, y, width, height, enemyCat, collideWit
     fly.set
     controller.add('fly',fly, fly.body as MatterJS.BodyType);
 
-    return new FlyController(ctx, fly, fly.name);
+    return new FlyController(ctx, fly, fly.name ); // , player,  enemyCat, collideWith);
 }
 
 export function createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller) {

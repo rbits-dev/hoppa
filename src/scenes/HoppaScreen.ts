@@ -66,7 +66,7 @@ export default class HoppaScreen extends Phaser.Scene {
             delay = 1000;
         }
 
-        WalletHelper.init();
+
 
         this.time.delayedCall(delay, () => {
 
@@ -255,6 +255,8 @@ export default class HoppaScreen extends Phaser.Scene {
     }
 
     private continueGame() {
+        
+        WalletHelper.init();
         WalletHelper.getCurrentAccount();
         this.scene.stop();
         this.scene.start('hoppa-select');

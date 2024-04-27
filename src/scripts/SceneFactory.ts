@@ -10,8 +10,6 @@ import NeonController from './NeonController';
 import BarController from './BarController';
 import ObstaclesController from './ObstaclesController';
 import { GameSettings } from '~/scenes/GameSettings';
-import { randomBytes } from 'crypto';
-import PlayerController from './PlayerController';
 
 declare global {
     var musicTune: boolean;
@@ -776,7 +774,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             break;
         }
         case 'fly': {
-            ctx.flies.push(CreatureHelper.createCreatureFly(ctx, x, y, width, height, enemyCat, collideWith, controller));
+            ctx.flies.push(CreatureHelper.createCreatureFly(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
             break;
         }
         case 'bear': {

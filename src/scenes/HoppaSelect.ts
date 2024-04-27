@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import * as SceneFactory from '../scripts/SceneFactory';
 import * as WalletHelper from '../scripts/WalletHelper'
+import { Wallet } from "ethers";
 
 declare global {
     var dramaticIntro: boolean;
@@ -83,6 +84,7 @@ export default class HoppaSelect extends Phaser.Scene {
 
         this.disconnectLabel.setInteractive({ cursor: 'pointer' })
             .on('pointerup', () => {
+                WalletHelper.initEmpty();
                 this.scene.stop();
                 this.scene.start('hoppa');
             }).on('pointerdown', () => {
@@ -224,8 +226,6 @@ export default class HoppaSelect extends Phaser.Scene {
     }
 
     private continueGame() {
-        //WalletHelper.init();
-        WalletHelper.getCurrentAccount();
         this.scene.stop();
         this.scene.start('story');
     }

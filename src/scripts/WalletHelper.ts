@@ -81,6 +81,14 @@ export function selectChain(id: string) {
   }
 }
 
+export function initEmpty() {
+  globalThis.rabbitsBalance = 0;
+  globalThis.changeEvent = 0;
+  globalThis.adReturn = "hoppa";
+  globalThis.selectedAddress = "";
+  globalThis.isValid = false;
+}
+
 export function init() {
 
     if( window.ethereum === undefined) {
@@ -90,11 +98,7 @@ export function init() {
     }
 
     globalThis.provider = new ethers.providers.Web3Provider(window.ethereum);
-    globalThis.rabbitsBalance = 0;
-    globalThis.changeEvent = 0;
-    globalThis.adReturn = "hoppa";
     globalThis.selectedAddress = "";
-    globalThis.isValid = false;
     
     (window.ethereum as any).on( 'accountsChanged', function(accounts) {
       if( accounts.length > 0 ) {
@@ -105,7 +109,7 @@ export function init() {
 
     (window.ethereum as any).on( 'network', (newNet,oldNet) => {
 
-      if(newNet.chainId == 1 || newNet.chainId == 8453 ) {
+      if(newNet.chainId == 1 || newNet.chainId == 8453|| newNet.chainId == 56 ) {
         getCurrentAccount();
         globalThis.changeEvent ++;
       }
@@ -168,16 +172,13 @@ export async function getCurrentAccount() {
     // save the currently connected address
     globalThis.selectedAddress = await globalThis.signer.getAddress();
     
-    const abi = [
-        "function balanceOf(address account) external view returns (uint256)",
-    ];
-    
     if( globalThis.currentChainData.rabbitTokenContract !== "" ) {
+      const abi = [
+        "function balanceOf(address account) external view returns (uint256)",
+      ];
 
       const rabbitContract = new ethers.Contract(globalThis.currentChainData.rabbitTokenContract, abi , globalThis.signer );    
       globalThis.rabbitsBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
-
-      console.log("User has RBITS");
     }
 
     await getMyNFTCollections();
