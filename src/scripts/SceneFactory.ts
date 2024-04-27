@@ -422,7 +422,7 @@ export function preload(ctx) {
     
     ctx.load.image('dropping', 'assets/dropping.webp');
     ctx.load.image('pokeball', 'assets/pokeball.webp');
-    ctx.load.image('moonshot-ball', 'assets/moonshot-ball.webp');
+    ctx.load.image('moonshot-ball', 'assets/pokeball.webp');
     ctx.load.image('crate', 'assets/crate.webp');
     ctx.load.image('zeppelin1', 'assets/zeppelin1.webp');
     ctx.load.image('zeppelin2', 'assets/zeppelin2.webp');
