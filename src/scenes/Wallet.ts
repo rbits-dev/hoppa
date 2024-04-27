@@ -87,20 +87,10 @@ export default class Wallet extends Phaser.Scene {
             .setTint(0xff7300)
             .setOrigin(0.5); 
 
-        if( globalThis.chainId != 1 && !globalThis.noWallet) {
-            this.status.setText("Your wallet is not connected to the Ethereum Chain!");
+        if( !globalThis.isValid && !globalThis.noWallet) {
+            this.status.setText("Your wallet is not connected ETH, BSC or Base");
         }
-
-     
-
-        let statusText = "Please confirm the TX and standby";
-        if( globalThis.chainId != 1 ) {
-            statusText = "You are not connected to the Ethereum Chain";
-        }
-        else if( globalThis.noWallet ) {
-            statusText = "Please install MetaMask or TrustWallet first";
-        }
-
+        
         this.image = this.add.image(width / 2, height / 2, 'bg').setOrigin(0.5, 0.5).setVisible(true);
 
         this.input.on('keydown', () => { if(!this.txLock) this.startGame(); });

@@ -102,7 +102,7 @@ export default class HoppaSelect extends Phaser.Scene {
             this.scene.stop();
             const n = Phaser.Math.Between(0,5);
             let scene = 'ad';
-            if( !globalThis.noWallet && globalThis.chainId == 1 && n < 2 ) {
+            if( !globalThis.noWallet && globalThis.isValid && n < 2 ) {
                 scene = 'halloffame';
             }
             this.scene.start(scene);
@@ -226,7 +226,6 @@ export default class HoppaSelect extends Phaser.Scene {
     private continueGame() {
         //WalletHelper.init();
         WalletHelper.getCurrentAccount();
-        WalletHelper.getMyNFTCollections();
         this.scene.stop();
         this.scene.start('story');
     }

@@ -2,28 +2,84 @@ import { ethers, BigNumber } from "ethers";
 
 const ERR_NO_WALLET = "No wallet found or permission denied";
 
-declare global {
-    var rabbitBalance: number;
-    var hasNFT: boolean;
-    var selectedAddress: string;
-    var provider: ethers.providers.Web3Provider;
-    var signer: ethers.providers.JsonRpcSigner;
-    var noWallet: boolean;
-    var chainId: number;
-    var changeEvent: number;
-    var adReturn: string;
-    var totalTokensStaked: number;
-    var allowance: number;
-    var leavePenalty: number;
-    var spawnLocation: number;
-    interface Window {
-        ethereum: import('ethers').providers.ExternalProvider;
-    }
+interface ChainData {
+  [chainId: string]: {
+    hallOfFameContract: string;
+    rabbitTokenContract: string;
+    hoppaCardsContract: string;
+  };
 }
 
-const rabbitTokenContract     = "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE";
-const hoppaCardsContract      = "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D"; //FIXME
-const hallOfFameContract      = "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7";
+interface NftCollections {
+  [chainId: string]: {
+    addresses: string[];
+  }
+}
+
+const chainData: ChainData = {
+  "1": {
+    hallOfFameContract: "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7",
+    rabbitTokenContract: "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE",
+    hoppaCardsContract: "",
+  },
+  "56": {
+    hallOfFameContract: "0x9d811D1600236cE2874A1f3cA2E7318cABe2DB7d",
+    rabbitTokenContract: "",
+    hoppaCardsContract: "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D",
+  }, 
+  "8453": {
+    hallOfFameContract: "0x43dec8a0d8F7e31F73111cAA6C86977dd95158c6",
+    rabbitTokenContract: "",
+    hoppaCardsContract: "",
+  }
+};
+
+const nftCollections: NftCollections = {
+  "1": {
+    addresses: [ "0x2A85FfbB9B978D6966915C13D9957D9ECC94e75D", "0xC5fBCeff4aceF8eE53016DcC2D0e98ba21dFC785", "0x7eB4c1Efc46c37FF5c7D2d6c72E5B1B98e28069E" ]
+  },
+  "56": {
+    addresses: [ "0x8004d73663F03Bc6dDB84d316ba0929240F6a8BA", "0xa54c728f58c8dFA6AadCe40fa4D32457d5d3eFCD", "0x67af3a5765299a3E2F869C3002204c749BD185E9", "0xf86E258d7D363bfDd0d1fC2B1e70D418a56c8154", "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D"  ]
+  }
+};
+
+declare global {
+  var rabbitBalance: number;
+  var hasNFT: boolean;
+  var selectedAddress: string;
+  var provider: ethers.providers.Web3Provider;
+  var signer: ethers.providers.JsonRpcSigner;
+  var noWallet: boolean;
+  var chainId: number;
+  var changeEvent: number;
+  var adReturn: string;
+  var totalTokensStaked: number;
+  var allowance: number;
+  var leavePenalty: number;
+  var spawnLocation: number;
+  var currentChainId: string;
+  var isValid: boolean;
+  var currentChainData: {
+    hallOfFameContract: string;
+    rabbitTokenContract: string;
+    hoppaCardsContract: string;
+  };
+  interface Window {
+      ethereum: import('ethers').providers.ExternalProvider;
+  }
+}
+
+export function selectChain(id: string) {
+  if( chainData.hasOwnProperty(id) ) {
+    globalThis.currentChainId = id;
+    globalThis.currentChainData = chainData[ id ];
+    globalThis.isValid = true;
+    console.log( globalThis.currentChainData );
+  }
+  else {
+    globalThis.isValid = false;
+  }
+}
 
 export function init() {
 
@@ -38,23 +94,22 @@ export function init() {
     globalThis.changeEvent = 0;
     globalThis.adReturn = "hoppa";
     globalThis.selectedAddress = "";
+    globalThis.isValid = false;
     
     (window.ethereum as any).on( 'accountsChanged', function(accounts) {
       if( accounts.length > 0 ) {
         getCurrentAccount();
-        getMyNFTCollections();
-        findCards();
         globalThis.changeEvent ++;
       }
     });
 
     (window.ethereum as any).on( 'network', (newNet,oldNet) => {
-      if(newNet.chainId == 1) {
+
+      if(newNet.chainId == 1 || newNet.chainId == 8453 ) {
         getCurrentAccount();
-        getMyNFTCollections();
-        findCards();
         globalThis.changeEvent ++;
       }
+      
     });
 
     (window.ethereum as any).on( 'disconnect', (code,reason) => {
@@ -62,9 +117,7 @@ export function init() {
           globalThis.provider.close();
     });
 
-    console.log("Connected");
-
-    findCards();
+    console.log("Initialized");
 }
 
 export async function requestAccounts() {
@@ -102,10 +155,12 @@ export async function getCurrentAccount() {
 
     globalThis.chainId = chainId;
 
-    if(globalThis.chainId != 1) {
-      console.log("Wallet is not connected with the Ethereum Chain: ", chainId);
+    if(globalThis.chainId != 1 && globalThis.chainId != 8453 && globalThis.chainId != 56) {
+      console.log("Wallet is not connected with ETH, BSC or Base", chainId);
       return;
     }
+
+    selectChain(chainId.toString());
 
     await globalThis.provider.send("eth_requestAccounts", []);
 
@@ -117,35 +172,53 @@ export async function getCurrentAccount() {
         "function balanceOf(address account) external view returns (uint256)",
     ];
     
-    const rabbitContract = new ethers.Contract(rabbitTokenContract, abi , globalThis.signer );    
-    globalThis.rabbitsBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
+    if( globalThis.currentChainData.rabbitTokenContract !== "" ) {
+
+      const rabbitContract = new ethers.Contract(globalThis.currentChainData.rabbitTokenContract, abi , globalThis.signer );    
+      globalThis.rabbitsBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
+
+      console.log("User has RBITS");
+    }
+
+    await getMyNFTCollections();
     
+    await findCards();
 }
 
 export async function findCards() {
- /* 
-  await requestAccounts();
+  
+  if( !globalThis.isValid ) {
+    console.log("Not connected with a valid chain");
+    return;
+  }
+
+  if( globalThis.currentChainData.hoppaCardsContract === "" ) {
+    console.log("No Hoppa game cards on chain " + globalThis.chainId + " yet");
+    return;
+  }
   
   const abi = [
       "function balanceOf(address _owner, uint256 _id) external view returns (uint256)",
   ];
 
-  const c = new ethers.Contract(hoppaCardsContract, abi , globalThis.signer );
+  const c = new ethers.Contract(globalThis.currentChainData.hoppaCardsContract, abi , globalThis.signer );
   let cards: string[] = new Array(10);
-  cards[0] = "0";
-  for( let i = 1; i < 10; i ++ ) {
-    let balance = await c.balanceOf( globalThis.selectedAddress, i );
-    if( balance > 0 ) 
-      globalThis.hasNFT = true;
-    let bn = "" + balance;
-    cards[i]= bn;
-  }
-  */
-  let cards: string[] = new Array(10);
+
+  // zero out array
   for( let i = 1; i < 10; i ++ ) {
     cards[i] = "0";
   }
 
+  for( let i = 1; i < 10; i ++ ) {
+    let balance = await c.balanceOf( globalThis.selectedAddress, i );
+    if( balance > 0 ) {
+      globalThis.hasNFT = true;
+      console.log("Has Hoppa Card " + i );
+    }
+    let bn = "" + balance;
+    cards[i]= bn;
+  }
+    
   const data = JSON.stringify(cards);
   window.localStorage.setItem( 'ra8bit.cards', data );
 }
@@ -162,7 +235,7 @@ export async function updateHighscore( name, score ): Promise<string> {
       "function updateScore(string memory initials, uint256 score) public",
   ];
 
-  const hallOfFame = new ethers.Contract(hallOfFameContract, abi , globalThis.signer );
+  const hallOfFame = new ethers.Contract(globalThis.currentChainData.hallOfFameContract, abi , globalThis.signer );
 
   try {
     const tx = await hallOfFame.updateScore( name, score );
@@ -186,7 +259,7 @@ export async function getHighscores(): Promise<string> {
     return "";
   
  
-  const hallOfFame = new ethers.Contract(hallOfFameContract, hallOfFameABI , globalThis.signer );
+  const hallOfFame = new ethers.Contract(globalThis.currentChainData.hallOfFameContract, hallOfFameABI , globalThis.signer );
 
   try {
     const highscores = await hallOfFame.getHallOfFame( );
@@ -211,7 +284,7 @@ export async function hasNewHighScore(score): Promise<boolean> {
   // save the currently connected address
   globalThis.selectedAddress = await globalThis.signer.getAddress();
  
-  const hallOfFame = new ethers.Contract(hallOfFameContract, hallOfFameABI , globalThis.signer );
+  const hallOfFame = new ethers.Contract(globalThis.currentChainData.hallOfFameContract, hallOfFameABI , globalThis.signer );
 
   try {
     const highscores = await hallOfFame.getHallOfFame( );
@@ -231,21 +304,29 @@ export async function hasNewHighScore(score): Promise<boolean> {
 }
 
 export function isNotEligible(): boolean {
-    return globalThis.noWallet || (globalThis.rabbitsBalance == 0);
+
+  if(globalThis.hasNFT)
+    return false;
+
+  if(globalThis.rabbitBalance > 0)
+    return false;
+
+  return true;
 }
 
 export async function getMyNFTCollections() {
-  /*let numCollections = 0;
-  const nftAddress = [
-    '0x82A3E038048CF02C19e60856564bE209899d4F12',
-    '0x0CBd80abc67d403E4258894E62235DbaF93F2779',
-    '0xa552F4c1eD2115779c19B835dCF5A895Cdc25624',
-    '0xa8e67efd3DDAD234947d8BC80F36aa8F9eb35dF0',
-    '0x8004d73663F03Bc6dDB84d316ba0929240F6a8BA',
-    '0x67af3a5765299a3E2F869C3002204c749BD185E9',
-    '0xa15803a167A94E5d19F320c7F3b421be4C5CA1B5',
-  ];
 
+  if( !nftCollections.hasOwnProperty( globalThis.chainId )) {
+    console.log("No NFT collections on currently selected chain");
+    return;
+  }
+ 
+  const nftAddress: string[] = nftCollections[ globalThis.chainId ].addresses;
+
+  let numCollections = 0;
+  
+  console.log("Check for NFTs from " + nftAddress );
+  
   newRequest().then( data => { 
     if( data == null ) {
       console.log("Server Error. Please try again later.");
@@ -261,10 +342,9 @@ export async function getMyNFTCollections() {
 
   if(numCollections > 0)
     globalThis.hasNFT = true;
-  */
+  
+  console.log("User has NFTs from " + numCollections + " collections");
 }
-
-
 
 function numberToUint256(value: number): BigNumber {
   

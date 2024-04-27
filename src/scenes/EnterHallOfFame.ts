@@ -269,7 +269,7 @@ export default class EnterHallOfFame extends Phaser.Scene {
 
         this.statusText.setText( "Please confirm the transaction to save your score");
 
-        if (globalThis.chainId == 56 && !globalThis.noWallet) {
+        if (globalThis.isValid && !globalThis.noWallet) {
             const saveHighscore = async () => {
                 const msg = await WalletHelper.updateHighscore(this.initials.join(""), this.info?.highScorePoints || 0);
 

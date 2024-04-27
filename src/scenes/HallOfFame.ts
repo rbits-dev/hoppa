@@ -182,7 +182,7 @@ export default class HallOfFame extends Phaser.Scene {
     }
       
     private getHallOfFame() {
-        if(globalThis.chainId == 1 && !globalThis.noWallet ) {
+        if(globalThis.isValid && !globalThis.noWallet ) {
             const loadHighscores = async() => {
                 const data = await WalletHelper.getHighscores();
                 if(this.scene.isActive(this.scene.key)) {

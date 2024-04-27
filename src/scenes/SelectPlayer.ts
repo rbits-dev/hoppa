@@ -184,7 +184,7 @@ export default class GameSettingsMenu extends Phaser.Scene {
     continueGame() {
         this.scene.stop();
 
-        if( globalThis.chainId == 1 && !globalThis.noWallet ) {
+        if( globalThis.isValid && !globalThis.noWallet ) {
             globalThis.adReturn = this.nextScene;
             this.scene.start( 'halloffame' );
         }
