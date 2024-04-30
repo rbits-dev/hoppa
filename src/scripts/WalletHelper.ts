@@ -99,7 +99,7 @@ export function init() {
 
     globalThis.provider = new ethers.providers.Web3Provider(window.ethereum);
     globalThis.selectedAddress = "";
-    
+
     (window.ethereum as any).on( 'accountsChanged', function(accounts) {
       if( accounts.length > 0 ) {
         getCurrentAccount();
@@ -360,12 +360,15 @@ function uint256Tonumber(big: BigNumber): number {
 
 export async function newRequest() {
   const { chainId }  = await provider.getNetwork();
-  const url = 'https://rbits.xyz/boxes/api/userNftData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress;
+  const url = 'https://rbits.xyz/boxes/backend/api/userData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress + "&NSFW=false";
   const response = await fetch( url, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',
     redirect: 'follow',
+    headers: {
+      AppKey: 'mTb+T!5!crBEQEL2!$PJ9&JSjeT3M6Hs*RytA-eaDSBS5UU@8-fCJHu6F?kp@s+JTu2-_-V8L#?5'
+    }
   }).then( (response) => {
     if( response.status >= 400 && response.status < 600) {
       console.log("Oops try again later ", response);
