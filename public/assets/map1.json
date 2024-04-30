@@ -2911,6 +2911,17 @@
                  "width":64,
                  "x":426,
                  "y":3031
+                }, 
+                {
+                 "class":"",
+                 "height":64,
+                 "id":593,
+                 "name":"fly",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":5040,
+                 "y":2490
                 }],
          "opacity":1,
          "properties":[
@@ -3108,7 +3119,7 @@
          "y":0
         }],
  "nextlayerid":18,
- "nextobjectid":591,
+ "nextobjectid":594,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
