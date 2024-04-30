@@ -144,10 +144,10 @@ export function createCreatureFly(ctx, x, y, width, height, enemyCat, collideWit
     fly.setCollidesWith(collideWith);
     fly.setName('fly');
     fly.setData('type', 'fly');
-    fly.set
+    
     controller.add('fly',fly, fly.body as MatterJS.BodyType);
 
-    return new FlyController(ctx, fly, fly.name ); // , player,  enemyCat, collideWith);
+    return new FlyController(ctx, fly, fly.name, player,  enemyCat, collideWith);
 }
 
 export function createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller) {
