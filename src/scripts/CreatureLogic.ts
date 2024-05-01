@@ -6,12 +6,15 @@ export function hasTileAhead(map: Phaser.Tilemaps.Tilemap, camera: Phaser.Camera
     x += (direction * tilesAhead * 64);
     x += (direction * (sprite.width * sprite.centerOfMass.x));
     let y = sprite.body.position.y + (sprite.centerOfMass.y * sprite.height);
-    y += 32;
-   
+    //y -= 28;
+    y += 16;
+
     const tile = map.getTileAtWorldXY(x, y, undefined, camera, 'ground');
     
-    if( tile?.properties.damage > 0 )
-        return null;
+    //tile?.setFlipY( tile.flipY ? false: true);
+
+    if( tile?.properties.damage > 0  )
+        return true;
 
     return tile != null;
 }
