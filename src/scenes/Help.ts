@@ -60,10 +60,10 @@ export default class Help extends Phaser.Scene {
         this.line2 = this.add.bitmapText(width * 0.5, height / 2 + 48, 'press_start', 'Hoppa will check your Balance for', 32)
             .setTint(0xffffff)
             .setOrigin(0.5);
-        this.line3 = this.add.bitmapText(width * 0.5, height / 2 + 96, 'press_start', 'RBITS tokens', 32)
+        this.line3 = this.add.bitmapText(width * 0.5, height / 2 + 96, 'press_start', 'RBITS tokens and NFTs', 32)
             .setTint(0xffffff)
             .setOrigin(0.5);
-        this.line4 = this.add.bitmapText(width * 0.5, height / 2 + 144, 'press_start', '', 32)
+        this.line4 = this.add.bitmapText(width * 0.5, height / 2 + 144, 'press_start', 'to grant VIP access', 32)
             .setTint(0xffffff)
             .setOrigin(0.5);
                     
