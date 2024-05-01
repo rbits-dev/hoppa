@@ -126,8 +126,9 @@ export default class PlayerController {
         });
 
 
-        this.scene.input.keyboard?.once('keydown-ESC', () => {
-            this.stopGame();
+        this.scene.input.keyboard?.on('keydown-ESC', () => {
+            if(!this.inventoryOpen)
+                this.stopGame();
         });
 
         this.stateMachine.addState('idle', {
