@@ -27,15 +27,15 @@ export default class PowerUps {
         this.scene = scene;
      
         if( !inventoryTrigger ) {
-            events.on('card-6', this.activateSpeedUp, this );
-            events.on('card-5', this.activatePowerUp, this );
-            events.on('card-7', this.activateMystery, this );
-            events.on('card-4', this.activateDroppings, this );
-            events.on('card-8', this.activateWarp, this);
-            events.on('card-3', this.activatePokeBall, this );
-            events.on('card-2', this.activateDeadEnd, this);
-            events.on('card-1', this.activateAnotherPlayer, this);
-            events.on('card-9', this.activateVoice, this);
+            events.on('card-5', this.activateSpeedUp, this );
+            events.on('card-4', this.activatePowerUp, this );
+            events.on('card-6', this.activateMystery, this );
+            events.on('card-3', this.activateDroppings, this );
+            events.on('card-7', this.activateWarp, this);
+            events.on('card-2', this.activatePokeBall, this );
+            events.on('card-1', this.activateDeadEnd, this);
+            events.on('card-0', this.activateAnotherPlayer, this);
+            events.on('card-8', this.activateVoice, this);
         }
 
         this.hasEvents = inventoryTrigger;
@@ -59,15 +59,15 @@ export default class PowerUps {
 
     public destroy() {
         if(!this.hasEvents) {
-            events.off('card-6', this.activateSpeedUp, this );
-            events.off('card-5', this.activatePowerUp, this );
-            events.off('card-7', this.activateMystery, this );
-            events.off('card-4', this.activateDroppings, this );
-            events.off('card-8', this.activateWarp, this);
-            events.off('card-3', this.activatePokeBall, this );
-            events.off('card-2', this.activateDeadEnd, this);
-            events.off('card-1', this.activateAnotherPlayer, this);
-            events.off('card-9', this.activateVoice, this);
+            events.off('card-5', this.activateSpeedUp, this );
+            events.off('card-4', this.activatePowerUp, this );
+            events.off('card-6', this.activateMystery, this );
+            events.off('card-3', this.activateDroppings, this );
+            events.off('card-7', this.activateWarp, this);
+            events.off('card-2', this.activatePokeBall, this );
+            events.off('card-1', this.activateDeadEnd, this);
+            events.off('card-0', this.activateAnotherPlayer, this);
+            events.off('card-8', this.activateVoice, this);
         }
     }
 

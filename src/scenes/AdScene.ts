@@ -69,7 +69,7 @@ export default class AdScene extends Phaser.Scene {
     }
     
     private chooseAd(): string {
-        const N = 11;
+        const N = 21;
         let c = Phaser.Math.Between(0,N);
         return 'assets/ad-'+c + '.mp4';
     }

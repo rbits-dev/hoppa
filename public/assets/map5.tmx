@@ -1113,22 +1113,22 @@
   <object id="497" name="fly" x="8018.67" y="516.848" width="64" height="64"/>
   <object id="499" name="billboard" x="21248" y="1023" width="192" height="220"/>
   <object id="500" name="billboard" x="1914" y="2495" width="192" height="220"/>
-  <object id="501" name="coinbrick" x="1405.33" y="2493.33" width="64" height="64">
+  <object id="501" name="coinbrick" x="1408" y="2496" width="64" height="64">
    <properties>
     <property name="hits" type="int" value="3"/>
    </properties>
   </object>
-  <object id="502" name="coinbrick" x="1533.33" y="2493.33" width="64" height="64">
+  <object id="502" name="coinbrick" x="1536" y="2496" width="64" height="64">
    <properties>
     <property name="hits" type="int" value="3"/>
    </properties>
   </object>
-  <object id="503" name="coinbrick" x="1661.33" y="2493.33" width="64" height="64">
+  <object id="503" name="coinbrick" x="1664" y="2496" width="64" height="64">
    <properties>
     <property name="hits" type="int" value="3"/>
    </properties>
   </object>
-  <object id="504" name="coinbrick" x="1789.33" y="2493.33" width="64" height="64">
+  <object id="504" name="coinbrick" x="1792" y="2496" width="64" height="64">
    <properties>
     <property name="hits" type="int" value="3"/>
    </properties>

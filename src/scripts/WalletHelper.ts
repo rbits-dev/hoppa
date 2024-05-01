@@ -20,7 +20,7 @@ const chainData: ChainData = {
   "1": {
     hallOfFameContract: "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7",
     rabbitTokenContract: "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE",
-    hoppaCardsContract: "",
+    hoppaCardsContract: "0x5AeB855344077073474e7d5b81df45242C2fD468",
   },
   "56": {
     hallOfFameContract: "0x9d811D1600236cE2874A1f3cA2E7318cABe2DB7d",
@@ -30,16 +30,19 @@ const chainData: ChainData = {
   "8453": {
     hallOfFameContract: "0x43dec8a0d8F7e31F73111cAA6C86977dd95158c6",
     rabbitTokenContract: "",
-    hoppaCardsContract: "",
+    hoppaCardsContract: "0x3569F398756a2F72a960625bb39356db412C6F53",
   }
 };
 
 const nftCollections: NftCollections = {
   "1": {
-    addresses: [ "0x2A85FfbB9B978D6966915C13D9957D9ECC94e75D", "0xC5fBCeff4aceF8eE53016DcC2D0e98ba21dFC785", "0x7eB4c1Efc46c37FF5c7D2d6c72E5B1B98e28069E" ]
+    addresses: [ "0x2A85FfbB9B978D6966915C13D9957D9ECC94e75D", "0xC5fBCeff4aceF8eE53016DcC2D0e98ba21dFC785", "0x7eB4c1Efc46c37FF5c7D2d6c72E5B1B98e28069E", "0x5AeB855344077073474e7d5b81df45242C2fD468" ]
   },
   "56": {
     addresses: [ "0x8004d73663F03Bc6dDB84d316ba0929240F6a8BA", "0xa54c728f58c8dFA6AadCe40fa4D32457d5d3eFCD", "0x67af3a5765299a3E2F869C3002204c749BD185E9", "0xf86E258d7D363bfDd0d1fC2B1e70D418a56c8154", "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D"  ]
+  },
+  "8453": {
+    addresses: [ "0x3569F398756a2F72a960625bb39356db412C6F53" ]
   }
 };
 
@@ -198,20 +201,34 @@ export async function findCards() {
     return;
   }
   
-  const abi = [
+  let abi;
+  if( globalThis.chainId == 56 ) {
+    abi = [
       "function balanceOf(address _owner, uint256 _id) external view returns (uint256)",
-  ];
+    ];
+  }
+  else {
+    abi = [
+      "function getAssetCount(address user, uint256 assetType) external view returns(uint256)",
+    ];
+  }
 
   const c = new ethers.Contract(globalThis.currentChainData.hoppaCardsContract, abi , globalThis.signer );
   let cards: string[] = new Array(10);
 
   // zero out array
-  for( let i = 1; i < 10; i ++ ) {
+  for( let i = 0; i < 9; i ++ ) {
     cards[i] = "0";
   }
 
-  for( let i = 1; i < 10; i ++ ) {
-    let balance = await c.balanceOf( globalThis.selectedAddress, i );
+  for( let i = 0; i < 9; i ++ ) {
+    let balance;
+    if(globalThis.chainId == 56 ) {
+      balance = await c.balanceOf( globalThis.selectedAddress, (i+1) ); // old erc1155
+    }
+    else {
+      balance = await c.getAssetCount( globalThis.selectedAddress, i ); // new erc721
+    }
     if( balance > 0 ) {
       globalThis.hasNFT = true;
       console.log("Has Hoppa Card " + i );

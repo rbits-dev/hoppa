@@ -23,9 +23,11 @@ export default class Inventory extends Phaser.Scene {
     private innerBorder = 8;
     private outerBorder = 4;
     private sceneEnding = false;
+
+    private keyCheckTimer: number = 0;
+    private keyCheckInterval: number = 75;
     
     private cardInfo : string[] = [
-        "",
         "Skin Change Approved!",
         "Dead End!",
         "Power Up! Hit em hard!",
@@ -70,6 +72,7 @@ export default class Inventory extends Phaser.Scene {
     }
 
     preload() {
+        this.load.audio('card-0', ['assets/card-0.mp3', 'assets/card-0.m4a'] );
         this.load.audio('card-1', ['assets/card-1.mp3', 'assets/card-1.m4a'] );
         this.load.audio('card-2', ['assets/card-2.mp3', 'assets/card-2.m4a'] );
         this.load.audio('card-3', ['assets/card-3.mp3', 'assets/card-3.m4a'] );
@@ -78,7 +81,6 @@ export default class Inventory extends Phaser.Scene {
         this.load.audio('card-6', ['assets/card-6.mp3', 'assets/card-6.m4a'] );
         this.load.audio('card-7', ['assets/card-7.mp3', 'assets/card-7.m4a'] );
         this.load.audio('card-8', ['assets/card-8.mp3', 'assets/card-8.m4a'] );
-        this.load.audio('card-9', ['assets/card-9.mp3', 'assets/card-9.m4a'] );
 
         this.load.image('inv', 'assets/inventory.webp' );
         this.load.atlas('cards', 'assets/cards.webp', 'assets/cards.json' );
@@ -92,21 +94,26 @@ export default class Inventory extends Phaser.Scene {
         let id = this.gridIndex;
         let changed = false;
         
-        if( this.player.isLeft()) {
-            id = this.gridIndex - 1;
-            changed = true;
-        }
-        else if(this.player.isRight()) {
-            id = this.gridIndex + 1;
-            changed = true;
-        }
-        else if(this.player.isUp()) {
-            id = this.gridIndex + this.numCols;
-            changed = true;
-        }
-        else if(this.player.isDown()) {
-            id = this.gridIndex - this.numCols;
-            changed = true;
+        this.keyCheckTimer += deltaTime;
+
+        if(this.keyCheckTimer >= this.keyCheckInterval ) {
+            if( this.player.isLeft()) {
+                id = this.gridIndex - 1;
+                changed = true;
+            }
+            else if(this.player.isRight()) {
+                id = this.gridIndex + 1;
+                changed = true;
+            }
+            else if(this.player.isUp()) {
+                id = this.gridIndex - this.numCols;
+                changed = true;
+            }
+            else if(this.player.isDown()) {
+                id = this.gridIndex + this.numCols;
+                changed = true;
+            }
+            this.keyCheckTimer = 0;
         }
 
         if( id < 0 ) 
@@ -114,12 +121,7 @@ export default class Inventory extends Phaser.Scene {
         else if ( id > (this.grid.length - 1))
           id = (this.grid.length - 1);
 
-        let i = this.gridIndex;
-        if( i > (this.grid.length-1))
-          i = (this.grid.length - 1);
-        else if ( i < 0 )
-          i = 0;
-        this.gridIndex = i;
+        this.gridIndex = id;
 
         const cell = this.grid[ this.gridIndex ];
         
@@ -200,8 +202,8 @@ export default class Inventory extends Phaser.Scene {
             this.endScene();
         });
 
-        let statusText = "Press I or R2 [exit]\nPress A or Space [select]\nArrows [navigate]\nB on virtual [exit]";
-        this.statusText = this.add.bitmapText(1000, 96, 'press_start', statusText, 16)
+        let statusText = "Press I or R2 [exit]\nPress Space or A [select]\nArrows [navigate]\nB on virtual [exit]";
+        this.statusText = this.add.bitmapText(1000, 108, 'press_start', statusText, 16)
                 .setTint(0x16ffff)
                 .setOrigin(0.5);
         
@@ -213,7 +215,7 @@ export default class Inventory extends Phaser.Scene {
         const padding = 16;
         const numCols = this.numCols;
         const numRows = 2;
-        const maxCards = 9;
+        const maxCards = 8;
         const totalWidth = numCols * cellSize + (numCols - 1) * padding;
         const totalHeight = numRows * cellSize + (numRows - 1) * padding;
         const startX = (this.cameras.main.width - totalWidth) / 2;
@@ -221,7 +223,7 @@ export default class Inventory extends Phaser.Scene {
         const graphics = this.graphics;
         const that = this;
         
-        let id = 1;
+        let id = 0;
         let haveBalance = false;
 
         for( let j = 0; j < numRows; j ++ ) {
@@ -273,7 +275,7 @@ export default class Inventory extends Phaser.Scene {
                     graphics.lineStyle(this.outerBorder, 0x16ffff);
                     graphics.strokeRect(x - (cz/2), y - (cz/2), cz, cz);
                     
-                    this.gridIndex = (id - 1);
+                    //this.gridIndex = id;
                     const iid = cell.getData("id");
 
                     this.text?.destroy();

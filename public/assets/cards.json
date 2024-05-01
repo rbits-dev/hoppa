@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "1.webp",
+					"filename": "0.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -31,7 +31,7 @@
 					}
 				},
 				{
-					"filename": "2.webp",
+					"filename": "1.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -52,7 +52,7 @@
 					}
 				},
 				{
-					"filename": "3.webp",
+					"filename": "2.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -73,7 +73,7 @@
 					}
 				},
 				{
-					"filename": "4.webp",
+					"filename": "3.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -94,7 +94,7 @@
 					}
 				},
 				{
-					"filename": "6.webp",
+					"filename": "4.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -115,7 +115,7 @@
 					}
 				},
 				{
-					"filename": "7.webp",
+					"filename": "5.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -136,7 +136,7 @@
 					}
 				},
 				{
-					"filename": "8.webp",
+					"filename": "6.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -157,7 +157,7 @@
 					}
 				},
 				{
-					"filename": "9.webp",
+					"filename": "7.webp",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -172,6 +172,27 @@
 					},
 					"frame": {
 						"x": 924,
+						"y": 0,
+						"w": 132,
+						"h": 132
+					}
+				},
+				{
+					"filename": "8.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 132,
+						"h": 132
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 132,
+						"h": 132
+					},
+					"frame": {
+						"x": 1056,
 						"y": 0,
 						"w": 132,
 						"h": 132
