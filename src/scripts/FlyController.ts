@@ -245,7 +245,7 @@ export default class FlyController {
   */      
         this.sprite?.setVelocityY(-1 * this.wingPower);
 
-        if( thinkingTime < this.moveTime ) {
+        if( thinkingTime < this.moveTime && this.player !== undefined ) {
             let v = Phaser.Math.Between(0,3);
             if( v >= 2 ) {
                 let d = Phaser.Math.Distance.BetweenPoints(this.player.getSprite(), this.sprite);
@@ -280,7 +280,7 @@ export default class FlyController {
 
         this.sprite?.setVelocityY(4 * this.wingPower);
 
-        if( thinkingTime < this.moveTime ) {
+        if( thinkingTime < this.moveTime && this.player !== undefined ) {
             let v = Phaser.Math.Between(0,3);
             if( v >= 2 ) {
                 let d = Phaser.Math.Distance.BetweenPoints(this.player.getSprite(), this.sprite);
