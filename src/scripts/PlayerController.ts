@@ -1560,11 +1560,6 @@ export default class PlayerController {
         if(this.sprite === undefined || this.sprite.body === undefined)
             return;
 
-        if(globalThis.spawnLocation > 0) {
-            globalThis.spawnLocation --;
-            return;
-        }
-
         if(!this.standingOnFloor)
            return;
 
@@ -1582,6 +1577,11 @@ export default class PlayerController {
             )) {
             this.scene.game.registry.set('playerX', nx);
             this.scene.game.registry.set('playerY', nny);
+            
+            if(globalThis.spawnLocation > 0) {
+                globalThis.spawnLocation --;
+                return;
+            }
         }
     }
 
