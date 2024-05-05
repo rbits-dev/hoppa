@@ -181,12 +181,12 @@ export default class Level7 extends BaseScene {
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
         const ra8bitTiles = this.map.addTilesetImage('ra8bits-64', 'ra8bits-64-tiles', 64, 64, 0, 0);
         
-        this.ground1 = this.map.createLayer('ground', [groundTiles, ra8bitTiles,stonesTiles,propTiles]);
+        this.map.createLayer('obstacles', propTiles);
         this.layer1 = this.map.createLayer('layer1', [groundTiles, ra8bitTiles,stonesTiles,propTiles]);
-     
+        this.ground1 = this.map.createLayer('ground', [groundTiles, ra8bitTiles,stonesTiles,propTiles]);
+        
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
        
-        this.map.createLayer('obstacles', propTiles);
         this.layer1.setDepth(10);
 
         const playerCat = 2;
@@ -237,7 +237,7 @@ export default class Level7 extends BaseScene {
             const { x = 0, y = 0, name, width = 0, height = 0, rotation = 0 } = objData;
             switch (name) {
                 default:
-                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, enemyCat, collideWith, this.obstaclesController, objData, this.playerController);
+                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, enemyCat, collideWith, this.obstaclesController, objData, this.playerController, this.map);
                     break;
             }
         });

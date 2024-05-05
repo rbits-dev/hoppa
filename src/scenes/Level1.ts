@@ -164,12 +164,14 @@ export default class Level1 extends BaseScene {
         this.map = this.make.tilemap({ key: 'tilemap1', tileWidth: 64, tileHeight: 64 });
         const groundTiles = this.map.addTilesetImage('ground', 'groundTiles', 64, 64, 0, 2);
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
-        this.ground1 = this.map.createLayer('ground', [groundTiles, propTiles]);
+        
+        this.map.createLayer('obstacles', propTiles);
+        
         this.layer1 = this.map.createLayer('layer1', [groundTiles, propTiles]);
-
+        this.ground1 = this.map.createLayer('ground', [groundTiles, propTiles]);
+        
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
 
-        this.map.createLayer('obstacles', propTiles);
         this.layer1.setDepth(10);
 
         const playerCat = 2; // this.matter.world.nextCategory();
@@ -227,18 +229,19 @@ export default class Level1 extends BaseScene {
             }
         });
 
+        this.matter.world.convertTilemapLayer(this.ground1, { label: 'ground', friction: 0, frictionStatic: 0 });
+        this.matter.world.setBounds(0,0,this.map.widthInPixels, this.map.heightInPixels, 1, true, true,false, false);
+
         objectsLayer?.objects.forEach(objData => {
             const { x = 0, y = 0, name, width = 0, height = 0, rotation = 0 } = objData;
             switch (name) {
                 default:
-                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, enemyCat, collideWith, this.obstaclesController, objData, this.playerController);
+                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, enemyCat, collideWith, this.obstaclesController, objData, this.playerController, this.map);
                     break;
             }
         });
 
-        this.matter.world.convertTilemapLayer(this.ground1, { label: 'ground', friction: 0, frictionStatic: 0 });
-        this.matter.world.setBounds(0,0,this.map.widthInPixels, this.map.heightInPixels, 1, true, true,false, false, false);
-
+        
         this.matter.world.on("collisionstart", (e: { pairs: any; }, o1: any, o2: any) => {
             const pairs = e.pairs;
             for (let i = 0; i < pairs.length; i++) {

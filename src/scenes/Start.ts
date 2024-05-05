@@ -135,7 +135,7 @@ export default class Start extends BaseScene {
             switch (name) {
 
                 default:
-                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, 4, [1], this.obstaclesController, objData, undefined);
+                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, 4, [1], this.obstaclesController, objData, undefined, this.map);
                     break;
             }
         })

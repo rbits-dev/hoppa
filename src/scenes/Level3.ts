@@ -166,12 +166,12 @@ export default class Level3 extends BaseScene {
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
         const grasTiles = this.map.addTilesetImage('gras', 'grasTiles', 64, 64, 0, 2);
 
-        this.ground1 = this.map.createLayer('ground', [groundTiles, grasTiles, propTiles]);
+        this.map.createLayer('obstacles', propTiles);
         this.layer1 = this.map.createLayer('layer1', [groundTiles, grasTiles, propTiles]);
-
+        this.ground1 = this.map.createLayer('ground', [groundTiles, grasTiles, propTiles]);
+        
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
 
-        this.map.createLayer('obstacles', propTiles);
         this.layer1.setDepth(10);
 
         const playerCat = 2;
@@ -228,7 +228,7 @@ export default class Level3 extends BaseScene {
             const { x = 0, y = 0, name, width = 0, height = 0, rotation = 0 } = objData;
             switch (name) {
                 default:
-                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, enemyCat, collideWith, this.obstaclesController, objData, this.playerController);
+                    SceneFactory.basicCreate(this, name, x, y, width, height, rotation, enemyCat, collideWith, this.obstaclesController, objData, this.playerController, this.map);
                     break;
             }
         });
