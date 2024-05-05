@@ -10,6 +10,12 @@ export default class BatController {
     private name;
     private velocityX = 7;
 
+    private verticalSpeed: number;
+    private verticalRange: number;
+    private verticalTimer: number = 0;
+    private verticalDuration: number = 200;
+    private verticalDirection: number = -1;
+
     constructor(
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
@@ -42,6 +48,9 @@ export default class BatController {
         events.on(this.name + '-blocked', this.handleBlocked, this);
 
         this.velocityX = Phaser.Math.FloatBetween(5.0, 8.0);
+    
+        this.verticalSpeed = 0.3;
+        this.verticalRange = 10;
     }
 
     destroy() {
@@ -53,6 +62,18 @@ export default class BatController {
 
     update(deltaTime: number) {
         this.stateMachine.update(deltaTime);
+    
+        this.verticalTimer += deltaTime;
+
+        if( this.verticalTimer >= this.verticalDuration ) {
+            this.verticalDirection *= -1;
+            this.verticalTimer = 0;
+        }
+
+        const verticalOffset = this.verticalRange * Math.sin(this.moveTime / 1000 * this.verticalSpeed);
+        this.sprite.setVelocityY(this.verticalDirection * verticalOffset);
+        
+
     }
 
     public getSprite() {
