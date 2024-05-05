@@ -704,7 +704,7 @@ export function createPlayer(ctx, x: number, y: number, width: number, height: n
     return player;
 }
 
-export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, collideWith, controller: ObstaclesController, objData, player) {
+export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, collideWith, controller: ObstaclesController, objData, player, tilemap) {
 
     switch (name) {
         case 'neon': {
@@ -726,7 +726,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             break;
         }
         case 'bomb': {
-            ctx.bombs.push(CreatureHelper.creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWith, controller));
+            ctx.bombs.push(CreatureHelper.creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWith, controller, tilemap));
             break;
         }
         case 'monster': {
@@ -750,7 +750,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             break;
         }
         case 'firewalker': {
-            ctx.firewalkers.push(CreatureHelper.creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, collideWith, controller));
+            ctx.firewalkers.push(CreatureHelper.creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
             break;
         }
         case 'lava-top':
