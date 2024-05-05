@@ -169,13 +169,14 @@ export default class DragonController {
         this.sprite = undefined;
     }
 
+
     private castFireball(dir: number) {
 
         if (this.castFireAt > this.scene.game.loop.frame)
             return;
 
-        let facingDir = this.player.getSprite().body.position.x - this.sprite.body.position.x > 0 ? 1 : -1;
-        if (this.sprite.flipX && facingDir != -1 && !this.sprite.flipX && facingDir != 1)
+        const facingDir = this.player.getSprite().body.position.x - this.sprite.body.position.x > 0 ? 1 : -1;
+        if ((dir === 1 && !this.sprite.flipX && facingDir !== -1) || (dir === -1 && this.sprite.flipX && facingDir !== 1))
             return;
 
         let fireball = this.scene.matter.add.sprite(
