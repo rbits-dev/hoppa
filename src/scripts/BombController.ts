@@ -1,11 +1,13 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
+import * as SceneFactory from '../scripts/SceneFactory';
 import * as CreatureLogic from './CreatureLogic';
 
 export default class BombController {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
+    private tilemap: Phaser.Tilemaps.Tilemap;
 
     private moveTime = 0;
     private name = "";
@@ -16,11 +18,13 @@ export default class BombController {
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
         name: string,
+        tilemap: Phaser.Tilemaps.Tilemap,
     ) {
         this.scene = scene;
         this.sprite = sprite;
         this.name = name;
         this.garbage = false;
+        this.tilemap = tilemap;
         this.createAnims();
 
         this.stateMachine = new StateMachine(this);
@@ -42,7 +46,6 @@ export default class BombController {
             .setState('idle');
 
         this.myMoveTime = Phaser.Math.Between(1500, 2500);
-
 
         events.on(this.name + '-stomped', this.handleStomped, this);
         events.on(this.name + '-blocked', this.handleBlocked, this);
@@ -93,8 +96,23 @@ export default class BombController {
 
     private deadOnEnter() {
         this.moveTime = 0;
+        
+        this.sprite.setOrigin(0.5,0.5);
+        this.sprite.setScale(3.0,3.0);
+        
         this.sprite.play('dead');
+
+        const ex = this.sprite.body?.position.x - 64;
+        const ey = this.sprite.body?.position.y;
+        const tiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex, ey, 3 * 64, 3 * 64 );
+        SceneFactory.addSound(this.scene, "explosion3", false, true );
+        tiles?.forEach( tile => {
+            this.tilemap.removeTileAt(tile.x, tile.y, false, true);
+            tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
+        });
+        
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            this.garbage = true;
             this.cleanup();
         });
     }
@@ -128,13 +146,13 @@ export default class BombController {
         if (this.sprite !== bomb && !this.garbage) {
             return;
         }
-        this.garbage = true;
+        //this.garbage = true;
         events.off(this.name + '-stomped', this.handleStomped, this);
-        this.sprite.flipX = false;
+        //this.sprite.flipX = false;
         this.sprite.play('count');
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.stateMachine.setState('dead');
-            this.cleanup();
+            //this.cleanup();
         });
 
     }
