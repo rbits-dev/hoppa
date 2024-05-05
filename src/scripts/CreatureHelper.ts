@@ -38,7 +38,7 @@ export function creatureCreateDragon(ctx, x, y, width, height, enemyCat, collide
     return new DragonController(ctx, dragon, player, dragon.name, enemyCat, collideWith);
 }
 
-export function creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWith, controller) {
+export function creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWith, controller, tilemap) {
     const bomb = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'bomb', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
         label: 'bomb'
@@ -53,7 +53,7 @@ export function creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWi
 
     controller.add('bomb', bomb,bomb.body as MatterJS.BodyType);
 
-    return new BombController(ctx, bomb, bomb.name);
+    return new BombController(ctx, bomb, bomb.name, tilemap);
 }
 
 export function createCreatureMonster(ctx, x, y, width, height, enemyCat, collideWith, controller) {
@@ -204,7 +204,7 @@ export function createCreatureSaw(ctx, x, y, width, height, rot, enemyCat, colli
     return new SawController(ctx, saw, saw.name);
 }
 
-export function creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, collideWith, controller) {
+export function creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, collideWith, controller, player) {
     const firewalker = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'firewalker', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
         label: 'firewalker'
@@ -219,7 +219,7 @@ export function creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, c
 
     controller.add('firewalker', firewalker, firewalker.body as MatterJS.BodyType);
 
-    return new FireWalkerController(ctx, firewalker, firewalker.name);
+    return new FireWalkerController(ctx, firewalker, firewalker.name, player);
 }
 
 export function createCreatureFlower(ctx, x, y, width, height, enemyCat, collideWith, controller) {
