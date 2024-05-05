@@ -1,25 +1,33 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
+import PlayerController from "./PlayerController";
 
 export default class FireWalkerController {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
+    private player: PlayerController;
     private garbage = false;
     private moveTime = 0;
     private velocityX;
     private name;
     private myMoveTime = 0;
 
+    private hasBoosted: boolean = false;
+    private boostCooldown: number = 0;
+    private speed: number = 0;
+
     constructor(
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
-        name: string
+        name: string,
+        player: PlayerController
     ) {
         this.scene = scene;
         this.sprite = sprite;
         this.name = name;
+        this.player = player;
         this.garbage = false;
         this.createAnims();
 
@@ -56,6 +64,33 @@ export default class FireWalkerController {
 
     update(deltaTime: number) {
         this.stateMachine.update(deltaTime);
+
+        if(this.player === undefined)
+            return;
+
+        const playerSprite = this.player.getSprite();
+        const distance = Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, playerSprite.x, playerSprite.y);
+
+        if (!this.hasBoosted && this.boostCooldown <= 0 && distance < (5 * 64) && 
+            ((this.sprite.flipX && this.sprite.x < playerSprite.x) || 
+            (!this.sprite.flipX && this.sprite.x > playerSprite.x))) {
+            if(this.speed == 0) {
+                let cv = this.velocityX * 0.8;
+                this.velocityX += cv;
+                this.speed = cv;
+            }
+
+            this.hasBoosted = true;
+            this.boostCooldown = 1000;
+        }
+        
+        this.boostCooldown = Math.max(0, this.boostCooldown - deltaTime );
+        if(this.boostCooldown <= 0) {
+            this.hasBoosted = false;
+            this.velocityX -= this.speed;
+            this.speed = 0;
+        }
+
     }
 
     public getSprite() {
