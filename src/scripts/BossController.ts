@@ -274,7 +274,7 @@ export default class BossController {
     private spawnKey() {
         
         SceneFactory.basicCreate(this.scene, 'key', this.sprite.body.position.x, this.sprite.body?.position.y - 64,
-            64, 64, 0, this.enemyCat, [0], this.obstacles, null, this);
+            64, 64, 0, this.enemyCat, [0], this.obstacles, null, this, this.map);
     }
 
     private bossDies() {
