@@ -31,7 +31,18 @@ const chainData: ChainData = {
     hallOfFameContract: "0x43dec8a0d8F7e31F73111cAA6C86977dd95158c6",
     rabbitTokenContract: "",
     hoppaCardsContract: "0x3569F398756a2F72a960625bb39356db412C6F53",
-  }
+  },
+  "84532": {
+    hallOfFameContract: "",
+    rabbitTokenContract: "",
+    hoppaCardsContract: "0x6abE1cAeBED860d0A3861Ed4Cb824a9bce2874fb",
+  },
+  "11155111": {
+    hallOfFameContract: "",
+    rabbitTokenContract: "",
+    hoppaCardsContract: "0x01Ec22e836e669293749904e26a483Ec4E78fE76",
+  },
+
 };
 
 const nftCollections: NftCollections = {
@@ -43,6 +54,12 @@ const nftCollections: NftCollections = {
   },
   "8453": {
     addresses: [ "0x3569F398756a2F72a960625bb39356db412C6F53" ]
+  },
+  "84532": {
+    addresses: [ "0x6abE1cAeBED860d0A3861Ed4Cb824a9bce2874fb" ]
+  },
+  "11155111": {
+    addresses: [ "0x01Ec22e836e669293749904e26a483Ec4E78fE76" ]
   }
 };
 
@@ -162,8 +179,8 @@ export async function getCurrentAccount() {
 
     globalThis.chainId = chainId;
 
-    if(globalThis.chainId != 1 && globalThis.chainId != 8453 && globalThis.chainId != 56) {
-      console.log("Wallet is not connected with ETH, BSC or Base", chainId);
+    if( !chainData.hasOwnProperty( chainId.toString() )) {
+      console.log("Wallet is not connected with ETH, BSC or Base: ", chainId);
       return;
     }
 
