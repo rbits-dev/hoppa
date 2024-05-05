@@ -412,7 +412,7 @@ export default class PlayerController {
                     if (v.use > 0) {
                         v.use = v.use - 1;
                         SceneFactory.basicCreate(this.scene, 'coin', body.position.x - 32, body.position.y - 96 - (64 * v.use),
-                            64, 64, 0, 4, [0], this.obstacles, null, this);
+                            64, 64, 0, 4, [0], this.obstacles, null, this, null);
                         this.bounceTile(body);
                     }
                     else if (v.use == 0) {
@@ -438,6 +438,7 @@ export default class PlayerController {
 
                 if (!b.tile.visible) {
                     b.destroy();
+                    this.standingOnFloor = false;
                     return;
                 }
 
