@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import * as SceneFactory from '../scripts/SceneFactory';
+import { sharedInstance as events } from '../scripts/EventManager';
 
 export default class BaseScene extends Phaser.Scene {
     
@@ -76,8 +77,36 @@ export default class BaseScene extends Phaser.Scene {
 
     }
 
+    emitCollisionEvents() {
+        this.matter.world.on("collisionstart", (e: { pairs: any; }, o1: any, o2: any) => {
+            const pairs = e.pairs;
+            for (let i = 0; i < pairs.length; i++) {
+                const bodyA = pairs[i].bodyA;
+                const bodyB = pairs[i].bodyB;
 
-    
+                if (bodyA.gameObject === undefined)
+                    continue;
+
+                const dy = Math.abs( bodyB.position.y - bodyA.position.y );
+                const dx = Math.abs( bodyB.position.x - bodyA.position.x );
+
+                if( dy <= 32 ) {
+                    events.emit(bodyA.gameObject?.name + '-blocked', bodyA.gameObject);
+                }
+                else if ( dx <= 64 && dy <= 32 && bodyB.gameObject instanceof Phaser.Physics.Matter.TileBody ) {
+                    events.emit(bodyA.gameObject?.name + '-blocked', bodyA.gameObject);
+                }
+            }
+        });
+
+        /*
+        this.matter.world.drawDebug = false;
+        this.input.keyboard.on("keydown-I", (event) => {
+          this.matter.world.drawDebug = !this.matter.world.drawDebug;
+          this.matter.world.debugGraphic.clear();
+        });
+        */
+    }
 
     
 

@@ -248,23 +248,7 @@ export default class Level4 extends BaseScene {
           this.matter.world.debugGraphic.clear();
         });
         */
-
-        this.matter.world.on("collisionstart", (e: { pairs: any; }, o1: any, o2: any) => {
-            const pairs = e.pairs;
-            for (let i = 0; i < pairs.length; i++) {
-                const bodyA = pairs[i].bodyA;
-                const bodyB = pairs[i].bodyB;
-
-                if (bodyA.gameObject === undefined)
-                    continue;
-
-                const dy = ~~(bodyB.position.y - bodyA.position.y);
-
-                if (dy <= 32) {
-                    events.emit(bodyA.gameObject?.name + '-blocked', bodyA.gameObject);
-                }
-            }
-        });
+        this.emitCollisionEvents();
 
         this.playerController?.setJoystick(this, width);
     }

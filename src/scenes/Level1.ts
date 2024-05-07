@@ -19,7 +19,7 @@ import BearController from '~/scripts/BearController';
 import CrowController from '~/scripts/CrowController';
 import FlyController from '~/scripts/FlyController';
 import SawController from '~/scripts/SawController';
-import { sharedInstance as events } from '../scripts/EventManager';
+
 import BaseScene from './BaseScene';
 import BossController from '~/scripts/BossController';
 import LavaController from '~/scripts/LavaController';
@@ -240,24 +240,8 @@ export default class Level1 extends BaseScene {
                     break;
             }
         });
-
         
-        this.matter.world.on("collisionstart", (e: { pairs: any; }, o1: any, o2: any) => {
-            const pairs = e.pairs;
-            for (let i = 0; i < pairs.length; i++) {
-                const bodyA = pairs[i].bodyA;
-                const bodyB = pairs[i].bodyB;
-
-                if (bodyA.gameObject === undefined)
-                    continue;
-
-                const dy = ~~(bodyB.position.y - bodyA.position.y);
-
-                if (dy <= 32) {
-                    events.emit(bodyA.gameObject?.name + '-blocked', bodyA.gameObject);
-                }
-            }
-        });
+        this.emitCollisionEvents();
 
         this.playerController?.setJoystick(this, width);
 
