@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import PlayerController from "../scripts/PlayerController";
 import { sharedInstance as events } from '../scripts/EventManager';
 import * as SceneFactory from '../scripts/SceneFactory';
-import { PlayerStats } from "./PlayerStats";
+import * as WalletHelper from "../scripts/WalletHelper";
 
 export default class Inventory extends Phaser.Scene {
     constructor() {
@@ -238,7 +238,7 @@ export default class Inventory extends Phaser.Scene {
                 cell.setInteractive({ useHandCursor: true });
                 
                 if( this.balances[id] < 1 ) {
-                    cell.setAlpha(0.1);
+                    cell.setAlpha(0.25);
                 }
                 else {
                     haveBalance = true;
@@ -324,8 +324,7 @@ export default class Inventory extends Phaser.Scene {
     }
     
     openItem(id) {
-        //let url = "0xb8eb97a1d6393b087eeacb33c3399505a3219d3d/" + id + "/1";
-        let url = "https://rbits.xyz/boxes/"
+        let url = WalletHelper.getLink();
         window.open(url, '_blank')?.focus();
     }
 

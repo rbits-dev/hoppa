@@ -7,6 +7,7 @@ interface ChainData {
     hallOfFameContract: string;
     rabbitTokenContract: string;
     hoppaCardsContract: string;
+    hoppaArtist: string;
   };
 }
 
@@ -21,26 +22,31 @@ const chainData: ChainData = {
     hallOfFameContract: "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7",
     rabbitTokenContract: "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE",
     hoppaCardsContract: "0x5AeB855344077073474e7d5b81df45242C2fD468",
+    hoppaArtist: "0xe941e3adA31bF3e6300eBcfeB8D12BA7AFE8EA2b",
   },
   "56": {
     hallOfFameContract: "0x9d811D1600236cE2874A1f3cA2E7318cABe2DB7d",
     rabbitTokenContract: "",
     hoppaCardsContract: "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D",
+    hoppaArtist: "",
   }, 
   "8453": {
     hallOfFameContract: "0x43dec8a0d8F7e31F73111cAA6C86977dd95158c6",
     rabbitTokenContract: "",
     hoppaCardsContract: "0x3569F398756a2F72a960625bb39356db412C6F53",
+    hoppaArtist: "0x9C2f45DbdA7367269bc47560275Cf587D71d8B7B",
   },
   "84532": {
     hallOfFameContract: "",
     rabbitTokenContract: "",
     hoppaCardsContract: "0x6abE1cAeBED860d0A3861Ed4Cb824a9bce2874fb",
+    hoppaArtist: "" ,
   },
   "11155111": {
     hallOfFameContract: "",
     rabbitTokenContract: "",
     hoppaCardsContract: "0x01Ec22e836e669293749904e26a483Ec4E78fE76",
+    hoppaArtist: "",
   },
 
 };
@@ -83,6 +89,7 @@ declare global {
     hallOfFameContract: string;
     rabbitTokenContract: string;
     hoppaCardsContract: string;
+    hoppaArtist: string;
   };
   interface Window {
       ethereum: import('ethers').providers.ExternalProvider;
@@ -204,6 +211,19 @@ export async function getCurrentAccount() {
     await getMyNFTCollections();
     
     await findCards();
+}
+
+export function getLink() {
+  const defaultLink = "https://rbits.xyz/boxes/live"
+  if( !globalThis.isValid )
+    return defaultLink;
+  if( globalThis.currentChainData.hoppaCardsContract === "" ) {
+    return defaultLink;
+  }
+  if( globalThis.currentChainData.hoppaArtist === "" ) {
+    return defaultLink;
+  }
+  return "https://rbits.xyz/boxes/artist/" + globalThis.currentChainData.hoppaArtist;
 }
 
 export async function findCards() {
