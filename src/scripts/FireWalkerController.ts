@@ -69,19 +69,29 @@ export default class FireWalkerController {
             return;
 
         const playerSprite = this.player.getSprite();
-        const distance = Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, playerSprite.x, playerSprite.y);
 
-        if (!this.hasBoosted && this.boostCooldown <= 0 && distance < (5 * 64) && 
-            ((this.sprite.flipX && this.sprite.x < playerSprite.x) || 
-            (!this.sprite.flipX && this.sprite.x > playerSprite.x))) {
-            if(this.speed == 0) {
-                let cv = this.velocityX * 0.8;
-                this.velocityX += cv;
-                this.speed = cv;
+        const enemyTileX = Math.floor(this.sprite.x / 64);
+        const playerTileX = Math.floor(playerSprite.x / 64); 
+        
+        const inLine = (this.sprite.flipX && enemyTileX < playerTileX) || 
+                       (!this.sprite.flipX && enemyTileX > playerTileX);
+
+        if( inLine ) {
+            const distance = Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, playerSprite.x, playerSprite.y);
+            
+            if (!this.hasBoosted && this.boostCooldown <= 0 && distance < (5 * 64) && 
+                ((this.sprite.flipX && this.sprite.x < playerSprite.x) || 
+                (!this.sprite.flipX && this.sprite.x > playerSprite.x))) {
+
+                if(this.speed == 0) {
+                    let cv = this.velocityX * 0.8;
+                    this.velocityX += cv;
+                    this.speed = cv;
+                }
+
+                this.hasBoosted = true;
+                this.boostCooldown = 1000;
             }
-
-            this.hasBoosted = true;
-            this.boostCooldown = 1000;
         }
         
         this.boostCooldown = Math.max(0, this.boostCooldown - deltaTime );

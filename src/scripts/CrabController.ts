@@ -1,6 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
+import PlayerController from "./PlayerController";
 
 export default class CrabController {
     private scene: Phaser.Scene;
@@ -12,15 +13,28 @@ export default class CrabController {
     private garbage = false;
     private myMoveTime = 0;
 
+    private pauseTime: number = 0;
+    private pauseDuration: number = 0;
+
+    private dashTime: number = 0;
+    private dashDuration: number = 0;
+
+    private player: PlayerController;
+    private tilemap: Phaser.Tilemaps.Tilemap;
+
     constructor(
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
-        name: string
+        name: string, 
+        player: PlayerController,
+        tilemap: Phaser.Tilemaps.Tilemap
     ) {
         this.scene = scene;
         this.sprite = sprite;
         this.name = name;
         this.garbage = false;
+        this.player = player;
+        this.tilemap = tilemap;
         this.createAnims();
 
         this.stateMachine = new StateMachine(this);
@@ -35,6 +49,14 @@ export default class CrabController {
             .addState('move-right', {
                 onEnter: this.moveRightOnEnter,
                 onUpdate: this.moveRightOnUPdate
+            })
+            .addState('paused', {
+                onEnter: this.pauseOnEnter,
+                onUpdate: this.pauseOnUpdate,
+            })
+            .addState('dash', {
+                onEnter: this.dashOnEnter,
+                onUpdate: this.dashOnUpdate,
             })
             .addState('dead', {
             })
@@ -55,6 +77,15 @@ export default class CrabController {
     }
 
     update(deltaTime: number) {
+
+        // set to 50% alpha when in water
+        const currentTile = this.tilemap.getTileAtWorldXY(this.sprite.x, this.sprite.y);
+        if (currentTile && currentTile.index == 66) {
+            this.sprite.setAlpha(0.5);
+        } else {
+            this.sprite.setAlpha(1);
+        }
+
         this.stateMachine.update(deltaTime);
     }
 
@@ -62,8 +93,53 @@ export default class CrabController {
         return this.sprite;
     }
 
+    private dashOnEnter() {
+        this.dashTime = 0;
+        this.dashDuration = Phaser.Math.Between(500, 1000);
+        this.sprite.play('dash');
+    }
+
+    private dashOnUpdate(deltaTime: number) {
+        this.dashTime += deltaTime;
+
+        const dashSpeed = 4;
+        if(this.sprite.flipX) {
+            this.sprite.setVelocityX(-dashSpeed);
+        }
+        else {
+            this.sprite.setVelocityX(dashSpeed);
+        }
+
+        if(this.dashTime > this.dashDuration) {
+            if(this.sprite.flipX) {
+                this.stateMachine.setState('move-left');
+            }
+            else {
+                this.stateMachine.setState('move-right');
+            }
+        }
+    }
+
+    private pauseOnEnter() {
+        this.pauseTime = 0;
+        this.pauseDuration = Phaser.Math.Between(500, 3000);
+        this.sprite.play('paused');
+    }
+    private pauseOnUpdate(deltaTime: number) {
+        this.pauseTime += deltaTime;
+        if( this.pauseTime > this.pauseDuration ) {
+            if( this.sprite.flipX ){
+                this.stateMachine.setState('move-left');
+            }
+            else {
+                this.stateMachine.setState('move-right');
+            }
+        }
+    }
+
     private moveLeftOnEnter() {
         this.moveTime = 0;
+        this.sprite.play('idle');
     }
 
     private moveLeftOnUpdate(deltaTime: number) {
@@ -72,7 +148,17 @@ export default class CrabController {
         this.sprite.setVelocityX(-2);
 
         if (this.moveTime > this.myMoveTime) {
-            this.stateMachine.setState('move-right');
+            this.slumber();
+        }
+    }
+
+    private slumber() {
+        let d = Phaser.Math.Between(1,5);
+        if( d < 4 ) {
+            this.stateMachine.setState('paused');
+        }
+        else {
+            this.stateMachine.setState('dash');
         }
     }
 
@@ -93,6 +179,7 @@ export default class CrabController {
 
     private moveRightOnEnter() {
         this.moveTime = 0;
+        this.sprite.play('idle');
     }
 
     private moveRightOnUPdate(deltaTime: number) {
@@ -101,7 +188,7 @@ export default class CrabController {
         this.sprite.setVelocityX(2);
 
         if (this.moveTime > this.myMoveTime) {
-            this.stateMachine.setState('move-left');
+            this.slumber();
         }
     }
 
@@ -164,6 +251,31 @@ export default class CrabController {
                 suffix: '.webp'
             })
         });
+
+        this.sprite.anims.create({
+            key: 'dash',
+            frameRate: 3,
+            repeat: -1,
+            frames: this.sprite.anims.generateFrameNames('crab', {
+                start: 0,
+                end: 0,
+                prefix: '0_Idle',
+                suffix: '.webp'
+            })
+        });
+
+        this.sprite.anims.create({
+            key: 'paused',
+            frameRate: 5,
+            repeat: -1,
+            frames: this.sprite.anims.generateFrameNames('crab', {
+                start: 0,
+                end: 1,
+                prefix: '0_Idle',
+                suffix: '.webp'
+            })
+        });
+
         this.sprite.anims.create({
             key: 'dead',
             frameRate: 10,

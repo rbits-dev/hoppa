@@ -125,7 +125,10 @@ export default class DragonController {
         if (this.sprite.active == false)
             return false;
 
-        if (!CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0) && this.sprite.body?.velocity.y == 0) {
+        let floorAhead = CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0);
+        let wallAhead = CreatureLogic.hasTileInFront(map, this.scene.cameras.main, this.sprite, true, 0);
+
+        if (!floorAhead || wallAhead ) {
             if (this.sprite.flipX)
                 this.stateMachine.setState("move-left");
             else

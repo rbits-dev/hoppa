@@ -150,7 +150,7 @@ export function createCreatureFly(ctx, x, y, width, height, enemyCat, collideWit
     return new FlyController(ctx, fly, fly.name, player,  enemyCat, collideWith);
 }
 
-export function createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller) {
+export function createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap) {
     const crab = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'crab', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
         label: 'crab'
@@ -165,7 +165,7 @@ export function createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWi
 
     controller.add('crab', crab,crab.body as MatterJS.BodyType);
 
-    return new CrabController(ctx, crab, crab.name)
+    return new CrabController(ctx, crab, crab.name, player, tilemap);
 }
 
 export function createCreatureFire(ctx, x, y, width, height, enemyCat, collideWith, controller) {
@@ -315,7 +315,7 @@ export function createCreatureBoss(ctx, x, y, width, height, enemyCat, collideWi
 }
 
 
-export function createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player) {
+export function createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap) {
     const tnt = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'tnt', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 68 }, { x: 0, y: 68 }],
         label: 'tnt'
@@ -328,7 +328,7 @@ export function createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWit
 
     controller.add('tnt', tnt,tnt.body as MatterJS.BodyType);
 
-    return new TNTController(ctx, tnt, tnt.name, player);
+    return new TNTController(ctx, tnt, tnt.name, player, tilemap);
 }
 
 export function createCreatureZeppelin1(ctx, x, y, width, height, enemyCat, collideWith, controller) {

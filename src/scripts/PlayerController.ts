@@ -1601,7 +1601,7 @@ export default class PlayerController {
     }
 
     public changeVelocity() {
-        this.sprite.setVelocityY( -1 * this.playerJump * 2.55 );
+        this.sprite.setVelocityY( -1 * this.playerJump * 0.75 );
     }
 
     private handlePlatform(body: MatterJS.BodyType) {

@@ -1,6 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import PlayerController from "./PlayerController";
+import * as SceneFactory from '../scripts/SceneFactory';
 
 export default class TNTController {
     private sprite: Phaser.Physics.Matter.Sprite;
@@ -8,17 +9,22 @@ export default class TNTController {
     private dead: boolean = false;
     private player: PlayerController;
     private name: string;
+    private tilemap: Phaser.Tilemaps.Tilemap;
+    private scene: Phaser.Scene;
 
     constructor(
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
         name: string,
         player: PlayerController,
+        tilemap: Phaser.Tilemaps.Tilemap
     ) {
         this.sprite = sprite;
         this.name = name;
+        this.scene = scene;
         this.createAnims();
         this.player = player;
+        this.tilemap = tilemap;
         this.stateMachine = new StateMachine(this);
 
         this.stateMachine.addState('idle', {
@@ -73,11 +79,34 @@ export default class TNTController {
         this.sprite.setCollisionCategory(0);
         this.sprite.play('active');
         this.sprite.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-            this.stateMachine.setState('dead');
+            this.explosiveRadius();
         });
 
         this.player?.changeVelocity();
 
+    }
+
+    private explosiveRadius() {
+        this.sprite.setOrigin(0.5,0.5);
+        this.sprite.setScale(3.0,3.0);
+        
+        this.sprite.play('boom');
+
+        const ex = this.sprite.body?.position.x - 128;
+        const ey = this.sprite.body?.position.y;
+        const tiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex, ey, 4 * 64, 3 * 64 );
+        tiles?.forEach( tile => {
+            this.tilemap.removeTileAt(tile.x, tile.y, false, true);
+            let snd = Phaser.Math.Between(1,6);
+            SceneFactory.addSound(this.scene, "explosion" + snd.toString(), false, true );
+        
+            tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
+            // objects in world map are not destroyed
+        });
+        
+        this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            this.stateMachine.setState('dead');
+        });
     }
 
     private createAnims() {
@@ -111,6 +140,18 @@ export default class TNTController {
                 start: 0,
                 end: 1,
                 prefix: '2_Dead',
+                suffix: '.webp'
+            })
+        });
+
+        this.sprite.anims.create({
+            key: 'boom',
+            repeat: 0,
+            frameRate: 5,
+            frames: this.sprite.anims.generateFrameNames('bomb', {
+                start: 0,
+                end: 2,
+                prefix: '3_Dead',
                 suffix: '.webp'
             })
         });

@@ -742,7 +742,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             break;
         }
         case 'crab': {
-            ctx.crabs.push(CreatureHelper.createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller));
+            ctx.crabs.push(CreatureHelper.createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap));
             break;
         }
         case 'fire': {
@@ -790,7 +790,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             break;
         }
         case 'tnt': {
-            ctx.tnts.push(CreatureHelper.createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
+            ctx.tnts.push(CreatureHelper.createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap));
             break;
         }
         case 'saw': {
