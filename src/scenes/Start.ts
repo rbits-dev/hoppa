@@ -313,12 +313,21 @@ export default class Start extends BaseScene {
             bird.update(deltaTime); 
             bird.lookahead(this.map);
         });
+
         this.bats.forEach(bat => bat.update(deltaTime));
-        this.bombs.forEach(bomb => bomb.update(deltaTime));
+
+        this.bombs.forEach(bomb => {
+            bomb.update(deltaTime);
+            bomb.lookahead(this.map);
+        });
+
         this.bears.forEach(bear => bear.update(deltaTime));
         this.tnts.forEach(tnt => tnt.update(deltaTime));
         
-        this.saws.forEach(saw => saw.update(deltaTime));
+        this.saws.forEach(saw => {
+            saw.update(deltaTime);
+            saw.lookahead(this.map);
+        });
         this.lava.forEach(lava => {
             lava.update(deltaTime);
         });
