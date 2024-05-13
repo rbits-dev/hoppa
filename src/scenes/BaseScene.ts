@@ -101,7 +101,7 @@ export default class BaseScene extends Phaser.Scene {
 
         /*
         this.matter.world.drawDebug = false;
-        this.input.keyboard.on("keydown-I", (event) => {
+        this.input.keyboard.on("keydown-V", (event) => {
           this.matter.world.drawDebug = !this.matter.world.drawDebug;
           this.matter.world.debugGraphic.clear();
         });
