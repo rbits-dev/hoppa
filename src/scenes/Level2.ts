@@ -341,7 +341,10 @@ export default class Level2 extends BaseScene {
         this.plants.forEach(plant => plant.update(deltaTime));
         this.birds.forEach(bird => bird.update(deltaTime));
         this.bats.forEach(bat => bat.update(deltaTime));
-        this.bombs.forEach(bomb => bomb.update(deltaTime)); 
+        this.bombs.forEach(bomb => {
+            bomb.update(deltaTime);
+            bomb.lookahead(this.map);
+        });
         this.bears.forEach(bear => bear.update(deltaTime));
         this.tnts.forEach(tnt => tnt.update(deltaTime));
         this.saws.forEach(saw => {

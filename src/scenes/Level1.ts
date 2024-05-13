@@ -352,7 +352,10 @@ export default class Level1 extends BaseScene {
 
         this.bats.forEach(bat => bat.update(deltaTime));
 
-        this.bombs.forEach(bomb => bomb.update(deltaTime));
+        this.bombs.forEach(bomb => {
+            bomb.update(deltaTime);
+            bomb.lookahead(this.map);
+        });
 
         this.bears.forEach(bear => bear.update(deltaTime));
         this.tnts.forEach(tnt => tnt.update(deltaTime));
