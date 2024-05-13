@@ -156,8 +156,6 @@ var filesToCache = [
 '/hoppa/assets/gras-purple.webp',
 '/hoppa/assets/greengray.m4a',
 '/hoppa/assets/greengray.mp3',
-'/hoppa/assets/ground-extruded.json',
-'/hoppa/assets/ground-extruded.webp',
 '/hoppa/assets/health.json',
 '/hoppa/assets/health.webp',
 '/hoppa/assets/heart.webp',
