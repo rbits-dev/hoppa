@@ -49,7 +49,7 @@ export default class FireWalkerController {
             .setState('idle');
 
         this.myMoveTime = Phaser.Math.Between(12000, 18000);
-        this.velocityX = Phaser.Math.FloatBetween( 4.5 , 5.5 );
+        this.velocityX = Phaser.Math.FloatBetween( 3.5 , 4.5 );
 
         events.on(this.name + '-stomped', this.handleStomped, this);
         events.on(this.name + '-blocked', this.handleBlocked, this);
