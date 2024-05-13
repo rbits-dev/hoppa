@@ -477,8 +477,8 @@ export default class FlyController {
             frameRate: 10,
             repeat: 0,
             frames: this.sprite.anims.generateFrameNames('fly', {
-                start: 2,
-                end: 4,
+                start: 0,
+                end: 2,
                 prefix: '1_Dead',
                 suffix: '.webp'
             })
