@@ -14,6 +14,9 @@ export default class BombController {
     private garbage = false;
     private myMoveTime = 0;
 
+    private fakeDetonationTimer = 0;
+    private fakeDetonator = 0;
+
     constructor(
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
@@ -46,6 +49,7 @@ export default class BombController {
             .setState('idle');
 
         this.myMoveTime = Phaser.Math.Between(1500, 2500);
+        this.fakeDetonationTimer = Phaser.Math.Between(3, 60);
 
         events.on(this.name + '-stomped', this.handleStomped, this);
         events.on(this.name + '-blocked', this.handleBlocked, this);
@@ -60,6 +64,16 @@ export default class BombController {
 
     update(deltaTime: number) {
         this.stateMachine.update(deltaTime);
+
+        this.fakeDetonator += deltaTime;
+        if( this.fakeDetonator > this.fakeDetonationTimer ) {
+            this.sprite.play('count');
+            this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                this.stateMachine.setState('idle');
+             });
+             this.fakeDetonationTimer = Phaser.Math.Between(3000, 30000);
+             this.fakeDetonator = 0;
+        }
     }
 
     public getSprite() {
@@ -215,8 +229,8 @@ export default class BombController {
             repeat: 0,
             frameRate: 5,
             frames: this.sprite.anims.generateFrameNames('bomb', {
-                start: 2,
-                end: 0,
+                start: 0,
+                end: 2,
                 prefix: '2_Count',
                 suffix: '.webp'
             })
