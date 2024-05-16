@@ -141,7 +141,11 @@ export default class DragonController {
 
     private idleOnEnter() {
         this.sprite.play('idle');
-        this.stateMachine.setState('move-left');
+        
+        if (this.sprite.flipX)
+            this.stateMachine.setState("move-right");
+        else
+            this.stateMachine.setState("move-left");
     }
 
     private handleStomped(dragon: Phaser.Physics.Matter.Sprite) {
@@ -182,6 +186,7 @@ export default class DragonController {
         if ((dir === 1 && !this.sprite.flipX && facingDir !== -1) || (dir === -1 && this.sprite.flipX && facingDir !== 1))
             return;
 
+
         let fireball = this.scene.matter.add.sprite(
             this.sprite.body.position.x - 12,
             this.sprite.body.position.y - 15,
@@ -194,8 +199,6 @@ export default class DragonController {
         fireball.setCollidesWith(this.collideWith);
         fireball.setCollisionCategory(this.collisionCat);
         fireball.setVelocityX(dir * 11);
-
-        this.fireballActiveTime = Phaser.Math.Between(1500, 2500 );
 
         fireball.setDepth(10);
         fireball.setIgnoreGravity(true);
@@ -217,16 +220,27 @@ export default class DragonController {
             }
 
         });
+
+        fireball.anims.create({
+            key: 'fireball',
+            frameRate: 15,
+            frames:  fireball.anims.generateFrameNumbers('fireball', { start: 0, end: 3 }),
+            repeat: -1
+        });
+        fireball.play({key: 'fireball', startFrame: Phaser.Math.Between(0,3) }, true);
+       
+        this.fireballActiveTime = Phaser.Math.Between(1500, 2500 );
         this.scene.time.delayedCall( this.fireballActiveTime, () => {
             fireball.destroy();
         });
 
-        const castDelay = Phaser.Math.Between(60,200);
+
+        const castDelay = Phaser.Math.Between(30,200);
         this.castFireAt = this.scene.game.loop.frame + castDelay;
 
         this.sprite.play('fire');
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-            this.sprite.play('idle');
+            this.stateMachine.setState('idle');
         });
     }
 
@@ -245,11 +259,11 @@ export default class DragonController {
     private createAnims() {
         this.sprite.anims.create({
             key: 'idle',
-            frameRate: 10,
+            frameRate: 5 ,
             repeat: -1,
             frames: this.sprite.anims.generateFrameNames('dragon', {
                 start: 0,
-                end: 0,
+                end: 1,
                 prefix: '0_Idle',
                 suffix: '.webp'
             })
@@ -258,9 +272,9 @@ export default class DragonController {
         this.sprite.anims.create({
             key: 'fire',
             frameRate: 10,
-            repeat: -1,
+            repeat: 1,
             frames: this.sprite.anims.generateFrameNames('dragon', {
-                start: 0,
+                start: 2,
                 end: 2,
                 prefix: '0_Idle',
                 suffix: '.webp'
