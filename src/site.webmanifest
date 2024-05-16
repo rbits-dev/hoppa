@@ -28,11 +28,6 @@
             "sizes": "1280x720"
         },
         {
-            "src": "../public/assets/screenshot2.webp",
-            "type": "image/webp",
-            "sizes": "1280x720"
-        },
-        {
             "src": "../public/assets/screenshot3.webp",
             "type": "image/webp",
             "sizes": "1280x720"
