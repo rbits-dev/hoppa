@@ -125,6 +125,14 @@ export default class PlayerController {
           this.openInventory();
         });
 
+        this.scene.input.keyboard?.on("keydown-P", () => {
+            SceneFactory.playMusicItem(this.scene, -1);
+        });
+
+        this.scene.input.keyboard?.on("keydown-N", () => {
+            SceneFactory.playMusicItem(this.scene, 1);
+        });
+
 
         this.scene.input.keyboard?.on('keydown-ESC', () => {
             if(!this.inventoryOpen)
