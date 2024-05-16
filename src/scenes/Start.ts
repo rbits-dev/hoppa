@@ -22,6 +22,8 @@ import * as WalletHelper from '../scripts/WalletHelper';
 import BaseScene from "./BaseScene";
 import BossController from "../scripts/BossController";
 import LavaController from "~/scripts/LavaController";
+import * as AlignmentHelper from '../scripts/AlignmentHelper';
+import NeonController from '~/scripts/NeonController';
 
 export default class Start extends BaseScene {
     constructor() {
@@ -47,6 +49,7 @@ export default class Start extends BaseScene {
     private saws: SawController[] = [];
     private boss: BossController[] = [];
     private lava: LavaController[] = [];
+    private neon: NeonController[] = [];
     private index = 0;
     private hsv;
     private shoutout !: Phaser.GameObjects.BitmapText;
@@ -89,6 +92,7 @@ export default class Start extends BaseScene {
         this.crows = [];
         this.saws = [];
         this.lava = [];
+        this.neon = [];
 
         const info = {
             'lastHealth': 100,
@@ -112,7 +116,10 @@ export default class Start extends BaseScene {
     preload() {
         SceneFactory.preload(this);
 
+        this.load.image('wall', 'assets/wall.webp');
+
         this.load.tilemapTiledJSON('start', 'assets/start.json');
+        this.load.atlas('neon', 'assets/neon2.webp', 'assets/neon2.json');
     }
 
     create() {
@@ -122,6 +129,11 @@ export default class Start extends BaseScene {
         this.hsv = Phaser.Display.Color.HSVColorWheel();
 
         const { width, height } = this.scale;
+        const totalWidth = 105 * 64;
+        const hei = 12 * 64;
+
+        AlignmentHelper.createAligned(this, totalWidth, hei, "wall", 1, 1);
+
         this.map = this.make.tilemap({ key: 'start', tileWidth: 64, tileHeight: 64 });
         const groundTiles = this.map.addTilesetImage('ground', 'groundTiles', 64, 64, 0, 2);
         const ra8bitTiles = this.map.addTilesetImage('minira8bits', 'ra8bitTiles', 64, 64, 0, 2);
@@ -184,7 +196,7 @@ export default class Start extends BaseScene {
         });
 
         this.input.on('pointerdown', () => { this.continueGame(); });
-        this.input.on('keydown', () => { this.continueGame(); });
+        this.input.keyboard?.on('keydown', () => { this.continueGame(); });
 
         const cam = this.cameras.add(0, 0, width, 128);
 
@@ -192,12 +204,12 @@ export default class Start extends BaseScene {
             'PRESS SPACE TO PLAY', 24).setTint(0xff7300).setOrigin(0.5, 0.5);
 
         this.credits = this.add.bitmapText(320 + 640, -350, 'press_start',
-            'Written by c0ntrol zero, Artwork by Pixel8it, Storyline by Dandybanger,C 2024 RBITS, C 2022 Ra8bits, C 2022 Moonshot', 12).setTint(0xff7300).setOrigin(0.5, 0.5);
+            'Written by c0ntrol zero, Artwork by Pixel8it, Storyline by Dandybanger, Copyleft 2022-2024', 12).setTint(0xff7300).setOrigin(0.5, 0.5);
         this.credits.setDropShadow(0, 2, 0xff0000, 0.5);
 
         cam.startFollow(this.shoutout);
-        cam.setFollowOffset(0, -216);
-        cam.setViewport(320, 0, 640, 512);
+     //   cam.setFollowOffset(0, -216);
+     //   cam.setViewport(320, 0, 640, 512);
 
         cam.roundPixels = true;
 
@@ -238,7 +250,7 @@ export default class Start extends BaseScene {
         super.destroy();
 
         this.input.off('pointerdown', () => { this.continueGame(); });
-        this.input.off('keydown', () => { this.continueGame(); });
+        this.input.keyboard?.off('keydown', () => { this.continueGame(); });
 
         this.monsters.forEach(monster => monster.destroy());
         this.fires.forEach(fire => fire.destroy());
@@ -341,7 +353,7 @@ export default class Start extends BaseScene {
         if (this.index >= 360)
             this.index = 0;
 
-        SceneFactory.cullSprites(this);
+        //SceneFactory.cullSprites(this);
 
         if(SceneFactory.gamePadIsButton(this,-1) || this.cursors?.space.isDown ) {
             this.continueGame();
