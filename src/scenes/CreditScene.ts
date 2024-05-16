@@ -118,6 +118,8 @@ export default class CreditScreen extends Phaser.Scene {
         "celestialghost8",
         "congusbongus",
         "IgnasD",
+        "Tamesu",
+        "Preston Peak",
         "",
         "Technology used",
         "Typescript",
