@@ -151,8 +151,6 @@ export default class FlyController {
         if (this.player !== undefined) {
             
             const canAttack = this.lookahead1(this.scene.map);
-            console.log(canAttack);
-
             if (canAttack){
                 var playerSprite  = this.player.getSprite();
                 const angle = this.calculateAttackAngle(this.lastKnownPlayerPosition);//Math.atan2(dy, dx);
