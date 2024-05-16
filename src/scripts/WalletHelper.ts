@@ -1,11 +1,11 @@
 import { ethers, BigNumber } from "ethers";
+import { CHAIN_CONFIGS } from "./ChainInfo";
 
 const ERR_NO_WALLET = "No wallet found or permission denied";
 
 interface ChainData {
   [chainId: string]: {
     hallOfFameContract: string;
-    rabbitTokenContract: string;
     hoppaCardsContract: string;
     hoppaArtist: string;
   };
@@ -20,31 +20,27 @@ interface NftCollections {
 const chainData: ChainData = {
   "1": {
     hallOfFameContract: "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7",
-    rabbitTokenContract: "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE",
+
     hoppaCardsContract: "0x5AeB855344077073474e7d5b81df45242C2fD468",
     hoppaArtist: "0xe941e3adA31bF3e6300eBcfeB8D12BA7AFE8EA2b",
   },
   "56": {
     hallOfFameContract: "0x9d811D1600236cE2874A1f3cA2E7318cABe2DB7d",
-    rabbitTokenContract: "",
     hoppaCardsContract: "0xb8eB97a1d6393B087EEACb33c3399505a3219d3D",
     hoppaArtist: "",
   }, 
   "8453": {
     hallOfFameContract: "0x43dec8a0d8F7e31F73111cAA6C86977dd95158c6",
-    rabbitTokenContract: "",
     hoppaCardsContract: "0x3569F398756a2F72a960625bb39356db412C6F53",
     hoppaArtist: "0x9C2f45DbdA7367269bc47560275Cf587D71d8B7B",
   },
   "84532": {
     hallOfFameContract: "",
-    rabbitTokenContract: "",
     hoppaCardsContract: "0x6abE1cAeBED860d0A3861Ed4Cb824a9bce2874fb",
     hoppaArtist: "" ,
   },
   "11155111": {
     hallOfFameContract: "",
-    rabbitTokenContract: "",
     hoppaCardsContract: "0x01Ec22e836e669293749904e26a483Ec4E78fE76",
     hoppaArtist: "",
   },
@@ -69,6 +65,8 @@ const nftCollections: NftCollections = {
   }
 };
 
+const RBITS_TOKEN_CONTRACT =  "0xa6EbCC4C5C0316191eA95BFC90F591DF23A03DFE";
+
 declare global {
   var rabbitBalance: number;
   var hasNFT: boolean;
@@ -87,7 +85,6 @@ declare global {
   var isValid: boolean;
   var currentChainData: {
     hallOfFameContract: string;
-    rabbitTokenContract: string;
     hoppaCardsContract: string;
     hoppaArtist: string;
   };
@@ -151,6 +148,43 @@ export function init() {
     console.log("Initialized");
 }
 
+export async function getUserBalance(addr: string): Promise<number> {
+    try {
+        const provider = new ethers.providers.JsonRpcProvider(CHAIN_CONFIGS[1].config.params[0].rpcUrls[0]);
+        
+        const abi = [
+            {
+                constant: true,
+                inputs: [
+                    {
+                        name: '_owner',
+                        type: 'address',
+                    },
+                ],
+                name: 'balanceOf',
+                outputs: [
+                    {
+                        name: 'balance',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+        ];
+        
+        const rabbitContract = new ethers.Contract(RBITS_TOKEN_CONTRACT, abi, provider);
+        const rabbitsBalance = await rabbitContract.balanceOf(addr);
+
+        return Number(rabbitsBalance);
+    } catch (e) {
+        console.log('Unable to get balance:', e);
+        return 0;
+    }
+}
+
+
 export async function requestAccounts() {
   try { 
     await globalThis.provider.send("eth_requestAccounts", []);
@@ -199,14 +233,7 @@ export async function getCurrentAccount() {
     // save the currently connected address
     globalThis.selectedAddress = await globalThis.signer.getAddress();
     
-    if( globalThis.currentChainData.rabbitTokenContract !== "" ) {
-      const abi = [
-        "function balanceOf(address account) external view returns (uint256)",
-      ];
-
-      const rabbitContract = new ethers.Contract(globalThis.currentChainData.rabbitTokenContract, abi , globalThis.signer );    
-      globalThis.rabbitsBalance = await rabbitContract.balanceOf( globalThis.selectedAddress );
-    }
+    globalThis.rabbitBalance = await getUserBalance(globalThis.selectedAddress);
 
     await getMyNFTCollections();
     
