@@ -93,7 +93,7 @@ export default class Wallet extends Phaser.Scene {
         
         this.image = this.add.image(width / 2, height / 2, 'bg').setOrigin(0.5, 0.5).setVisible(true);
 
-        this.input.on('keydown', () => { if(!this.txLock) this.startGame(); });
+        this.input.keyboard?.on('keydown', () => { if(!this.txLock) this.startGame(); });
         this.input.keyboard?.once('keydown-ESC', () => {
             this.scene.stop();
             this.scene.start('hoppa-select');
