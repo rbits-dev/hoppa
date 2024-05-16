@@ -288,7 +288,7 @@ export default class EnterHallOfFame extends Phaser.Scene {
             saveHighscore();
         }
         else {
-            this.statusText.setText("You are not connected to the Binance Smart Chain");
+            this.statusText.setText("You are not connected to the Block Chain");
         }
         this.time.delayedCall(cd * 1000, this.endScene, undefined, this);
     }
