@@ -125,6 +125,20 @@ export default class BombController {
             tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
         });
         
+        let remainingTiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex - 64, ey, 64, 64 );
+        SceneFactory.addSound(this.scene, "explosion1", false, true );
+        remainingTiles?.forEach( tile => {
+            this.tilemap.removeTileAt(tile.x, tile.y, false, true);
+            tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
+        });
+
+        remainingTiles = this.tilemap.getTilesWithinWorldXY(ex + 4 * 64, ey, 64, 64 );
+        SceneFactory.addSound(this.scene, "explosion4", false, true );
+        remainingTiles?.forEach( tile => {
+            this.tilemap.removeTileAt(tile.x, tile.y, false, true);
+            tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
+        });
+
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.garbage = true;
             this.cleanup();
