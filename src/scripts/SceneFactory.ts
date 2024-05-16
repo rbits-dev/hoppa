@@ -21,6 +21,8 @@ declare global {
     var rabbit: string;
     var voice: string;
     var rabbitSpriteSheet: string;
+    var musicIndex: number;
+    var musicTrack: any;
 }
 
 export function playSound(sounds: Map<string, Phaser.Sound.BaseSound>, sound: string) {
@@ -113,10 +115,15 @@ export function playMusic(ctx: Phaser.Scene, choice: string): Phaser.Sound.BaseS
         globalThis.musicTune = false;
     });
 
+    globalThis.musicTrack = m;
+
     return m;
 }
 
 export function playRepeatMusic(ctx: Phaser.Scene, choice: string): Phaser.Sound.BaseSound {
+
+    console.log("Play " + choice );
+
     const m: Phaser.Sound.BaseSound = ctx.sound.add(choice, { loop: false, delay: 2, volume: globalThis.musicVolume });
     if (!ctx.sound.locked) {
         m.play();
@@ -139,6 +146,8 @@ export function playRepeatMusic(ctx: Phaser.Scene, choice: string): Phaser.Sound
     m.once(Phaser.Sound.Events.STOP, () => {
         globalThis.musicTune = false;
     });
+
+    globalThis.musicTrack = m;
 
     return m;
 }
@@ -163,11 +172,11 @@ export function random(min: number, max: number): number {
   }
 
 export function playRandomMusic(ctx: Phaser.Scene) {
-
     if (globalThis.musicTune) {
         console.log("Already playing " + globalThis.musicTitle);
         return;
     }
+
 
     const tracks = [
         '01_main_screen_trailer',
@@ -211,6 +220,64 @@ export function playRandomMusic(ctx: Phaser.Scene) {
     ];
 
     const choice = tracks[  random(0, tracks.length - 1)];
+    playMusic(ctx, choice);
+}
+
+export function playMusicItem(ctx: Phaser.Scene, dir: number) {
+
+    if (globalThis.musicTune) {
+        globalThis.musicTrack?.stop();   
+     }
+
+    const tracks = [
+        '01_main_screen_trailer',
+        '02_level_grass',
+        '03_level_forest',
+        '04_level_rain',
+        '05_level_desert',
+        'bgm_alpha',
+        'bgm_beta',
+        'bgm_delta',
+        'bgm_epsilon',
+        'bgm_gamma',
+        'bgm_menu',
+        'bgm_omega',
+        'bottomlesspitman',
+        'dawn_of_hope_low',
+        'greengray',
+        'junglegroove',
+        'onmyway',
+        'propersummer',
+        'spy',
+        'thevillage',
+        'heroimmortal',
+        'juhanijunkala',
+        'juhanjunkala2',
+        'thecreeper',
+        'redheels', 
+        'freejump',
+        'longawayhome',
+        'swinginglevel',
+        'happylevel', 
+        '8bitmetal',
+        'catchy',  
+        'enchantedwoods',
+        'galaticfunk',
+        'chiptune-stage1',
+        'chiptune-stage2',
+        'x-pixeladventures',
+        'surpassyourlimits',
+        'tamesu'
+    ];
+
+    let item = globalThis.musicIndex;
+    item += dir;
+    if(item < 0 ) item = 0; else if( item >= tracks.length) item = tracks.length - 1;
+
+    const choice = tracks[  item ];
+
+    globalThis.musicIndex = item;
+    
     playMusic(ctx, choice);
 }
 
@@ -306,7 +373,7 @@ export function krasotaSays(selector: number, text: string ): string {
 
 
 export function setupHandlers(ctx: Phaser.Scene) {
-
+    globalThis.musicIndex = 0;
 }
 
 export function handleLoseFocus(ctx: Phaser.Scene) {
