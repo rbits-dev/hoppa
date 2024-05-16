@@ -431,7 +431,7 @@ export default class News {
   }`,
   `{
     "title": "Crypto market cap hits $5 trillion",
-    "text": "Experts predict continued growth in 2023"
+    "text": "Experts predict continued growth in 2024"
   }`,
   `{
     "title": "Crypto market dominates finance",
