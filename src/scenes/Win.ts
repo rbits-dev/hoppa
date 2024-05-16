@@ -121,7 +121,7 @@ export default class Win extends CreditScene {
         this.scroller.scrollY = -2000;
        
         this.input.on('pointerdown', () => { this.continueGame(); });
-        this.input.on('keydown', () => { this.continueGame(); });
+        this.input.keyboard?.on('keydown', () => { this.continueGame(); });
     }
 
     update(time, delta) {
@@ -156,6 +156,9 @@ export default class Win extends CreditScene {
     
         SceneFactory.stopSound(this);
         SceneFactory.removeAllSounds(this);
+
+        this.input.off('pointerdown', () => { this.continueGame(); });
+        this.input.keyboard?.off('keydown', () => { this.continueGame(); });
     }
 
     private hasNewHighscore() {
