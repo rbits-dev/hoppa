@@ -291,6 +291,7 @@ export function createCreatureBear(ctx, x, y, width, height, enemyCat, collideWi
     bear.setStatic(true);
     bear.setCollisionCategory(enemyCat);
     bear.setCollidesWith(collideWith);
+    bear.setDepth(1);
     bear.setName('bear');
 
     controller.add('bear', bear,bear.body as MatterJS.BodyType);
