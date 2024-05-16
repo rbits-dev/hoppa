@@ -1856,7 +1856,7 @@ export default class PlayerController {
         return this.isGamePadButton(1) || this.cursors.shift.isDown || this.playerButton1;
     }
     public isSpace(): boolean {
-        return this.isGamePadButton(0) || Phaser.Input.Keyboard.JustDown(this.cursors.space) || this.playerButton2;
+        return this.isGamePadButton(0) || Phaser.Input.Keyboard.JustDown(this.cursors.space) || this.playerButton2 || Phaser.Input.Keyboard.JustDown(this.wasd.up);
     }
     public isR2(): boolean {
         return this.isGamePadButton(7) || (this.playerButton1 && this.playerButton2);
