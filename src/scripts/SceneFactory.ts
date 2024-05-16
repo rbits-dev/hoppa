@@ -205,7 +205,9 @@ export function playRandomMusic(ctx: Phaser.Scene) {
         'galaticfunk',
         'chiptune-stage1',
         'chiptune-stage2',
-        'x-pixeladventures'
+        'x-pixeladventures',
+        'surpassyourlimits',
+        'tamesu'
     ];
 
     const choice = tracks[  random(0, tracks.length - 1)];
@@ -373,7 +375,6 @@ export function preload(ctx) {
     ctx.load.bitmapFont('press_start', 'assets/press_start_2p.webp', 'assets/press_start_2p.fnt');
     ctx.load.spritesheet('health', 'assets/health.webp', { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 4 });
     ctx.load.image('bg-ui', 'assets/bg-ui.webp');
-    ctx.load.image('mushyroom', 'assets/label-mushyroom.webp');
     
     ctx.load.atlas( 'lava-top', 'assets/lava-top.webp', 'assets/lava-top.json');
     ctx.load.atlas( 'lava-center', 'assets/lava-center.webp', 'assets/lava-center.json');
@@ -417,6 +418,7 @@ export function preload(ctx) {
     ctx.load.image('rubber1', 'assets/rubber_1.webp');
     ctx.load.image('rubber2', 'assets/rubber_2.webp');
     ctx.load.image('rubber3', 'assets/rubber_3.webp');
+    ctx.load.image('beware', 'assets/beware.webp');
     
     ctx.load.image('dropping', 'assets/dropping.webp');
     ctx.load.image('pokeball', 'assets/pokeball.webp');
@@ -517,6 +519,9 @@ export function preload(ctx) {
     ctx.load.audio('chiptune-stage1', [ 'assets/chiptune-stage1.mp3', 'assets/chiptune-stage1.m4a']);
     ctx.load.audio('chiptune-stage2', [ 'assets/chiptune-stage2.mp3', 'assets/chiptune-stage2.m4a']);
     ctx.load.audio('x-pixeladventures', [ 'assets/x-pixeladventures.mp3', 'assets/x-pixeladventures.m4a']);
+    ctx.load.audio('surpassyourlimits', [ 'assets/sur1.mp3', 'assets/sur1.m4a' ]);
+    ctx.load.audio('tamesu', [ 'assets/tam1.mp3', 'assets/tam1.m4a' ]);
+
     ctx.load.audio('winneris', [ 'assets/winneris.mp3', 'assets/winneris.m4a']);
     ctx.load.audio('hiscore', [ 'assets/hiscore.mp3', 'assets/hiscore.m4a']);
     ctx.load.audio('finalbossbattle', [ 'assets/finalbossbattle.mp3', 'assets/finalbossbattle.m4a']);
