@@ -10,14 +10,10 @@ export default class GameOver extends Phaser.Scene {
     }
 
     private introMusic?: Phaser.Sound.BaseSound;
-    //private text!: Phaser.GameObjects.BitmapText;
     private textDemo!: TextDemo;
     private anyKey?: Phaser.GameObjects.BitmapText;
     
     private info?: PlayerStats;
-    private offset: number = 0;
-    private amplitude = 100;
-    private frequency = 0.01;
 
     preload() {
         SceneFactory.preload(this);
@@ -36,15 +32,8 @@ export default class GameOver extends Phaser.Scene {
         
         this.introMusic = SceneFactory.addSound(this, 'gameover', false);
 
-       /* this.text = this.add.bitmapText(width * 0.5, height * 0.5, 'press_start', 'GAME OVER', 64)
-            .setTint(0xff7300)
-            .setOrigin(0.5);*/
         this.textDemo = new TextDemo(this,'press_start','GAME OVER', 48, width * 0.5, height * 0.5, 0xff7300, 0.5);
         this.textDemo.letterBounce(500,800,true,32,-1);
-
-        this.input.on('pointerdown', () => { this.continueGame(); });
-        this.input.on('keydown', () => { this.continueGame(); });
-
         this.cameras.main.shake(500);
 
         this.time.delayedCall( 5000, () => {
@@ -52,6 +41,9 @@ export default class GameOver extends Phaser.Scene {
                 .setTint(0xffffff)
                 .setOrigin(0.5);
         });
+
+        this.input.on('pointerdown', () => { this.continueGame(); });
+        this.input.keyboard?.on('keydown', () => { this.continueGame(); });
     }
 
     continueGame() {
@@ -70,11 +62,12 @@ export default class GameOver extends Phaser.Scene {
         this.introMusic?.destroy();
         this.anyKey?.destroy();
         this.textDemo.destroy();
+
+        this.input.off('pointerdown', () => { this.continueGame(); });
+        this.input.keyboard?.off('keydown', () => { this.continueGame(); });
     }
 
     private hasNewHighscore() {
-        let result = false;
-
         const data = window.localStorage.getItem( 'ra8bit.stats' );
         if( data != null ) {
             const obj = JSON.parse(data);
