@@ -36,7 +36,7 @@ export default class AdScene extends Phaser.Scene {
         this.time.delayedCall( 5000, () => { this.news = new News(this) } );
         
         this.input.on('pointerdown', this.startGame, this);
-        this.input.on('keydown',this.startGame, this);
+        this.input.keyboard?.on('keydown',this.startGame, this);
     }
 
     update(time,delta) {
@@ -62,8 +62,8 @@ export default class AdScene extends Phaser.Scene {
 
       this.news?.destroy();
 
-      this.input.off('pointerdown', this.startGame, this);
-      this.input.off('keydown', this.startGame, this);
+      this.input.off('pointerdown', () => { this.startGame(); });
+      this.input.keyboard?.off('keydown', () => { this.startGame(); });
 
       this.adEnding = false;
     }
