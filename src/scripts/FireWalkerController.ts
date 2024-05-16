@@ -11,6 +11,8 @@ export default class FireWalkerController {
     private garbage = false;
     private moveTime = 0;
     private velocityX;
+    private startVelocityX;
+    private prevVelocityX;
     private name;
     private myMoveTime = 0;
 
@@ -50,6 +52,7 @@ export default class FireWalkerController {
 
         this.myMoveTime = Phaser.Math.Between(12000, 18000);
         this.velocityX = Phaser.Math.FloatBetween( 3.45 , 4.55 );
+        this.startVelocityX = this.velocityX;
 
         events.on(this.name + '-stomped', this.handleStomped, this);
         events.on(this.name + '-blocked', this.handleBlocked, this);
@@ -76,7 +79,10 @@ export default class FireWalkerController {
         const inLine = (this.sprite.flipX && enemyTileX < playerTileX) || 
                        (!this.sprite.flipX && enemyTileX > playerTileX);
 
-        if( inLine ) {
+        const dY = Math.abs( playerSprite.y - this.sprite.y);
+       
+
+        if( inLine && dY < 32 ) {
             const distance = Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, playerSprite.x, playerSprite.y);
             
             if (!this.hasBoosted && this.boostCooldown <= 0 && distance < (5 * 64) && 
@@ -101,6 +107,7 @@ export default class FireWalkerController {
             this.speed = 0;
         }
 
+        this.velocityChange();
     }
 
     public getSprite() {
@@ -109,6 +116,21 @@ export default class FireWalkerController {
 
     private moveLeftOnEnter() {
         this.moveTime = 0;
+    }
+
+    private velocityChange() {
+        if(this.prevVelocityX != this.velocityX ) {
+
+            const v = Math.abs( this.sprite.body?.velocity.x );
+            if( v > this.startVelocityX ) {
+                this.sprite.play('fast');
+            }
+            else {
+                this.sprite.play('idle');
+            }
+
+            this.prevVelocityX = this.velocityX
+        }
     }
 
     private moveLeftOnUpdate(deltaTime: number) {
@@ -199,7 +221,7 @@ export default class FireWalkerController {
 
     private createAnims() {
         this.sprite.anims.create({
-            key: 'idle',
+            key: 'fast',
             frameRate: 10,
             repeat: -1,
             frames: this.sprite.anims.generateFrameNames('firewalker', {
@@ -209,6 +231,19 @@ export default class FireWalkerController {
                 suffix: '.webp'
             })
         });
+
+        this.sprite.anims.create({
+            key: 'idle',
+            frameRate: 5,
+            repeat: -1,
+            frames: this.sprite.anims.generateFrameNames('firewalker', {
+                start: 0,
+                end: 1,
+                prefix: '0_Idle',
+                suffix: '.webp'
+            })
+        });
+
         this.sprite.anims.create({
             key: 'dead',
             frameRate: 10,
