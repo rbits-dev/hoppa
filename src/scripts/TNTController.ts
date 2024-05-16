@@ -103,6 +103,21 @@ export default class TNTController {
             tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
             // objects in world map are not destroyed
         });
+        let remainingTiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex - 64, ey, 64, 64 );
+        let snd = Phaser.Math.Between(1,6);
+            SceneFactory.addSound(this.scene, "explosion" + snd.toString(), false, true );
+        remainingTiles?.forEach( tile => {
+            this.tilemap.removeTileAt(tile.x, tile.y, false, true);
+            tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
+        });
+
+        remainingTiles = this.tilemap.getTilesWithinWorldXY(ex + 4 * 64, ey, 64, 64 );
+        snd = Phaser.Math.Between(1,6);
+            SceneFactory.addSound(this.scene, "explosion" + snd.toString(), false, true );
+        remainingTiles?.forEach( tile => {
+            this.tilemap.removeTileAt(tile.x, tile.y, false, true);
+            tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
+        });
         
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.stateMachine.setState('dead');
