@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="106" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="15" nextobjectid="109">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="106" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="15" nextobjectid="119">
  <editorsettings>
   <export target="start.json" format="json"/>
  </editorsettings>
@@ -2063,7 +2063,7 @@
   <object id="92" name="lava-top" x="6400" y="704" width="64" height="64"/>
   <object id="93" name="firewalker" x="1601.21" y="185.939" width="64" height="64"/>
   <object id="94" name="bomb" x="4544" y="640" width="64" height="64"/>
-  <object id="95" name="dragon" x="2352.85" y="600.485" width="64" height="96"/>
+  <object id="95" name="dragon" x="2267.52" y="600.485" width="64" height="96"/>
   <object id="97" name="carrot" x="1746.79" y="440.727" width="64" height="64"/>
   <object id="98" name="firewalker" x="5884.61" y="195.03" width="64" height="64"/>
   <object id="99" name="firewalker" x="5561.94" y="512" width="64" height="64"/>
@@ -2075,7 +2075,20 @@
   <object id="105" name="crab" x="2198.3" y="186.182" width="64" height="64"/>
   <object id="106" name="crab" x="3543.76" y="310.424" width="64" height="64"/>
   <object id="107" name="crab" x="913.455" y="183.152" width="64" height="64"/>
-  <object id="108" name="bomb" x="4477.09" y="186.182" width="64" height="64"/>
+  <object id="108" name="bomb" x="4480" y="320" width="64" height="64"/>
+  <object id="109" name="neon" x="2882.67" y="360.667" width="256" height="52">
+   <properties>
+    <property name="taste" value="neon"/>
+   </properties>
+  </object>
+  <object id="110" name="billboard" x="465" y="442" width="192" height="220"/>
+  <object id="111" name="billboard" x="2395" y="442" width="192" height="220"/>
+  <object id="113" name="saw" x="1344" y="256" width="64" height="32"/>
+  <object id="114" name="saw" x="3840" y="512" width="64" height="32"/>
+  <object id="115" name="bat" x="448" y="64" width="64" height="64"/>
+  <object id="116" name="bat" x="540" y="108" width="64" height="64"/>
+  <object id="117" name="bat" x="620" y="22" width="64" height="64"/>
+  <object id="118" name="zeppelin1" x="1166" y="16" width="128" height="96"/>
  </objectgroup>
  <layer id="12" name="obstacles" width="106" height="12">
   <data encoding="csv">

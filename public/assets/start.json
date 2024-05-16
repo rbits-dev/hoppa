@@ -213,8 +213,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":1383.39393939394,
-                 "y":634.424242424242
+                 "x":1383.39,
+                 "y":634.424
                 }, 
                 {
                  "class":"",
@@ -445,7 +445,7 @@
                  "visible":true,
                  "width":64,
                  "x":2972,
-                 "y":191.515151515152
+                 "y":191.515
                 }, 
                 {
                  "class":"",
@@ -873,8 +873,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":1601.21212121212,
-                 "y":185.939393939394
+                 "x":1601.21,
+                 "y":185.939
                 }, 
                 {
                  "class":"",
@@ -895,8 +895,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":2352.84848484848,
-                 "y":600.484848484848
+                 "x":2267.52,
+                 "y":600.485
                 }, 
                 {
                  "class":"",
@@ -906,8 +906,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":1746.78787878788,
-                 "y":440.727272727273
+                 "x":1746.79,
+                 "y":440.727
                 }, 
                 {
                  "class":"",
@@ -917,8 +917,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":5884.60606060606,
-                 "y":195.030303030303
+                 "x":5884.61,
+                 "y":195.03
                 }, 
                 {
                  "class":"",
@@ -928,7 +928,7 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":5561.93939393939,
+                 "x":5561.94,
                  "y":512
                 }, 
                 {
@@ -983,8 +983,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":4831.63636363636,
-                 "y":183.151515151515
+                 "x":4831.64,
+                 "y":183.152
                 }, 
                 {
                  "class":"",
@@ -994,8 +994,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":2198.30303030303,
-                 "y":186.181818181818
+                 "x":2198.3,
+                 "y":186.182
                 }, 
                 {
                  "class":"",
@@ -1005,8 +1005,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":3543.75757575758,
-                 "y":310.424242424242
+                 "x":3543.76,
+                 "y":310.424
                 }, 
                 {
                  "class":"",
@@ -1016,8 +1016,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":913.454545454545,
-                 "y":183.151515151515
+                 "x":913.455,
+                 "y":183.152
                 }, 
                 {
                  "class":"",
@@ -1027,8 +1027,113 @@
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":4477.09090909091,
-                 "y":186.181818181818
+                 "x":4480,
+                 "y":320
+                }, 
+                {
+                 "class":"",
+                 "height":52,
+                 "id":109,
+                 "name":"neon",
+                 "properties":[
+                        {
+                         "name":"taste",
+                         "type":"string",
+                         "value":"neon"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":256,
+                 "x":2882.67,
+                 "y":360.667
+                }, 
+                {
+                 "class":"",
+                 "height":220,
+                 "id":110,
+                 "name":"billboard",
+                 "rotation":0,
+                 "visible":true,
+                 "width":192,
+                 "x":465,
+                 "y":442
+                }, 
+                {
+                 "class":"",
+                 "height":220,
+                 "id":111,
+                 "name":"billboard",
+                 "rotation":0,
+                 "visible":true,
+                 "width":192,
+                 "x":2395,
+                 "y":442
+                }, 
+                {
+                 "class":"",
+                 "height":32,
+                 "id":113,
+                 "name":"saw",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":1344,
+                 "y":256
+                }, 
+                {
+                 "class":"",
+                 "height":32,
+                 "id":114,
+                 "name":"saw",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":3840,
+                 "y":512
+                }, 
+                {
+                 "class":"",
+                 "height":64,
+                 "id":115,
+                 "name":"bat",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":448,
+                 "y":64
+                }, 
+                {
+                 "class":"",
+                 "height":64,
+                 "id":116,
+                 "name":"bat",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":540,
+                 "y":108
+                }, 
+                {
+                 "class":"",
+                 "height":64,
+                 "id":117,
+                 "name":"bat",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":620,
+                 "y":22
+                }, 
+                {
+                 "class":"",
+                 "height":96,
+                 "id":118,
+                 "name":"zeppelin1",
+                 "rotation":0,
+                 "visible":true,
+                 "width":128,
+                 "x":1166,
+                 "y":16
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1106,7 +1211,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":109,
+ "nextobjectid":119,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
