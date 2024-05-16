@@ -88,7 +88,7 @@ export default class Wallet extends Phaser.Scene {
             .setOrigin(0.5); 
 
         if( !globalThis.isValid && !globalThis.noWallet) {
-            this.status.setText("Your wallet is not connected ETH, BSC or Base");
+            this.status.setText("Your wallet is not connected with ETH, BSC or Base");
         }
         
         this.image = this.add.image(width / 2, height / 2, 'bg').setOrigin(0.5, 0.5).setVisible(true);
