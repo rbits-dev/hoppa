@@ -58,7 +58,7 @@ export default class Story extends CreditScene {
         this.scroller.scrollY = -1900;
 
         this.input.on('pointerdown', () => { this.startGame(); });
-        this.input.on('keydown', () => { this.startGame(); });
+        this.input.keyboard?.on('keydown', () => { this.startGame(); });
     }
 
     destroy() {
@@ -66,6 +66,9 @@ export default class Story extends CreditScene {
         this.scroller.destroy();
         SceneFactory.stopSound(this);
         SceneFactory.removeAllSounds(this);
+
+        this.input.off('pointerdown', () => { this.startGame(); });
+        this.input.keyboard?.off('keydown', () => { this.startGame(); });
     }
 
     nextStory() {
