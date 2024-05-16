@@ -33,7 +33,7 @@ export default class Help extends Phaser.Scene {
         this.createIntro();
 
         this.input.on('pointerdown', () => { this.continueGame(); });
-        this.input.on('keydown', () => { this.continueGame(); });
+        this.input.keyboard?.on('keydown', () => { this.continueGame(); });
     }
 
     private clearLines() {
@@ -109,6 +109,9 @@ export default class Help extends Phaser.Scene {
         this.line3.destroy();
         this.line4.destroy();
         this.line5?.destroy();
+
+        this.input.off('pointerdown', () => { this.continueGame(); });
+        this.input.keyboard?.off('keydown', () => { this.continueGame(); });
     }
 
     private continueGame() {
