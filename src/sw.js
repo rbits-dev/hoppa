@@ -1,5 +1,5 @@
-var cacheName = 'hoppa-v2';
-var cacheWhiteList = [ "hoppa-v2" ];
+var cacheName = 'hoppa-v24';
+var cacheWhiteList = [ "hoppa-v24" ];
 
 var filesToCache = [
 '/hoppa/assets/01_main_screen_trailer.m4a',
@@ -20,6 +20,7 @@ var filesToCache = [
 '/hoppa/assets/8bitmetal.mp3',
 '/hoppa/assets/ape.webp',
 '/hoppa/assets/arrow.webp',
+'/hoppa/assets/wall.webp',
 '/hoppa/assets/back1.webp',
 '/hoppa/assets/back2.webp',
 '/hoppa/assets/back3.webp',
@@ -207,7 +208,7 @@ var filesToCache = [
 '/hoppa/assets/minira8bits.webp',
 '/hoppa/assets/monster.json',
 '/hoppa/assets/monster.webp',
-'/hoppa/assets/moonshot.webp',
+'/hoppa/assets/rbits.webp',
 '/hoppa/assets/nothrow.m4a',
 '/hoppa/assets/nothrow.mp3',
 '/hoppa/assets/objects.json',
