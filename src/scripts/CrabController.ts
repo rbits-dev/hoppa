@@ -159,7 +159,7 @@ export default class CrabController {
         this.strength = 3;
         this.attackDuration = Phaser.Math.Between(2000,5500); 
         if(this.heart === undefined) {
-            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height + 32, 'beware',4).setScale(0.75,0.75);
+            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height + 32, 'beware',3).setScale(0.75,0.75);
             const tweenConfig = {
                 targets: this.heart,
                 scaleX: 1.25,
