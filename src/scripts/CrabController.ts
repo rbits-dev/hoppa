@@ -3,7 +3,7 @@ import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
 import PlayerController from "./PlayerController";
 
-export default class CrabController {
+export default class CrabController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private heart?: Phaser.GameObjects.Image;
@@ -195,25 +195,20 @@ export default class CrabController {
     }
 
     private evadeOnExit() {
-        this.sprite.setCollisionGroup(0);
     }
 
     private evadeOnEnter() {
         this.moveTime = 0;
         this.sprite.play('idle');
-        this.sprite.setCollisionGroup(-1);
     }
 
     private followOnExit() {
         this.destroyCreatureIcon();
-        this.sprite.setCollisionGroup(0);
     }
 
     private followOnEnter() {
         this.moveTime = 0;
         this.sprite.play('calm');
-
-        this.sprite.setCollisionGroup(-1);
 
         if(this.heart === undefined) {
             this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height + 32, 'star',4).setScale(0.33,0.33);
@@ -443,8 +438,8 @@ export default class CrabController {
         this.slumber(true);
     }
 
-    private handleStomped(bird: Phaser.Physics.Matter.Sprite) {
-        if (this.sprite !== bird && !this.garbage) {
+    private handleStomped(crab: Phaser.Physics.Matter.Sprite) {
+        if (this.sprite !== crab && !this.garbage) {
             return;
         }
 
@@ -452,12 +447,12 @@ export default class CrabController {
         if(this.strength > 0)
             return;
 
-        this.garbage = true;
         events.off(this.name + '-stomped', this.handleStomped, this);
+
         this.heart?.setVisible(false);
         this.sprite.play('dead');
-        this.sprite.setStatic(true);
-        this.sprite.setCollisionCategory(0);
+       // this.sprite.setStatic(true);
+       // this.sprite.setCollisionCategory(0);
         this.sprite.on('animationcomplete', () => {
             this.cleanup();
         });
@@ -471,6 +466,7 @@ export default class CrabController {
         }
         this.destroyCreatureIcon();
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     public keepObject() {

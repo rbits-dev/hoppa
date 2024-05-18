@@ -1,7 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 
-export default class PlantController {
+export default class PlantController implements Controller {
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
     private touched: boolean;

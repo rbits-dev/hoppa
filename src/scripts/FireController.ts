@@ -2,7 +2,7 @@ import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
 
-export default class FireController {
+export default class FireController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -112,7 +112,7 @@ export default class FireController {
         if (this.sprite !== fire && !this.garbage) {
             return;
         }
-        this.garbage = true;
+
         this.cleanup();
     }
 
@@ -122,6 +122,7 @@ export default class FireController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     private handleBlocked(fire: Phaser.Physics.Matter.Sprite) {

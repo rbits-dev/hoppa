@@ -1,7 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
-export default class BirdController {
+export default class BirdController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -97,7 +97,6 @@ export default class BirdController {
             return;
         }
 
-        this.garbage = true;
         events.off(this.name + '-stomped', this.handleStomped, this);
 
         this.sprite.play('dead');
@@ -157,6 +156,7 @@ export default class BirdController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     public keepObject() {

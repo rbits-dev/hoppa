@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import PlayerController from './PlayerController';
 import { sharedInstance as events } from './EventManager';
 
-export default class ChangeSkin {
+export default class ChangeSkin implements StaticObject {
 
     private sprite: Phaser.Physics.Matter.Sprite;
     private name: string;
@@ -18,6 +18,10 @@ export default class ChangeSkin {
 
     destroy() {
         events.off(this.name + '-touched', this.handleTouched, this);
+    }
+
+    public getSprite() {
+        return this.sprite;
     }
 
     private handleTouched(lightswitch: Phaser.Physics.Matter.Sprite, player: PlayerController) {

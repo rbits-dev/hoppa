@@ -444,6 +444,7 @@ export function preload(ctx) {
     ctx.load.image('bg-ui', 'assets/bg-ui.webp');
     
     ctx.load.atlas( 'lava-top', 'assets/lava-top.webp', 'assets/lava-top.json');
+    ctx.load.atlas( 'water-top', 'assets/watertop.webp', 'assets/watertop.json');
     ctx.load.atlas( 'lava-center', 'assets/lava-center.webp', 'assets/lava-center.json');
 
     // sprite atlases
@@ -776,7 +777,7 @@ export function createPlayer(ctx, x: number, y: number, width: number, height: n
     return player;
 }
 
-export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, collideWith, controller: ObstaclesController, objData, player, tilemap) {
+export function basicCreateCreature(ctx, name, x, y, width, height, rotation, enemyCat, collideWith, controller: ObstaclesController, objData, player, tilemap): Controller | Creature | StaticObject| undefined {
 
     switch (name) {
         case 'neon': {
@@ -790,89 +791,156 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             neon.setCollisionGroup(6);
             neon.setCollidesWith([6]);
             controller.add('neon', neon, neon.body as MatterJS.BodyType);
-            ctx.neon.push(m);
-            break;
+            return m;
         }
         case 'dragon': {
-            ctx.dragons.push(CreatureHelper.creatureCreateDragon(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
-            break;
+            return CreatureHelper.creatureCreateDragon(ctx, x, y, width, height, enemyCat, collideWith, controller, player);
         }
         case 'bomb': {
-            ctx.bombs.push(CreatureHelper.creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWith, controller, tilemap));
-            break;
+            return CreatureHelper.creatureCreateBomb(ctx, x, y, width, height, enemyCat, collideWith, controller, tilemap);
         }
         case 'monster': {
-            ctx.monsters.push(CreatureHelper.createCreatureMonster(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureMonster(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'bat': {
-            ctx.bats.push(CreatureHelper.createCreatureBat(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureBat(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'bird': {
-            ctx.birds.push(CreatureHelper.createCreatureBird(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureBird(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'crab': {
-            ctx.crabs.push(CreatureHelper.createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap));
-            break;
+            return CreatureHelper.createCreatureCrab(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap);
         }
         case 'fire': {
-            ctx.fires.push(CreatureHelper.createCreatureFire(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureFire(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'firewalker': {
-            ctx.firewalkers.push(CreatureHelper.creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
-            break;
+            return CreatureHelper.creatureCreatureFireWalker(ctx, x, y, width, height, enemyCat, collideWith, controller, player);
+        }
+        case 'water-top': {
+            return CreatureHelper.createCreatureWater(ctx,name,x,y,width,height,enemyCat,collideWith,controller);
         }
         case 'lava-top':
         case 'lava-center':
-            ctx.lava.push( CreatureHelper.createCreatureLava(ctx, name,x,y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureLava(ctx, name,x,y, width, height, enemyCat, collideWith, controller);
         case 'flower': {
-            ctx.flowers.push(CreatureHelper.createCreatureFlower(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureFlower(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'plant': {
-            ctx.plants.push(CreatureHelper.createCreaturePlant(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreaturePlant(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'zeppelin1': {
-            ctx.zeps.push(CreatureHelper.createCreatureZeppelin1(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureZeppelin1(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'zeppelin2': {
-            ctx.zeps.push(CreatureHelper.createCreatureZeppelin2(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureZeppelin2(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'fly': {
-            ctx.flies.push(CreatureHelper.createCreatureFly(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
-            break;
+            return CreatureHelper.createCreatureFly(ctx, x, y, width, height, enemyCat, collideWith, controller, player);
         }
         case 'bear': {
-            ctx.bears.push(CreatureHelper.createCreatureBear(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
-            break;
+            return CreatureHelper.createCreatureBear(ctx, x, y, width, height, enemyCat, collideWith, controller, player);
         }
         case 'boss': {
-            ctx.boss.push(CreatureHelper.createCreatureBoss(ctx, x, y, width, height, enemyCat, collideWith, controller, player));
-            break;
+            return CreatureHelper.createCreatureBoss(ctx, x, y, width, height, enemyCat, collideWith, controller, player);
         }
         case 'crow': {
-            ctx.crows.push(CreatureHelper.createCreatureCrow(ctx, x, y, width, height, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureCrow(ctx, x, y, width, height, enemyCat, collideWith, controller);
         }
         case 'tnt': {
-            ctx.tnts.push(CreatureHelper.createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap));
-            break;
+            const target_x = objData.properties?.find((p) => p.name === 'target-x').value || -1;
+            const target_y = objData.properties?.find((p) => p.name === 'target-y').value || -1;
+            return CreatureHelper.createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap, target_x, target_y);
         }
         case 'saw': {
-            ctx.saws.push(CreatureHelper.createCreatureSaw(ctx, x, y, width, height, rotation, enemyCat, collideWith, controller));
-            break;
+            return CreatureHelper.createCreatureSaw(ctx, x, y, width, height, rotation, enemyCat, collideWith, controller);
         }
         case 'lightswitch': {
-            ctx.lightswitches.push(CreatureHelper.createLightSwitch(ctx, x, y, width, height, rotation, enemyCat, collideWith, controller, player));
-            break;
+            return CreatureHelper.createLightSwitch(ctx, x, y, width, height, rotation, enemyCat, collideWith, controller, player);
         }
+        case 'bar': {
+            const bar = ctx.matter.add.sprite(x + (width * 0.5), y+ (height * 0.5), 'bar', undefined, {
+                vertices: [{ x: 0, y: 0 }, { x: 937, y: 0 }, { x: 937, y: 28 }, { x: 0, y: 28 }],
+                isStatic: true,
+                label: 'bar'
+            });
+        
+            bar.setData('type', 'bar'); 
+            bar.setCollidesWith([]);
+
+            const m = new BarController(ctx,bar,'bar');
+            controller.add('bar', bar, bar.body as MatterJS.BodyType);
+            return m;
+        }
+        case 'billboard': {
+            const billboard = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'billboards', undefined, {
+                isStatic: true,
+                label: 'billboard',
+                vertices: [{ x: 0, y: -60 }, { x: 192, y: -60 }, { x: 192, y: 48 }, { x: 0, y: 48 }],
+                render: { sprite: { yOffset: 64 } },
+            }).setOrigin(0.5, 0.33);
+            const b = new BillBoard(ctx, billboard);
+            controller.add('billboard',billboard, billboard.body as MatterJS.BodyType);
+            return b;
+        }
+        case 'changeskin': {
+            const use = objData.properties.find((p) => p.name === 'use').value;
+            const skin = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'changeskin', undefined, {
+                isStatic: true,
+                label: 'changeskin',
+                vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
+
+            });
+            const s = new ChangeSkin(ctx, skin, 'changeskin');
+            controller.addWithValues('changeskin',skin,  skin.body as MatterJS.BodyType, { "use": use });
+            return s;
+        }
+        case 'window': {
+            return CreatureHelper.createWindow(ctx,x,y,width,height,rotation,enemyCat,collideWith,controller,player);
+        }
+
+        case 'platform': {
+            const to = objData.properties.find((p) => p.name === 'to').value;
+            const duration = objData.properties.find((p) => p.name === 'duration').value;
+            const vert = objData.properties.find((p) => p.name === 'vert').value;
+            const noautostart = objData.properties.find((p)=> p.name === 'noautostart')?.value || false;
+
+            const platform = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'platform', undefined, {
+                isStatic: true,
+                label: 'platform',
+                vertices: [{ x: 0, y: 0 }, { x: 192, y: 0 }, { x: 192, y: 32 }, { x: 0, y: 32 }]
+            });
+
+            const m = new MovingPlatform(ctx, x, y, to, duration, vert, platform, noautostart, platform.body.id, player);
+            controller.add('platform', platform, platform.body as MatterJS.BodyType);
+            return m;
+        }
+        case 'mushroom-platform': {
+            const to = objData.properties.find((p) => p.name === 'to').value;
+            const duration = objData.properties.find((p) => p.name === 'duration').value;
+            const vert = objData.properties.find((p) => p.name === 'vert').value;
+            const noautostart = objData.properties.find((p)=> p.name === 'noautostart')?.value || false;
+
+            const platform = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'mushroom', undefined, {
+                isStatic: true,
+                label: 'mushroom-platform',
+                vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }]
+            });
+
+            const m = new MovingMushroom(ctx, x, y, to, duration, vert, platform, noautostart, platform.body.id, player);
+            controller.add('mushroom-platform', platform, platform.body as MatterJS.BodyType);
+            return m;
+        }
+
+    }
+
+    return undefined;
+}
+
+
+export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, collideWith, controller: ObstaclesController, objData, player, tilemap) {
+
+    switch (name) {
         case 'carrot': {
             ObjectHelper.createCarrot(ctx, x, y, width, height);
             break;
@@ -902,10 +970,7 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             ObjectHelper.createTrashcan(ctx,x,y,width,height);
             break;
         }
-        case 'window': {
-            ctx.doors.push(CreatureHelper.createWindow(ctx,x,y,width,height,rotation,enemyCat,collideWith,controller,player));
-            break;
-        }
+
         case 'pipe': {
             const dstx = objData.properties.find((p) => p.name === 'dstx')?.value;
             const dsty = objData.properties.find((p) => p.name === 'dsty')?.value;
@@ -922,52 +987,8 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             controller.addWithValues('pipe', undefined, pipe,{ "dstx": dstx, "dsty": dsty, "delay": delay, "duration": duration, "room_width": room_wid, "room_height": room_hei, "level": level });
             break;
         }
-        case 'platform': {
-            const to = objData.properties.find((p) => p.name === 'to').value;
-            const duration = objData.properties.find((p) => p.name === 'duration').value;
-            const vert = objData.properties.find((p) => p.name === 'vert').value;
-            const noautostart = objData.properties.find((p)=> p.name === 'noautostart')?.value || false;
 
-            const platform = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'platform', undefined, {
-                isStatic: true,
-                label: 'platform',
-                vertices: [{ x: 0, y: 0 }, { x: 192, y: 0 }, { x: 192, y: 32 }, { x: 0, y: 32 }]
-            });
 
-            const m = new MovingPlatform(ctx, x, y, to, duration, vert, platform, noautostart, platform.body.id, player);
-            controller.add('platform', platform, platform.body as MatterJS.BodyType);
-            break;
-        }
-        case 'mushroom-platform': {
-            const to = objData.properties.find((p) => p.name === 'to').value;
-            const duration = objData.properties.find((p) => p.name === 'duration').value;
-            const vert = objData.properties.find((p) => p.name === 'vert').value;
-            const noautostart = objData.properties.find((p)=> p.name === 'noautostart')?.value || false;
-
-            const platform = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'mushroom', undefined, {
-                isStatic: true,
-                label: 'mushroom-platform',
-                vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }]
-            });
-
-            const m = new MovingMushroom(ctx, x, y, to, duration, vert, platform, noautostart, platform.body.id, player);
-            controller.add('mushroom-platform', platform, platform.body as MatterJS.BodyType);
-            break;
-        }
-        case 'bar': {
-            const bar = ctx.matter.add.sprite(x + (width * 0.5), y+ (height * 0.5), 'bar', undefined, {
-                vertices: [{ x: 0, y: 0 }, { x: 937, y: 0 }, { x: 937, y: 28 }, { x: 0, y: 28 }],
-                isStatic: true,
-                label: 'bar'
-            });
-        
-            bar.setData('type', 'bar'); 
-            bar.setCollidesWith([]);
-
-            const m = new BarController(ctx,bar,'bar');
-            controller.add('bar', bar, bar.body as MatterJS.BodyType);
-            break
-        }
         case 'sink': {
             //FIXME: groups a set of tiles and move them down 
             break;
@@ -1053,29 +1074,6 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
 
             break;
         }
-        case 'billboard': {
-            const billboard = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'billboards', undefined, {
-                isStatic: true,
-                label: 'billboard',
-                vertices: [{ x: 0, y: -60 }, { x: 192, y: -60 }, { x: 192, y: 48 }, { x: 0, y: 48 }],
-                render: { sprite: { yOffset: 64 } },
-            }).setOrigin(0.5, 0.33);
-            new BillBoard(ctx, billboard);
-            controller.add('billboard',billboard, billboard.body as MatterJS.BodyType);
-            break;
-        }
-        case 'changeskin': {
-            const use = objData.properties.find((p) => p.name === 'use').value;
-            const skin = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'changeskin', undefined, {
-                isStatic: true,
-                label: 'changeskin',
-                vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
-
-            });
-            new ChangeSkin(ctx, skin, 'changeskin');
-            controller.addWithValues('changeskin',skin,  skin.body as MatterJS.BodyType, { "use": use });
-            break;
-        }
 
         case 'player':
         case 'player-spawn':
@@ -1099,13 +1097,16 @@ export function basicCreate(ctx, name, x, y, width, height, rotation, enemyCat, 
             console.log("Object " + objData.id + " has no name");
             break;
 
+            /*
         default:
             {
                 const sp = objData.properties.find((p) => p.name === 'label').value;
                 ctx.add.image(width / 2, height / 2, name, sp);
             }
+            */
             break;
     }
+
 
 }
 

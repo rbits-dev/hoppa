@@ -1,8 +1,8 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
-import * as CreatureLogic from './CreatureLogic';
 
-export default class ZeppelinController {
+
+export default class ZeppelinController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -42,6 +42,10 @@ export default class ZeppelinController {
             .setState('idle');
 
         events.on(this.name + '-blocked', this.handleBlocked, this);
+    }
+
+    keepObject() {
+        return true;
     }
 
     destroy() {

@@ -1,10 +1,11 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 
-export default class FlowerController {
+export default class FlowerController implements Creature {
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
     private name;
+    private isGarbage: boolean = false;
 
     constructor(
         scene: Phaser.Scene,
@@ -45,6 +46,10 @@ export default class FlowerController {
         this.sprite.play('idle');
     }
 
+    keepObject(): boolean {
+        return !this.isGarbage;
+    }
+
     private handleStomped(flower: Phaser.Physics.Matter.Sprite) {
         if (this.sprite !== flower) {
             return;
@@ -68,6 +73,7 @@ export default class FlowerController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.isGarbage = true;
     }
 
     private createAnims() {

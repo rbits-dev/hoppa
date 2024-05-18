@@ -1,7 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 
-export default class BatController {
+export default class BatController implements Controller {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -72,8 +72,6 @@ export default class BatController {
 
         const verticalOffset = this.verticalRange * Math.sin(this.moveTime / 1000 * this.verticalSpeed);
         this.sprite.setVelocityY(this.verticalDirection * verticalOffset);
-        
-
     }
 
     public getSprite() {
@@ -117,7 +115,7 @@ export default class BatController {
         if (this.sprite !== bat && !this.garbage) {
             return;
         }
-        this.garbage = true;
+
         events.off(this.name + '-stomped', this.handleStomped, this);
         this.sprite.setStatic(true);
         this.sprite.setCollisionCategory(0);
@@ -134,6 +132,7 @@ export default class BatController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     private handleBlocked(bat: Phaser.Physics.Matter.Sprite) {

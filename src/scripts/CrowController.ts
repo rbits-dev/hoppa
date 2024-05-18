@@ -1,8 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
-import * as CreatureLogic from './CreatureLogic';
 
-export default class CrowController {
+export default class CrowController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -113,7 +112,7 @@ export default class CrowController {
         }
         
         events.off(this.name + '-stomped', this.handleStomped, this);
-        this.garbage = true;
+
         this.sprite.play('dead');
         this.sprite.setStatic(true);
         this.sprite.setCollisionCategory(0);
@@ -129,6 +128,7 @@ export default class CrowController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     private handleBlocked(crow: Phaser.Physics.Matter.Sprite) {

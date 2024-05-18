@@ -1,0 +1,209 @@
+{
+	"textures": [
+		{
+			"image": "watertop.webp",
+			"format": "RGBA8888",
+			"size": {
+				"w": 576,
+				"h": 65
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "watertop-0.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-1.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 64,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-2.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 128,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-3.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 192,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-4.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 256,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-5.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 320,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-6.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 384,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-7.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 448,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				},
+				{
+					"filename": "watertop-8.webp",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					},
+					"frame": {
+						"x": 512,
+						"y": 0,
+						"w": 64,
+						"h": 65
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:c4419310955a292ad25d119bfe37a643:4ab680ffcc00eb43c3bfb9cb64bf74ab:3ee030767ce05b28b2e7002c59569e28$"
+	}
+}

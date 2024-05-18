@@ -1,7 +1,7 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 
-export default class DoorController {
+export default class DoorController implements Controller {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private sprite2: Phaser.Physics.Matter.Sprite;

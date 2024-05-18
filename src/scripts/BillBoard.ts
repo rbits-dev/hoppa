@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-export default class BillBoard {
+export default class BillBoard implements StaticObject {
 
     private sprite: Phaser.Physics.Matter.Sprite;
     private frame = 0;
@@ -21,6 +21,10 @@ export default class BillBoard {
 
     public rotateBillBoard() {
         this.sprite.setFrame((this.frame + 1) % 28);
+    }
+
+    public getSprite() {
+        return this.sprite;
     }
 
     public destroy() {

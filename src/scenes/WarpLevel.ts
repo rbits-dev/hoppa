@@ -96,7 +96,7 @@ export default class WarpLevel extends BaseScene {
             'highScorePoints': 0,
             'coinsCollected': 0,
             'carrotsCollected': 0,
-            'currLevel': 1,
+            'currLevel': 99,
             'scorePoints': 0,
             'livesRemaining': 3,
             'invincibility': false,

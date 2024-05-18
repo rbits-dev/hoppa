@@ -18,9 +18,10 @@ import PlantController from "./PlantController";
 import PlayerController from "./PlayerController";
 import SawController from "./SawController";
 import TNTController from "./TNTController";
+import WaterController from "./WaterController";
 import ZeppelinController from "./ZeppelinController";
 
-export function creatureCreateDragon(ctx, x, y, width, height, enemyCat, collideWith, controller, player) {
+export function creatureCreateDragon(ctx, x, y, width, height, enemyCat, collideWith, controller, player): Creature {
     const dragon = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'dragon', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 96 }, { x: 0, y: 96 }],
         label: 'dragon'
@@ -255,6 +256,26 @@ export function createCreaturePlant(ctx, x, y, width, height, enemyCat, collideW
     return new PlantController(ctx, plant, plant.name);
 }
 
+export function createCreatureWater(ctx, name,x, y, width, height, enemyCat, collideWith, controller) {
+    const lava = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), name, undefined, {
+        vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
+        label: name
+    })
+        .setFixedRotation();
+    lava.setStatic(true);
+    lava.setCollisionCategory(enemyCat);
+    
+    lava.setDepth(10);
+    lava.setCollidesWith(6);
+    
+    lava.setName(name);
+    lava.setData('type', name);
+
+    controller.add(name, lava,lava.body as MatterJS.BodyType);
+
+    return new WaterController(ctx, lava, lava.name);
+}
+
 export function createCreatureLava(ctx, name,x, y, width, height, enemyCat, collideWith, controller) {
     const lava = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), name, undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 64 }, { x: 0, y: 64 }],
@@ -316,7 +337,7 @@ export function createCreatureBoss(ctx, x, y, width, height, enemyCat, collideWi
 }
 
 
-export function createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap) {
+export function createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWith, controller, player, tilemap, target_x, target_y) {
     const tnt = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'tnt', undefined, {
         vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 68 }, { x: 0, y: 68 }],
         label: 'tnt'
@@ -329,7 +350,7 @@ export function createCreatureTNT(ctx, x, y, width, height, enemyCat, collideWit
 
     controller.add('tnt', tnt,tnt.body as MatterJS.BodyType);
 
-    return new TNTController(ctx, tnt, tnt.name, player, tilemap);
+    return new TNTController(ctx, tnt, tnt.name, player, tilemap, target_x, target_y);
 }
 
 export function createCreatureZeppelin1(ctx, x, y, width, height, enemyCat, collideWith, controller) {

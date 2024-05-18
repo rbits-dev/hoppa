@@ -1,4 +1,4 @@
-export default class NeonController {
+export default class NeonController implements StaticObject {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private onTime = 0;

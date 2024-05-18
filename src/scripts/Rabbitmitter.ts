@@ -2,7 +2,6 @@ import Phaser from 'phaser'
 
 export default class Rabbitmitter {
 
-    private sprite!: MatterJS.BodyType;
     private emitter!: Phaser.GameObjects.Particles.ParticleEmitter;
     private scene: Phaser.Scene;
     private layers: string[] = ['ground', 'layer1'];

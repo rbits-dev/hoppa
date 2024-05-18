@@ -1,7 +1,7 @@
 
 import StateMachine from "./StateMachine";
 
-export default class LavaController implements Controller {
+export default class WaterController implements Controller {
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
 
@@ -20,9 +20,6 @@ export default class LavaController implements Controller {
 
         this.stateMachine.addState('idle', {
             onEnter: this.idleOnEnter
-        })
-        .addState('dead', {
-              
         })
         .setState('idle');
 
@@ -48,13 +45,13 @@ export default class LavaController implements Controller {
     private createAnims() {
         this.sprite.anims.create({
             key: 'idle',
-            frameRate: 10,
+            frameRate: 5,
             repeat: -1,
             yoyo: true,
             frames: this.sprite.anims.generateFrameNames(this.name, {
                 start: 1,
-                end: (this.name === 'lava-center' ? 30 : 32),
-                prefix: 'lavatop-',
+                end: 8,
+                prefix: 'watertop-',
                 suffix: '.webp'
             })
         });

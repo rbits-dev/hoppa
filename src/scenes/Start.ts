@@ -1,29 +1,14 @@
 import Phaser from "phaser";
 import ObstaclesController from "../scripts/ObstaclesController";
 import * as SceneFactory from '../scripts/SceneFactory';
-import MonsterController from '../scripts/MonsterController';
-import FireController from '../scripts/FireController';
-import FlowerController from '../scripts/FlowerController';
-import PlantController from '../scripts/PlantController';
-import FireWalkerController from '~/scripts/FireWalkerController';
-import CrabController from '../scripts/CrabController';
-import BirdController from '../scripts/BirdController';
-import BatController from '../scripts/BatController';
-import DragonController from '../scripts/DragonController';
-import BombController from '../scripts/BombController';
+
 import { sharedInstance as events } from '../scripts/EventManager';
-import ZeppelinController from "../scripts/ZeppelinController";
-import TNTController from '../scripts/TNTController';
-import BearController from '../scripts/BearController';
-import CrowController from '../scripts/CrowController';
-import FlyController from '../scripts/FlyController';
-import SawController from "../scripts/SawController";
+
 import * as WalletHelper from '../scripts/WalletHelper';
 import BaseScene from "./BaseScene";
-import BossController from "../scripts/BossController";
-import LavaController from "~/scripts/LavaController";
+
 import * as AlignmentHelper from '../scripts/AlignmentHelper';
-import NeonController from '~/scripts/NeonController';
+
 
 export default class Start extends BaseScene {
     constructor() {
@@ -31,25 +16,7 @@ export default class Start extends BaseScene {
     }
 
     private obstaclesController!: ObstaclesController;
-    private flowers: FlowerController[] = [];
-    private monsters: MonsterController[] = [];
-    private fires: FireController[] = [];
-    private plants: PlantController[] = [];
-    private firewalkers: FireWalkerController[] = [];
-    private crabs: CrabController[] = [];
-    private birds: BirdController[] = [];
-    private bats: BatController[] = [];
-    private bombs: BombController[] = [];
-    private dragons: DragonController[] = [];
-    private zeps: ZeppelinController[] = [];
-    private tnts: TNTController[] = [];
-    private bears: BearController[] = [];
-    private flies: FlyController[] = [];
-    private crows: CrowController[] = [];
-    private saws: SawController[] = [];
-    private boss: BossController[] = [];
-    private lava: LavaController[] = [];
-    private neon: NeonController[] = [];
+
     private index = 0;
     private hsv;
     private shoutout !: Phaser.GameObjects.BitmapText;
@@ -71,28 +38,6 @@ export default class Start extends BaseScene {
         }
 
         this.obstaclesController = new ObstaclesController();
-        this.monsters = [];
-        this.fires = [];
-        this.flowers = [];
-        this.plants = [];
-        this.firewalkers = [];
-        this.crabs = [];
-        this.birds = [];
-        this.bats = [];
-        this.dragons = [];
-        this.bombs = [];
-        this.zeps = [];
-        this.bears = [];
-        this.tnts = [];
-        this.flies = [];
-        this.crows = [];
-        this.bears = [];
-        this.tnts = [];
-        this.flies = [];
-        this.crows = [];
-        this.saws = [];
-        this.lava = [];
-        this.neon = [];
 
         const info = {
             'lastHealth': 100,
@@ -142,12 +87,15 @@ export default class Start extends BaseScene {
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
 
         const objectsLayer = this.map.getObjectLayer('objects');
+        super.initManager(this.map);
         objectsLayer?.objects.forEach(objData => {
             const { x = 0, y = 0, name, width = 0, height = 0, rotation = 0 } = objData;
             switch (name) {
-
                 default:
+                    super.push( SceneFactory.basicCreateCreature(this, name, x, y, width, height, rotation, 4, [1], this.obstaclesController, objData, undefined, this.map) );
+                    
                     SceneFactory.basicCreate(this, name, x, y, width, height, rotation, 4, [1], this.obstaclesController, objData, undefined, this.map);
+                    
                     break;
             }
         })
@@ -252,24 +200,6 @@ export default class Start extends BaseScene {
         this.input.off('pointerdown', () => { this.continueGame(); });
         this.input.keyboard?.off('keydown', () => { this.continueGame(); });
 
-        this.monsters.forEach(monster => monster.destroy());
-        this.fires.forEach(fire => fire.destroy());
-        this.plants.forEach(plant => plant.destroy());
-        this.flowers.forEach(flower => flower.destroy());
-        this.crabs.forEach(crab => crab.destroy());
-        this.birds.forEach(bird => bird.destroy());
-        this.firewalkers.forEach(firewalker => firewalker.destroy());
-        this.bats.forEach(bat => bat.destroy());
-        this.dragons.forEach(dragon => dragon.destroy());
-        this.bombs.forEach(bomb => bomb.destroy());
-        this.zeps.forEach(zep => zep.destroy());
-        this.bears.forEach(bear => bear.destroy());
-        this.tnts.forEach(tnt => tnt.destroy());
-        this.flies.forEach(fly => fly.destroy());
-        this.crows.forEach(crow => crow.destroy());
-        this.saws.forEach(saw => saw.destroy());
-        this.lava.forEach(lava=>lava.destroy());
-
         this.shoutout.destroy();
         this.credits.destroy();
 
@@ -283,67 +213,10 @@ export default class Start extends BaseScene {
 
         super.update(time,deltaTime);
 
-        if(!super.doStep())
+        if(!super.doStep(time,deltaTime))
             return;
         
-        this.monsters.forEach(monster => {
-            monster.update(deltaTime);
-            monster.lookahead(this.map);
-        });
-        this.fires.forEach(fire => {
-            fire.update(deltaTime);
-            fire.lookahead(this.map)
-        });
-        this.firewalkers.forEach(firewalker => {
-            firewalker.update(deltaTime);
-            firewalker.lookahead(this.map);
-        });
-        this.zeps.forEach(zep => { 
-            zep.update(deltaTime); 
-            zep.lookahead(this.map);
-        });
-        this.flies.forEach(fly => {
-            fly.update(deltaTime); 
-            fly.lookahead(this.map);
-        });
-        this.crabs.forEach(crab => {
-            crab.update(deltaTime);
-            crab.lookahead(this.map);
-        });
-        this.dragons.forEach(dragon => {
-            dragon.update(deltaTime);
-            dragon.lookahead(this.map);
-        });
-        this.crows.forEach(crow => {
-            crow.update(deltaTime);
-            crow.lookahead(this.map);
-        });
-
-        this.flowers.forEach(flower => flower.update(deltaTime));
-        this.plants.forEach(plant => plant.update(deltaTime));
-        this.birds.forEach(bird => {
-            bird.update(deltaTime); 
-            bird.lookahead(this.map);
-        });
-
-        this.bats.forEach(bat => bat.update(deltaTime));
-
-        this.bombs.forEach(bomb => {
-            bomb.update(deltaTime);
-            bomb.lookahead(this.map);
-        });
-
-        this.bears.forEach(bear => bear.update(deltaTime));
-        this.tnts.forEach(tnt => tnt.update(deltaTime));
-        
-        this.saws.forEach(saw => {
-            saw.update(deltaTime);
-            saw.lookahead(this.map);
-        });
-        this.lava.forEach(lava => {
-            lava.update(deltaTime);
-        });
-
+    
         const top = this.hsv[this.index].color;
         const bottom = this.hsv[359 - this.index].color;
 
@@ -352,8 +225,6 @@ export default class Start extends BaseScene {
         this.index++;
         if (this.index >= 360)
             this.index = 0;
-
-        //SceneFactory.cullSprites(this);
 
         if(SceneFactory.gamePadIsButton(this,-1) || this.cursors?.space.isDown ) {
             this.continueGame();

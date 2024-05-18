@@ -3,7 +3,7 @@ import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
 import PlayerController from "./PlayerController";
 
-export default class FireWalkerController {
+export default class FireWalkerController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -196,7 +196,7 @@ export default class FireWalkerController {
         if (this.sprite !== fire && !this.garbage) {
             return;
         }
-        this.garbage = true;
+
         events.off(this.name + '-stomped', this.handleStomped, this);
         this.sprite.play('dead');
         this.sprite.setStatic(true);
@@ -213,9 +213,10 @@ export default class FireWalkerController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
-    public keepObject() {
+    public keepObject(): boolean {
         return !this.garbage;
     }
 

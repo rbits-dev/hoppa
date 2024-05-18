@@ -2,7 +2,7 @@ import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import PlayerController from "./PlayerController";
 
-export default class LightSwitchController {
+export default class LightSwitchController implements Controller {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;

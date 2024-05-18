@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import { sharedInstance as events } from './EventManager';
 import PlayerController from './PlayerController';
 
-export default class MovingPlatform {
+export default class MovingPlatform implements StaticObject {
 
     private startY = 0;
     private startX = 0;
@@ -43,6 +43,10 @@ export default class MovingPlatform {
             this.enable();
             this.start();
         }
+    }
+    
+    getSprite() {
+        return this.sprite;
     }
 
     disable() {

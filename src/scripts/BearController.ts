@@ -2,7 +2,7 @@ import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import PlayerController from "./PlayerController";
 
-export default class BearController {
+export default class BearController implements Controller{
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private heart: Phaser.GameObjects.Image;
@@ -88,7 +88,7 @@ export default class BearController {
         }
         
         events.off(this.name + '-stomped', this.handleStomped, this);
-        this.garbage = true;
+
         this.sprite.play('dead');
         this.sprite.setStatic(true);
         this.sprite.setCollisionCategory(0);
@@ -109,6 +109,7 @@ export default class BearController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
     public keepObject() {
         return !this.garbage;

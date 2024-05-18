@@ -278,7 +278,8 @@ export default class UI extends Phaser.Scene {
 
     private handleWarpLevel(value: number) {
        
-        this.levelLabel.setText('Level '+ this.info.currLevel);
+        const text = (this.info.currLevel == 99 ? 'Warp' : 'Level ' + this.info.currLevel);
+        this.levelLabel.setText(text);
 
         this.time_start = 0;
         this.lasttick = 0;

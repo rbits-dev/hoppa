@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import * as SceneFactory from '../scripts/SceneFactory';
 import { sharedInstance as events } from '../scripts/EventManager';
+import Manager from './Manager';
 
 export default class BaseScene extends Phaser.Scene {
     
@@ -10,7 +11,9 @@ export default class BaseScene extends Phaser.Scene {
     private readonly TARGET_RATE = 1000 / 30;
     private accumulator = 0;
 
-  
+    private manager?: Manager;
+
+
     constructor(name: string |  Phaser.Types.Scenes.SettingsConfig)  {
         super(name);
     }
@@ -22,10 +25,18 @@ export default class BaseScene extends Phaser.Scene {
         document.addEventListener('visibilitychange', this.looseFocus );
     }
 
+    push( obj: Controller|Creature ) {
+       if( obj !== undefined )
+         this.manager?.push(obj);
+    }
+
     create() {
         this.input.setDefaultCursor('none');
-
         this.matter.world.autoUpdate = false;
+    }
+
+    initManager(map: Phaser.Tilemaps.Tilemap) {
+        this.manager = new Manager(map);
     }
 
     update(time: number, delta: number) {
@@ -46,7 +57,10 @@ export default class BaseScene extends Phaser.Scene {
 
     }
    
-    doStep(): boolean {
+    doStep(time: number, delta: number): boolean {
+        if(this.renderNow)
+            this.manager?.update(time,delta);
+
         return this.renderNow;
     }
 
@@ -67,6 +81,9 @@ export default class BaseScene extends Phaser.Scene {
     }
 
     destroy() {
+
+        this.manager?.destroy();
+
         this.game.events.off(Phaser.Core.Events.BLUR, this.muteSound, this);
         this.game.events.off(Phaser.Core.Events.FOCUS, this.unmuteSound, this );
 

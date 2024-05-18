@@ -2,7 +2,7 @@ import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
 
-export default class SawController {
+export default class SawController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -49,6 +49,10 @@ export default class SawController {
 
     update(deltaTime: number) {
         this.stateMachine.update(deltaTime);
+    }
+
+    keepObject(): boolean {
+        return true;
     }
 
     public getSprite() {
@@ -102,13 +106,6 @@ export default class SawController {
 
         this.sprite.play('idle');
         this.stateMachine.setState('move-down');
-    }
-
-    private handleStomped(saw: Phaser.Physics.Matter.Sprite) {
-        if (this.sprite !== saw) {
-            return;
-        }
-
     }
 
     private handleBlocked(saw: Phaser.Physics.Matter.Sprite) {

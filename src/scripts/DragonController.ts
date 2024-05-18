@@ -3,7 +3,7 @@ import { sharedInstance as events } from './EventManager';
 import * as CreatureLogic from './CreatureLogic';
 import PlayerController from "./PlayerController";
 
-export default class DragonController {
+export default class DragonController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -152,7 +152,7 @@ export default class DragonController {
         if (this.sprite !== dragon && !this.garbage) {
             return;
         }
-        this.garbage = true;
+
         events.off(this.name + '-stomped', this.handleStomped, this);
         this.sprite.play('dead');
         this.sprite.setStatic(true);
@@ -174,6 +174,7 @@ export default class DragonController {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
 

@@ -1,6 +1,7 @@
 
 import { sharedInstance as events } from './EventManager';
-export default class BarController {
+
+export default class BarController implements StaticObject {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private name: string;

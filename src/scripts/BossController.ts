@@ -5,7 +5,7 @@ import AnimatedParticle from "./AnimatedParticle";
 import * as SceneFactory from '../scripts/SceneFactory';
 import ObstaclesController from "./ObstaclesController";
 
-export default class BossController {
+export default class BossController implements Controller {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     
@@ -317,7 +317,6 @@ export default class BossController {
 
         if(this.health <= 0) {
             this.changeState(3);
-            this.garbage = true;
         }
         
     }
@@ -346,6 +345,7 @@ export default class BossController {
         this.scene.anims.remove('idle');
         this.scene.anims.remove('angry');
         this.sprite.off(Phaser.Animations.Events.ANIMATION_UPDATE, function(anim,frame,sprite,frameKey) {}, this );
+        this.garbage = true;
     }
 
     public keepObject() {

@@ -1,10 +1,9 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 import PlayerController from "./PlayerController";
-//import TestRoom from "~/scenes/TestRoom";
-import * as CreatureLogic from './CreatureLogic';
 
-export default class FlyController {
+
+export default class FlyController implements Creature {
     private scene: Phaser.Scene;
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
@@ -23,6 +22,7 @@ export default class FlyController {
     private wingPower = 0;
     private droppingActiveTime: number = 0;
     private castDroppingAt: number = 0;
+    private heart?: Phaser.GameObjects.Image;
 
     constructor(
         scene: Phaser.Scene,
@@ -52,7 +52,8 @@ export default class FlyController {
         })
         .addState('move-to-player',{
             onEnter: this.moveToPlayerOnEnter,
-            onUpdate: this.moveToPlayerOnUpdate
+            onUpdate: this.moveToPlayerOnUpdate,
+            onExit: this.moveToPlayerOnExit
         })
         .addState('return-to-origin', {
             onEnter: this.returnToOriginOnEnter,
@@ -145,6 +146,27 @@ export default class FlyController {
             this.lastKnownPlayerBounds = this.player.getSprite().getBounds();
         }
         this.sprite?.play('flying');
+
+        if(this.heart === undefined) {
+            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height, 'beware',3).setScale(0.75,0.75);
+            const tweenConfig = {
+                targets: this.heart,
+                scaleX: 1.25,
+                scaleY: 1.25,
+                duration: 1500,
+                ease: 'Sine.easeInOut',
+                yoyo: true,
+                repeat: 99,
+                onComplete: () => {
+                    this.destroyCreatureIcon();
+                }
+            };
+            this.scene.tweens.add( tweenConfig );
+        }
+    }
+
+    private moveToPlayerOnExit() {
+        this.destroyCreatureIcon();
     }
 
     private moveToPlayerOnUpdate(deltaTime: number) {
@@ -172,6 +194,8 @@ export default class FlyController {
                 {
                     this.stateMachine.setState('return-to-origin');
                 }
+
+                this.heart?.setPosition(this.sprite.x, this.sprite.y - this.sprite.height);
 
             } else {
 
@@ -390,9 +414,11 @@ export default class FlyController {
         if (this.sprite !== fly && !this.garbage) {
             return;
         }
-        this.garbage = true;
 
         events.off(this.name + '-stomped', this.handleStomped, this);
+        
+        this.heart?.setVisible(false);
+
         this.sprite.setStatic(true);
         this.sprite.setCollisionCategory(0);
         this.sprite.play('dead');
@@ -411,7 +437,11 @@ export default class FlyController {
            this.sprite.destroy();
            this.stateMachine.destroy();
         }
+
+        this.destroyCreatureIcon();
+
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     private handleBlocked(fly: Phaser.Physics.Matter.Sprite) {
@@ -431,6 +461,22 @@ export default class FlyController {
     
     public keepObject() {
         return !this.garbage;
+    }
+
+
+    private destroyCreatureIcon() {
+        if( this.heart !== undefined) {
+            const fadeOutTweenConfig = {
+                targets: this.heart,
+                alpha: 0,
+                duration: 200,
+                onComplete: () => {
+                    this.heart?.destroy();
+                    this.heart = undefined;
+                }
+            };
+            this.scene.tweens.add(fadeOutTweenConfig);
+        }
     }
 
     private createAnims() {
