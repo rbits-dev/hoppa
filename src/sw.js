@@ -1,5 +1,5 @@
-var cacheName = 'hoppa-v24';
-var cacheWhiteList = [ "hoppa-v24" ];
+var cacheName = 'hoppa-v24.1';
+var cacheWhiteList = [ "hoppa-v24.1" ];
 
 var filesToCache = [
 '/hoppa/assets/01_main_screen_trailer.m4a',
@@ -182,6 +182,8 @@ var filesToCache = [
 '/hoppa/assets/lava-top.webp',
 '/hoppa/assets/lava-center.json',
 '/hoppa/assets/lava-center.webp',
+'/hoppa/assets/watertop.json',
+'/hoppa/assets/watertop.webp',
 '/hoppa/assets/lab.json',
 '/hoppa/assets/lab.webp',
 '/hoppa/assets/lava.m4a',
