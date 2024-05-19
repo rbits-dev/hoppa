@@ -419,11 +419,11 @@ export async function getMyNFTs( chainId ) {
     }
     const arr = data.data;
    
-    numNFTs = arr?.nftTotal
-  });
+    numNFTs = arr?.nftTotal;
 
-  if(numNFTs > 0)
-    globalThis.hasNFT = true;
+    if(numNFTs > 0)
+      globalThis.hasNFT = true;
+  });
   
 }
 
