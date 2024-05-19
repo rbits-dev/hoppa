@@ -235,9 +235,12 @@ export async function getCurrentAccount() {
     
     globalThis.rabbitBalance = await getUserBalance(globalThis.selectedAddress);
 
-    await getMyNFTCollections();
+    await getMyNFTs(1);
+    await getMyNFTs(56);
+    await getMyNFTs(8453);
     
     await findCards();
+
 }
 
 export function getLink() {
@@ -396,59 +399,45 @@ export function isNotEligible(): boolean {
   return true;
 }
 
-export async function getMyNFTCollections() {
+export async function getMyNFTs( chainId ) {
 
-  if( !nftCollections.hasOwnProperty( globalThis.chainId )) {
+  if( !nftCollections.hasOwnProperty( chainId )) {
     console.log("No NFT collections on currently selected chain");
     return;
   }
  
-  const nftAddress: string[] = nftCollections[ globalThis.chainId ].addresses;
+  const nftAddress: string[] = nftCollections[ chainId ].addresses;
 
-  let numCollections = 0;
+  let numNFTs = 0;
   
   console.log("Check for NFTs from " + nftAddress );
   
-  newRequest().then( data => { 
+  newRequest(chainId).then( data => { 
     if( data == null ) {
       console.log("Server Error. Please try again later.");
       return;
     }
     const arr = data.data;
    
-    for( const d of arr.data ) {
-        if( nftAddress.includes( d.ArtistNFTAddress ) )
-          numCollections ++;
-    }
+    numNFTs = arr?.nftTotal
   });
 
-  if(numCollections > 0)
+  if(numNFTs > 0)
     globalThis.hasNFT = true;
   
-  console.log("User has NFTs from " + numCollections + " collections");
 }
 
-function numberToUint256(value: number): BigNumber {
-  
-  return ethers.utils.parseUnits( value.toString(), 9 );
-}
+export async function newRequest(chainId) {
 
-function uint256Tonumber(big: BigNumber): number {
-
-  return parseInt( big.toString() ) / 1e9;
-
-}
-
-export async function newRequest() {
-  const { chainId }  = await provider.getNetwork();
-  const url = 'https://rbits.xyz/boxes/backend/api/userData?blockchainId=' + chainId + '&userAddress=' + globalThis.selectedAddress + "&NSFW=false";
+  const url = 'https://rbits.xyz/boxes/backend/api/landingPageData?userAddress=' + globalThis.selectedAddress;
   const response = await fetch( url, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',
     redirect: 'follow',
     headers: {
-      AppKey: 'mTb+T!5!crBEQEL2!$PJ9&JSjeT3M6Hs*RytA-eaDSBS5UU@8-fCJHu6F?kp@s+JTu2-_-V8L#?5'
+      AppKey: 'mTb+T!5!crBEQEL2!$PJ9&JSjeT3M6Hs*RytA-eaDSBS5UU@8-fCJHu6F?kp@s+JTu2-_-V8L#?5',
+      Blockchainid: chainId,
     }
   }).then( (response) => {
     if( response.status >= 400 && response.status < 600) {
