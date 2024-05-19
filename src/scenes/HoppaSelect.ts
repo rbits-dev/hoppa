@@ -21,6 +21,8 @@ export default class HoppaSelect extends Phaser.Scene {
 
     private arrowY: number = 460;
     private arrowX: number = 300;
+    private lastSeenNFTs: boolean = false;
+    private lastSeenBalance: number = 0;
 
     private lastUpdate: number = 0;
     private currentAddress: string = "";
@@ -195,7 +197,7 @@ export default class HoppaSelect extends Phaser.Scene {
             this.arrow?.setVisible(false);
         }
     
-        if( globalThis.selectedAddress !== this.currentAddress ) {
+        if( globalThis.selectedAddress !== this.currentAddress || globalThis.hasNFT != this.lastSeenNFTs || globalThis.rabbitBalance != this.lastSeenBalance) {
             console.log("update!");
             const { width, height } = this.scale;
             this.addressLabel.destroy();
@@ -203,6 +205,8 @@ export default class HoppaSelect extends Phaser.Scene {
                 .setTint(WalletHelper.isNotEligible() ?  0xc0c0c0: 0x00ff00 )
                 .setOrigin(0.5);
             this.currentAddress = globalThis.selectedAddress;
+            this.lastSeenNFTs = globalThis.hasNFT;
+            this.lastSeenBalance = globalThis.rabbitBalance;
         }
 
     }
