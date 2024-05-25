@@ -11,6 +11,7 @@ import FireController from "./FireController";
 import FireWalkerController from "./FireWalkerController";
 import FlowerController from "./FlowerController";
 import FlyController from "./FlyController";
+import FrogController from "./FrogController";
 import LavaController from "./LavaController";
 import LightSwitchController from "./LightSwitchController";
 import MonsterController from "./MonsterController";
@@ -256,6 +257,23 @@ export function createCreaturePlant(ctx, x, y, width, height, enemyCat, collideW
 
     return new PlantController(ctx, plant, plant.name,  enemyCat, collideWith);
 }
+
+export function createCreatureFrog(ctx, x, y, width, height, rot, enemyCat, collideWith, controller) {
+    const frog = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5) + 2, 'frog', undefined, {
+        vertices: [{ x: 0, y: 0 }, { x: 16, y: 0 }, { x: 16, y: 16 }, { x: 0, y: 16 }], 
+        label: 'frog',
+    })
+        .setFixedRotation();
+    frog.setDepth(10);
+    frog.setCollisionCategory(enemyCat);
+    frog.setCollidesWith(6);
+    frog.setName('frog');
+
+    controller.add('frog',frog, frog.body as MatterJS.BodyType);
+
+    return new FrogController(ctx, frog, frog.name, 0, 7, 10, 0.5);
+}
+
 
 export function createCreatureWater(ctx, name,x, y, width, height, enemyCat, collideWith, controller) {
     const lava = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), name, undefined, {
