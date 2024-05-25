@@ -115,6 +115,8 @@ export function initEmpty() {
 
 export function init() {
 
+    initEmpty();
+
     if( window.ethereum === undefined) {
         globalThis.noWallet = true;
         console.log("No wallet installed");
