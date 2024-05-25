@@ -120,8 +120,6 @@ export default class Wallet extends Phaser.Scene {
     }
 
     update() {
-        
-
         if( globalThis.changeEvent != this.changeEvents ) {
             this.scene.restart();
             this.changeEvents = globalThis.changeEvent;

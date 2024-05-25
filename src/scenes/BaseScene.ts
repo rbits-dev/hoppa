@@ -25,7 +25,7 @@ export default class BaseScene extends Phaser.Scene {
         document.addEventListener('visibilitychange', this.looseFocus );
     }
 
-    push( obj: Controller|Creature ) {
+    push( obj: Controller|Creature|StaticObject|undefined ) {
        if( obj !== undefined )
          this.manager?.push(obj);
     }
