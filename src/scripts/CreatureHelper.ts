@@ -242,7 +242,7 @@ export function createCreatureFlower(ctx, x, y, width, height, enemyCat, collide
 
 export function createCreaturePlant(ctx, x, y, width, height, enemyCat, collideWith, controller) {
     const plant = ctx.matter.add.sprite(x + (width * 0.5), y + (height * 0.5), 'plant', undefined, {
-        vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 16 }, { x: 0, y: 16 }],
+        vertices: [{ x: 0, y: 0 }, { x: 64, y: 0 }, { x: 64, y: 72 }, { x: 0, y: 72 }],
         label: 'plant'
     })
         .setFixedRotation();
@@ -250,10 +250,11 @@ export function createCreaturePlant(ctx, x, y, width, height, enemyCat, collideW
     plant.setCollisionCategory(enemyCat);
     plant.setCollidesWith(collideWith);
     plant.setName('plant');
+    //plant.setMass(20);
 
     controller.add('plant', plant,plant.body as MatterJS.BodyType);
 
-    return new PlantController(ctx, plant, plant.name);
+    return new PlantController(ctx, plant, plant.name,  enemyCat, collideWith);
 }
 
 export function createCreatureWater(ctx, name,x, y, width, height, enemyCat, collideWith, controller) {
