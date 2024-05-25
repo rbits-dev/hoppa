@@ -79,7 +79,7 @@ export default class FlowerController implements Creature {
     private createAnims() {
         this.sprite.anims.create({
             key: 'idle',
-            frameRate: 2,
+            frameRate: Phaser.Math.Between(2,4),
             repeat: -1,
             frames: this.sprite.anims.generateFrameNames('flower', {
                 start: 1,
