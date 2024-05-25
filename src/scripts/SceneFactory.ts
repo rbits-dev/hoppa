@@ -476,7 +476,8 @@ export function preload(ctx) {
     ctx.load.spritesheet('billboards', 'assets/billboards.webp', { frameWidth: 192, frameHeight: 220, startFrame: 0, endFrame: 28 });
     ctx.load.spritesheet('lightswitch', 'assets/lightswitch.webp', { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1 });
     ctx.load.spritesheet('fireball', 'assets/fireball.webp', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 3 });
-
+    ctx.load.spritesheet('frog', 'assets/grfrog.webp', { frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 7 });
+    
     // images
     ctx.load.image('heart', 'assets/heart.webp');
     ctx.load.image('berry', 'assets/berry.webp');
@@ -828,6 +829,9 @@ export function basicCreateCreature(ctx, name, x, y, width, height, rotation, en
         }
         case 'plant': {
             return CreatureHelper.createCreaturePlant(ctx, x, y, width, height, enemyCat, collideWith, controller);
+        }
+        case 'frog': {
+            return CreatureHelper.createCreatureFrog(ctx,x,y,width,height,rotation, enemyCat,collideWith, controller);
         }
         case 'zeppelin1': {
             return CreatureHelper.createCreatureZeppelin1(ctx, x, y, width, height, enemyCat, collideWith, controller);
