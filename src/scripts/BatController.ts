@@ -70,8 +70,10 @@ export default class BatController implements Controller {
             this.verticalTimer = 0;
         }
 
-        const verticalOffset = this.verticalRange * Math.sin(this.moveTime / 1000 * this.verticalSpeed);
-        this.sprite.setVelocityY(this.verticalDirection * verticalOffset);
+        if(this.sprite !== undefined) {
+            const verticalOffset = this.verticalRange * Math.sin(this.moveTime / 1000 * this.verticalSpeed);
+            this.sprite.setVelocityY(this.verticalDirection * verticalOffset);
+        }
     }
 
     public getSprite() {
