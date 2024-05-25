@@ -13,7 +13,7 @@ export default class CrabController implements Creature {
     private name: string;
     private garbage = false;
     private myMoveTime = 0;
-    private strength = 1;
+    private strength: number = 1;
 
     private pauseTime: number = 0;
     private pauseDuration: number = 0;
@@ -22,6 +22,7 @@ export default class CrabController implements Creature {
     private dashDuration: number = 0;
 
     private attackDuration: number = 0;
+    private attackPower: number = 3;
 
     private aggroTime: number = 0;
     private aggroDuration: number = 400;
@@ -156,7 +157,7 @@ export default class CrabController implements Creature {
 
     private attackOnEnter() {
         this.moveTime = 0;
-        this.strength = 3;
+        this.strength = this.attackPower;
         this.attackDuration = Phaser.Math.Between(2000,5500); 
         if(this.heart === undefined) {
             this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height + 32, 'beware',3).setScale(0.75,0.75);
@@ -191,7 +192,6 @@ export default class CrabController implements Creature {
     
     private attackOnExit() {
         this.destroyCreatureIcon();
-        this.strength = 1;
     }
 
     private evadeOnExit() {
@@ -443,7 +443,13 @@ export default class CrabController implements Creature {
             return;
         }
 
-        this.strength --;
+        if( this.attackPower > 0 ) {
+            this.attackPower --;
+        }
+        if( this.strength > 0 ) {
+            this.strength --;
+        }
+
         if(this.strength > 0)
             return;
 
@@ -453,16 +459,18 @@ export default class CrabController implements Creature {
         this.sprite.play('dead');
        // this.sprite.setStatic(true);
        // this.sprite.setCollisionCategory(0);
-        this.sprite.on('animationcomplete', () => {
+        this.sprite.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.cleanup();
         });
         this.stateMachine.setState('dead');
     }
 
     private cleanup() {
+        if(this.garbage)
+            return;
+        this.stateMachine.destroy();
         if(this.sprite !== undefined) {
            this.sprite.destroy();
-           this.stateMachine.destroy();
         }
         this.destroyCreatureIcon();
         this.sprite = undefined;
