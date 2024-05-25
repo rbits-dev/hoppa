@@ -90,7 +90,7 @@ export default class FireWalkerController implements Creature {
                 (!this.sprite.flipX && this.sprite.x > playerSprite.x))) {
 
                 if(this.speed == 0) {
-                    let cv = this.velocityX * 0.8;
+                    let cv = this.velocityX * 0.5;
                     this.velocityX += cv;
                     this.speed = cv;
                 }
