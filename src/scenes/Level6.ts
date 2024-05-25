@@ -21,6 +21,7 @@ export default class Level6 extends BaseScene {
     
     private ground1!: Phaser.Tilemaps.TilemapLayer;
     private layer1!: Phaser.Tilemaps.TilemapLayer;
+    private deco!: Phaser.Tilemaps.TilemapLayer;
 
     constructor() {
         super('level6');
@@ -72,6 +73,7 @@ export default class Level6 extends BaseScene {
         this.load.image('clouds', 'assets/clouds.webp');
         this.load.atlas('neon', 'assets/neon2.webp', 'assets/neon2.json');
         this.load.tilemapTiledJSON('tilemap7', 'assets/map7.json');
+        this.load.image('items', 'assets/items.webp');
     }
 
     create() {
@@ -98,14 +100,17 @@ export default class Level6 extends BaseScene {
         const groundTiles = this.map.addTilesetImage('ground', 'groundTiles', 64, 64, 0, 2);
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
         const grasTiles = this.map.addTilesetImage('gras-purple', 'grasPurpleTiles', 64, 64, 0, 2);
+        const itemTiles = this.map.addTilesetImage( 'items', 'items', 64, 64, 0, 0);
         
         this.map.createLayer('obstacles', propTiles);
-        this.layer1 = this.map.createLayer('layer1', [groundTiles,grasTiles,propTiles]);
+        this.layer1 = this.map.createLayer('layer1', [groundTiles,grasTiles,propTiles, itemTiles]);
         this.ground1 = this.map.createLayer('ground', [groundTiles,grasTiles,propTiles]);
+        this.deco = this.map.createLayer('fg', [ itemTiles ] );
         
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
        
         this.layer1.setDepth(10);
+        this.deco.setDepth(11);
 
         const playerCat = 2;
         const enemyCat = 4;

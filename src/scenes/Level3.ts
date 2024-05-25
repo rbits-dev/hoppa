@@ -17,6 +17,7 @@ export default class Level3 extends BaseScene {
     private objects: Phaser.Physics.Matter.Sprite[] = [];
     private ground1!: Phaser.Tilemaps.TilemapLayer;
     private layer1!: Phaser.Tilemaps.TilemapLayer;
+    private deco!: Phaser.Tilemaps.TilemapLayer;
     private playerX = -1;
     private playerY = -1;
 
@@ -74,6 +75,7 @@ export default class Level3 extends BaseScene {
         this.load.image('bg_4', 'assets/back5.webp');
         this.load.image('bg_5', 'assets/back6.webp');
         this.load.image('bg_6', 'assets/back7.webp');
+        this.load.image('items', 'assets/items.webp');
 
         
         SceneFactory.preload(this);
@@ -114,14 +116,16 @@ export default class Level3 extends BaseScene {
         const groundTiles = this.map.addTilesetImage('ground', 'groundTiles', 64, 64, 0, 2);
         const propTiles = this.map.addTilesetImage('props', 'propTiles', 64, 64, 0, 2);
         const grasTiles = this.map.addTilesetImage('gras', 'grasTiles', 64, 64, 0, 2);
+        const itemTiles = this.map.addTilesetImage('items', 'items', 64,64,0,0 );
 
         this.map.createLayer('obstacles', propTiles);
-        this.layer1 = this.map.createLayer('layer1', [groundTiles, grasTiles, propTiles]);
+        this.layer1 = this.map.createLayer('layer1', [groundTiles, grasTiles, propTiles, itemTiles]);
         this.ground1 = this.map.createLayer('ground', [groundTiles, grasTiles, propTiles]);
-        
+        this.deco = this.map.createLayer( 'fg', [itemTiles] );
         this.ground1.setCollisionByProperty({ collides: true, recalculateFaces: false });
 
         this.layer1.setDepth(10);
+        this.deco.setDepth(11);
 
         const playerCat = 2;
         const enemyCat = 4;
@@ -210,6 +214,7 @@ export default class Level3 extends BaseScene {
         this.objects.forEach(obj => obj.destroy());
         this.layer1.destroy();
         this.ground1.destroy();
+        this.deco.destroy();
         this.map.destroy();
     
         this.sounds.clear();
