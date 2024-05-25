@@ -1,24 +1,34 @@
 import StateMachine from "./StateMachine";
 import { sharedInstance as events } from './EventManager';
 
-export default class PlantController implements Controller {
+export default class PlantController implements Creature {
     private sprite: Phaser.Physics.Matter.Sprite;
     private stateMachine: StateMachine;
     private touched: boolean;
     private dead: boolean;
     private name: string;
+    private garbage: boolean = false;
    
+    private enemyCat: number;
+    private collidesWith: number[];
+
     constructor(
         scene: Phaser.Scene,
         sprite: Phaser.Physics.Matter.Sprite,
-        name: string
+        name: string,
+        enemycat: number,
+        collidesWith: number[],
+
     ) {
         this.sprite = sprite;
         this.name = name;
         this.touched = false;
         this.dead = false;
-        this.createAnims();
+        this.enemyCat = enemycat;
+        this.collidesWith = collidesWith;
 
+        this.createAnims(); 
+         
         this.stateMachine = new StateMachine(this);
 
         this.stateMachine.addState('idle', {
@@ -31,6 +41,10 @@ export default class PlantController implements Controller {
 
         events.on(this.name + '-stomped', this.handleStomped, this);
         events.on(this.name + '-touched', this.handleTouched, this);
+    }
+
+    lookahead(map: Phaser.Tilemaps.Tilemap): boolean {
+        return false;
     }
 
     destroy() {
@@ -49,9 +63,7 @@ export default class PlantController implements Controller {
     }
 
     private idleOnEnter() {
-        if(this.dead)
-            return;
-            
+
         if(!this.touched) {
             this.sprite.play('wait');
         }
@@ -76,13 +88,13 @@ export default class PlantController implements Controller {
             this.touched = true;
             this.grow(true);
         }
-        else {
-            events.off(this.name + '-stomped', this.handleStomped, this);
-             this.sprite.setStatic(true);
-             this.sprite.setCollisionCategory(0);
-        }
 
-        this.dead = true;
+        
+        events.off(this.name + '-stomped', this.handleStomped, this);
+        //this.sprite.setStatic(true);
+        this.sprite.setCollisionCategory(0);
+        
+        this.stateMachine.setState('dead');
     }
 
     private handleTouched(plant: Phaser.Physics.Matter.Sprite) {
@@ -92,32 +104,45 @@ export default class PlantController implements Controller {
         if(this.touched == true || this.dead)
             return;
 
+        this.grow(false);
         this.touched = true;
         events.off(this.name + '-touched', this.handleTouched, this);
       
     }
 
     private grow(dies: boolean) {
-        const fh = [ 0,0, 16, 64, 96, 128,0,0 ];
+       
         this.sprite.play('grow').on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.stateMachine.setState( dies ? 'dead': 'idle');
-        })
-        .on( 'animationupdate', (anim,frame) => {
+        });
+       /* .on( 'animationupdate', (anim,frame) => {
+            const fh = [ 8,8, 16, 64, 96, 128,8,8 ];
             if(anim.key === 'grow' ) {
                 const frameIndex = frame.index;
                 const newHeight = fh[ frameIndex ];
                 this.sprite.setBody({ height: newHeight });
+                this.sprite.setFixedRotation();
+                this.sprite.setStatic(true);
+                this.sprite.setCollidesWith(this.collidesWith);
+                this.sprite.setCollisionCategory(this.enemyCat);
             }
-        });
+        }); */
     }
 
 
     private cleanup() {
+        if(this.garbage)
+            return;
+        this.stateMachine.destroy();
         if(this.sprite !== undefined) {
            this.sprite.destroy();
-           this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
+    }
+
+    public keepObject(): boolean {
+        return !this.garbage;
     }
 
     private createAnims() {
