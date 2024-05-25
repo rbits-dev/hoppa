@@ -1,5 +1,5 @@
-var cacheName = 'hoppa-v24.1';
-var cacheWhiteList = [ "hoppa-v24.1" ];
+var cacheName = 'hoppa-v24.2';
+var cacheWhiteList = [  "hoppa-v24.1","hoppa-v24.2" ];
 
 var filesToCache = [
 '/hoppa/assets/01_main_screen_trailer.m4a',
@@ -272,6 +272,7 @@ var filesToCache = [
 '/hoppa/assets/spritesheet_ground_extruded.webp',
 '/hoppa/assets/spritesheet_props.webp',
 '/hoppa/assets/spritesheet_props_extruded.webp',
+'/hoppa/assets/items.webp',
 '/hoppa/assets/spy.m4a',
 '/hoppa/assets/spy.mp3',
 '/hoppa/assets/star.m4a',
@@ -300,6 +301,7 @@ var filesToCache = [
 '/hoppa/assets/thevillage.mp3',
 '/hoppa/assets/tnt.json',
 '/hoppa/assets/tnt.webp',
+'/hoppa/assets/grfrog.webp',
 '/hoppa/assets/toad.webp',
 '/hoppa/assets/trap.json',
 '/hoppa/assets/trap.webp',
