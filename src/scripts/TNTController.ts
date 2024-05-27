@@ -131,7 +131,7 @@ export default class TNTController implements Controller {
         const ex = cx - 128;
         const ey = cy;
         
-        let tiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex, ey, 4 * 64, 3 * 64 );
+        let tiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex, ey, 4 * 64, 3 * 64, undefined,undefined, 'ground' );
         tiles?.forEach( tile => {
             this.tilemap.removeTileAt(tile.x, tile.y, false, true);
             let snd = Phaser.Math.Between(1,6);
@@ -140,7 +140,7 @@ export default class TNTController implements Controller {
             tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
             // objects in world map are not destroyed
         });
-        tiles = this.tilemap.getTilesWithinWorldXY(ex - 64, ey, 64, 64 );
+        tiles = this.tilemap.getTilesWithinWorldXY(ex - 64, ey, 64, 64, undefined,undefined, 'ground' );
         let snd = Phaser.Math.Between(1,6);
             SceneFactory.addSound(this.scene, "explosion" + snd.toString(), false, true );
         tiles?.forEach( tile => {
@@ -148,7 +148,7 @@ export default class TNTController implements Controller {
             tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
         });
 
-        tiles = this.tilemap.getTilesWithinWorldXY(ex + 4 * 64, ey, 64, 64 );
+        tiles = this.tilemap.getTilesWithinWorldXY(ex + 4 * 64, ey, 64, 64, undefined,undefined, 'ground' );
         snd = Phaser.Math.Between(1,6);
             SceneFactory.addSound(this.scene, "explosion" + snd.toString(), false, true );
         tiles?.forEach( tile => {

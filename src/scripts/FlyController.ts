@@ -258,13 +258,7 @@ export default class FlyController implements Creature {
         this.moveTime += deltaTime;
 
         let thinkingTime = this.moveTargetTime / 2;
-/*
-        if(this.sprite?.body?.velocity.y == 0 && thinkingTime < this.moveTime ) {
-            this.stateMachine.setState('idle'); // fly has landed
-            this.moveTargetTime = Phaser.Math.Between(300,1450);
-            return;
-        }
-  */      
+
         this.sprite?.setVelocityY(-1 * this.wingPower);
 
         if( thinkingTime < this.moveTime && this.player !== undefined ) {
@@ -293,12 +287,6 @@ export default class FlyController implements Creature {
     private moveUpOnUPdate(deltaTime: number) {
         this.moveTime += deltaTime;
         let thinkingTime = this.moveTargetTime / 2;
-
-      /*  if(this.sprite?.body?.velocity.y == 0 && thinkingTime < this.moveTime ) {
-            this.stateMachine.setState('idle'); // fly has landed
-            this.moveTargetTime = Phaser.Math.Between(300,1450);
-            return;
-        } */
 
         this.sprite?.setVelocityY(4 * this.wingPower);
 
@@ -438,7 +426,8 @@ export default class FlyController implements Creature {
            this.stateMachine.destroy();
         }
 
-        this.destroyCreatureIcon();
+        this.heart?.destroy();
+        this.heart = undefined;
 
         this.sprite = undefined;
         this.garbage = true;
@@ -448,8 +437,6 @@ export default class FlyController implements Creature {
         if (this.sprite !== fly || this.sprite === undefined) {
             return;
         }
-
-        this.moveTime = 0;
 
         if (this.sprite?.body?.velocity.y > 0) {
             this.stateMachine.setState('move-down');

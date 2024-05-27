@@ -120,21 +120,21 @@ export default class BombController implements Creature {
         
         const ex = this.sprite.body?.position.x - 64;
         const ey = this.sprite.body?.position.y;
-        const tiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex, ey, 3 * 64, 3 * 64 );
+        const tiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex, ey, 3 * 64, 3 * 64, undefined,undefined, 'ground' );
         SceneFactory.addSound(this.scene, "explosion3", false, true );
         tiles?.forEach( tile => {
             this.tilemap.removeTileAt(tile.x, tile.y, false, true);
             tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
         });
         
-        let remainingTiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex - 64, ey, 64, 64 );
+        let remainingTiles: Phaser.Tilemaps.Tile[] = this.tilemap.getTilesWithinWorldXY(ex - 64, ey, 64, 64, undefined,undefined, 'ground' );
         SceneFactory.addSound(this.scene, "explosion1", false, true );
         remainingTiles?.forEach( tile => {
             this.tilemap.removeTileAt(tile.x, tile.y, false, true);
             tile.setVisible(false); // in playercontroller , tilebodies that are not visible are destroyed on collision
         });
 
-        remainingTiles = this.tilemap.getTilesWithinWorldXY(ex + 4 * 64, ey, 64, 64 );
+        remainingTiles = this.tilemap.getTilesWithinWorldXY(ex + 4 * 64, ey, 64, 64, undefined,undefined, 'ground' );
         SceneFactory.addSound(this.scene, "explosion4", false, true );
         remainingTiles?.forEach( tile => {
             this.tilemap.removeTileAt(tile.x, tile.y, false, true);

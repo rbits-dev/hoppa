@@ -100,6 +100,7 @@ export default class CrabController implements Creature {
     }
 
     update(deltaTime: number) {
+        
         this.stateMachine.update(deltaTime);
 
         this.aggroTime += deltaTime;
@@ -344,7 +345,7 @@ export default class CrabController implements Creature {
     private aggro() {
         if(this.player !== undefined ) {
             const cur = this.stateMachine.getCurrentState();
-            if( cur !== 'attack' && cur !== 'follow' && cur !== 'evade') {
+            if( cur !== 'attack' && cur !== 'follow' && cur !== 'evade' && cur !== 'dead') {
                 const distance = Phaser.Math.Distance.Between( this.sprite.body?.position.x,
                     this.sprite.body?.position.y,
                     this.player.getSprite().x,
@@ -368,7 +369,10 @@ export default class CrabController implements Creature {
     }
 
     private slumber(changeDirection: boolean) {
-        
+
+        if (this.sprite.active == false)
+            return;
+
         if( this.aggro() )
             return;
         
@@ -433,8 +437,6 @@ export default class CrabController implements Creature {
             return;
         }
 
-        this.moveTime = 0;
-
         this.slumber(true);
     }
 
@@ -453,16 +455,19 @@ export default class CrabController implements Creature {
         if(this.strength > 0)
             return;
 
+        this.stateMachine.setState('dead');
+
         events.off(this.name + '-stomped', this.handleStomped, this);
 
         this.heart?.setVisible(false);
+
         this.sprite.play('dead');
        // this.sprite.setStatic(true);
        // this.sprite.setCollisionCategory(0);
         this.sprite.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.cleanup();
         });
-        this.stateMachine.setState('dead');
+
     }
 
     private cleanup() {
@@ -472,7 +477,8 @@ export default class CrabController implements Creature {
         if(this.sprite !== undefined) {
            this.sprite.destroy();
         }
-        this.destroyCreatureIcon();
+        this.heart?.destroy();
+        this.heart = undefined;
         this.sprite = undefined;
         this.garbage = true;
     }
