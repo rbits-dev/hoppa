@@ -525,6 +525,141 @@ export default class News {
   "title": "Crypto Investor Buys Lamborghini, Forgets Keys on Blockchain",
   "text": "Crypto investor buys Lamborghini, forgets keys on blockchain. Looks like he needs to mine some more memory."
   }`,
-
+  `{
+    "title": "Bitcoin Hits $1 Million: Experts Predict Parabolic Surge",
+    "text": "Top economists predict Bitcoin will hit $1 million, fueling a parabolic surge and making early investors rich beyond their wildest dreams."
+  }`,
+  `{
+    "title": "Crypto Boom: Institutional Money Floods Market",
+    "text": "Institutional investors flood the crypto market, driving Bitcoin's dominance to new highs and sparking a bullish frenzy."
+  }`,
+  `{
+    "title": "Ethereum 2.0 Launch: Game-Changer for Blockchain",
+    "text": "The launch of Ethereum 2.0 marks a game-changer for blockchain, with improved scalability set to revolutionize industries."
+  }`,
+  `{
+    "title": "Altcoin Explosion: Top Coins Set for Massive Gains",
+    "text": "Altcoins like Ethereum, Cardano, and Binance Coin are primed for massive gains as investors diversify their portfolios."
+  }`,
+  `{
+    "title": "Dogecoin Mania: Meme Coin Surges 1000%",
+    "text": "Dogecoin surges 1000% in a day, defying expectations and becoming the talk of Wall Street."
+  }`,
+  `{
+    "title": "NFT Frenzy: Digital Art Sells for Millions",
+    "text": "The NFT frenzy reaches new heights as digital artworks fetch millions, solidifying NFTs as a legitimate asset class."
+  }`,
+  `{
+    "title": "DeFi Revolution: Yield Farming Yields 1000% APY",
+    "text": "Decentralized finance (DeFi) revolutionizes banking with yield farming opportunities offering staggering returns."
+  }`,
+  `{
+    "title": "Smart Contracts Transform Supply Chains",
+    "text": "Smart contracts transform supply chains, streamlining processes and boosting efficiency by 90%."
+  }`,
+  `{
+    "title": "Stablecoin Domination: USDT Emerges as Reserve Currency",
+    "text": "Stablecoins surpass fiat currency as USDT emerges as the world's reserve currency, offering stability in turbulent times."
+  }`,
+  `{
+    "title": "Green Mining Revolution: Crypto Reduces Carbon Emissions",
+    "text": "Crypto mining leads a green energy revolution, reducing carbon emissions by 50% and paving the way for a sustainable future."
+  }`,
+  `{
+    "title": "Crypto Gold Rush: New Coin Hits All-Time Highs",
+    "text": "Investors flock to the latest coin, driving it to all-time highs and sparking a frenzy reminiscent of the Gold Rush."
+  }`,
+  `{
+    "title": "Blockchain Breakthrough: Scalability Problem Solved",
+    "text": "Blockchain developers solve scalability issues, paving the way for mass adoption and unprecedented transaction speeds."
+  }`,
+  `{
+    "title": "ICO Craze: Record-Breaking Fundraising Hits Billions",
+    "text": "Initial Coin Offerings (ICOs) shatter fundraising records, with billions pouring into innovative blockchain projects."
+  }`,
+  `{
+    "title": "Crypto Titans Clash: Battle for Dominance Intensifies",
+    "text": "Top crypto projects clash in a battle for dominance, with each vying to become the industry's undisputed leader."
+  }`,
+  `{
+    "title": "Shiba Inu Coin Rockets in Meme Token Surge",
+    "text": "Shiba Inu Coin skyrockets in meme token surge."
+  }`,
+  `{
+    "title": "Doge-themed NFTs Break Auction Records",
+    "text": "Doge-themed NFTs shatter auction records."
+  }`,
+  `{
+    "title": "DogeArmy Token Unites Reddit Community",
+    "text": "DogeArmy token unites Reddit's Dogecoin community."
+  }`,
+  `{
+    "title": "Elon Musk Boosts Dogecoin Lunar Mission",
+    "text": "Elon Musk boosts Dogecoin's lunar mission."
+  }`,
+  `{
+    "title": "Vitalik Buterin Endorses Dogecoin Ecosystem",
+    "text": "Vitalik Buterin endorses Dogecoin ecosystem."
+  }`,
+  `{
+    "title": "ShibaSwap Launches Meme Token Platform",
+    "text": "ShibaSwap launches meme token platform."
+  }`,
+  `{
+    "title": "Pepe the Frog Goes Crypto in NFT Craze",
+    "text": "Pepe the Frog goes crypto in NFT craze."
+  }`,
+  `{
+    "title": "SpaceX Plans Lunar Mission Funded by Dogecoin",
+    "text": "SpaceX plans lunar mission funded by Dogecoin."
+  }`,
+  `{
+    "title": "Cat-Themed Token Meows to Top 10 Market Cap",
+    "text": "Cat-themed token meows to top 10 market cap."
+  }`,
+  `{
+    "title": "Rise of Memetic Tokens: Doge and Shiba Lead Charge",
+    "text": "Rise of memetic tokens: Doge and Shiba lead charge."
+  }`, 
+  `{
+    "title": "Dogecoin's Elon Musk Tweet Sparks Meme Token Rally",
+    "text": "Elon Musk's Dogecoin tweet sparks meme token rally."
+  }`,
+  `{
+    "title": "ShibaSwap Launches NFT Marketplace for Meme Tokens",
+    "text": "ShibaSwap launches NFT marketplace for meme tokens."
+  }`,
+  `{
+    "title": "Crypto Celebrities Join Forces to Promote DogeArmy Coin",
+    "text": "Crypto celebrities join forces to promote DogeArmy Coin."
+  }`,
+  `{
+    "title": "Doge-themed Metaverse Takes Crypto Community by Storm",
+    "text": "Doge-themed metaverse takes crypto community by storm."
+  }`,
+  `{
+    "title": "Shiba Inu Coin Becomes Top Meme Token on Social Media",
+    "text": "Shiba Inu Coin becomes top meme token on social media."
+  }`,
+  `{
+    "title": "Viral TikTok Campaign Propels CatCoin to New Heights",
+    "text": "Viral TikTok campaign propels CatCoin to new heights."
+  }`,
+  `{
+    "title": "Doge-inspired Artwork Sells for Record-Breaking Amount",
+    "text": "Doge-inspired artwork sells for record-breaking amount."
+  }`,
+  `{
+    "title": "Reddit's Dogecoin Community Plans Charity Drive",
+    "text": "Reddit's Dogecoin community plans charity drive."
+  }`,
+  `{
+    "title": "Meme Token Exchange Hits Milestone 1 Million Users",
+    "text": "Meme token exchange hits milestone 1 million users."
+  }`,
+  `{
+    "title": "ShibaSwap Adds Support for New Doge-themed Tokens",
+    "text": "ShibaSwap adds support for new Doge-themed tokens."
+  }`
   ];
 }
