@@ -597,13 +597,13 @@
   <object id="3609" name="exit" x="21248" y="1088" width="64" height="64">
    <properties>
     <property name="event" value="next-level"/>
-    <property name="room" value="level7"/>
+    <property name="room" value="level9"/>
    </properties>
   </object>
   <object id="3610" name="exit" x="21312" y="1088" width="64" height="64">
    <properties>
     <property name="event" value="next-level"/>
-    <property name="room" value="level7"/>
+    <property name="room" value="level9"/>
    </properties>
   </object>
   <object id="3611" name="coin" x="21248" y="896" width="64" height="64"/>

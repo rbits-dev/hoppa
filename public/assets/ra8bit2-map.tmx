@@ -2511,7 +2511,7 @@
   <object id="523" name="exit" x="6208" y="192" width="64" height="64">
    <properties>
     <property name="event" value="next-level"/>
-    <property name="room" value="level7"/>
+    <property name="room" value="level8"/>
    </properties>
   </object>
   <object id="524" name="billboard" x="1889.33" y="191" width="192" height="220"/>

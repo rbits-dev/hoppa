@@ -302,7 +302,7 @@
                         {
                          "name":"room",
                          "type":"string",
-                         "value":"level6"
+                         "value":"level7"
                         }],
                  "rotation":0,
                  "visible":true,
@@ -324,7 +324,7 @@
                         {
                          "name":"room",
                          "type":"string",
-                         "value":"level6"
+                         "value":"level7"
                         }],
                  "rotation":0,
                  "visible":true,
@@ -346,7 +346,7 @@
                         {
                          "name":"room",
                          "type":"string",
-                         "value":"level6"
+                         "value":"level7"
                         }],
                  "rotation":0,
                  "visible":true,
@@ -368,7 +368,7 @@
                         {
                          "name":"room",
                          "type":"string",
-                         "value":"level6"
+                         "value":"level7"
                         }],
                  "rotation":0,
                  "visible":true,
@@ -6064,7 +6064,7 @@
          "name":"ground",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":336,
          "x":0,
          "y":0
@@ -6125,7 +6125,7 @@
          "name":"layer1",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":336,
          "x":0,
          "y":0
