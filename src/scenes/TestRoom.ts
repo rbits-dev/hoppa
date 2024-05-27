@@ -39,7 +39,7 @@ export default class TestRoom extends BaseScene {
             'lastHealth': 100,
             'coinsCollected': 0,
             'carrotsCollected': 0,
-            'currLevel': 6,
+            'currLevel': 10,
             'scorePoints': 0,
             'highScorePoints': 0,
             'livesRemaining': 3,
@@ -57,7 +57,7 @@ export default class TestRoom extends BaseScene {
             this.info = obj as PlayerStats;
         }
 
-        this.info.currLevel = 6;
+        this.info.currLevel = 10;
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
             this.destroy();
         });

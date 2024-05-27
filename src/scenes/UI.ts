@@ -36,12 +36,8 @@ export default class UI extends Phaser.Scene {
         if( data != null ) {
             const obj = JSON.parse(data);
             this.info = obj as PlayerStats;
-
-            if(this.info.currLevel === undefined) {
-                this.info.currLevel = 0;
-            }
         }
-        else {
+      /*  else {
             this.info = {
                 'lastHealth': 100,
                 'coinsCollected': 0,
@@ -57,8 +53,8 @@ export default class UI extends Phaser.Scene {
                 'pokeBall': false,
                 'voice': false,
             };
-        }
-        
+        }*/
+
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
             this.destroy();
         });
@@ -300,7 +296,7 @@ export default class UI extends Phaser.Scene {
             this.info.currLevel = 1;
         }
         else {
-           if(this.info.currLevel < 7)
+           if(this.info.currLevel < 9)
            this.info.currLevel ++;
         }
 
