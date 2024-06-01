@@ -29,6 +29,7 @@ import HallOfFame from './scenes/HallOfFame'
 import EnterHallOfFame from './scenes/EnterHallOfFame'
 import HoppaSelect from './scenes/HoppaSelect'
 import WarpLevel from './scenes/WarpLevel'
+import Level9 from './scenes/Level9'
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.WEBGL,
@@ -62,7 +63,7 @@ const config: Phaser.Types.Core.GameConfig = {
 		activePointers: 4,
 		gamepad: true,
 	},
-	scene: [Loader,LogoScreen,AdScene, HoppaScreen,HoppaSelect, Wallet,HallOfFame,EnterHallOfFame, Inventory,Story,GameSettingsMenu,Help,Start,SelectPlayer,WarpLevel,Level1,Level2,Level3,Level4,Level5,Level6,Level7,Level8,Bonus,Bonus2,Win,UI,Pause,GameOver],	
+	scene: [Loader,LogoScreen,AdScene, HoppaScreen,HoppaSelect, Wallet,HallOfFame,EnterHallOfFame, Inventory,Story,GameSettingsMenu,Help,Start,SelectPlayer,WarpLevel,Level1,Level2,Level3,Level4,Level5,Level6,Level7,Level8,Level9,Bonus,Bonus2,Win,UI,Pause,GameOver],	
 }
 
 window.addEventListener('load', () => {

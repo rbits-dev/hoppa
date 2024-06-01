@@ -296,7 +296,7 @@ export default class UI extends Phaser.Scene {
             this.info.currLevel = 1;
         }
         else {
-           if(this.info.currLevel < 9)
+           if(this.info.currLevel < 10)
            this.info.currLevel ++;
         }
 
