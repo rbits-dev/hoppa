@@ -72,7 +72,6 @@ export default class FireWalkerController implements Creature {
             return;
 
         const playerSprite = this.player.getSprite();
-
         const enemyTileX = Math.floor(this.sprite.x / 64);
         const playerTileX = Math.floor(playerSprite.x / 64); 
         
@@ -81,7 +80,6 @@ export default class FireWalkerController implements Creature {
 
         const dY = Math.abs( playerSprite.y - this.sprite.y);
        
-
         if( inLine && dY < 32 ) {
             const distance = Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, playerSprite.x, playerSprite.y);
             
@@ -160,7 +158,10 @@ export default class FireWalkerController implements Creature {
         if (this.sprite.active == false)
             return false;
 
-        if (!CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0) && this.sprite.body?.velocity.y == 0) {
+        let floorAhead = CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0);
+        let wallAhead = CreatureLogic.hasTileInFront(map, this.scene.cameras.main, this.sprite, true, 0);
+
+        if (!floorAhead || wallAhead ) {
             if (this.sprite.flipX) {
                 this.stateMachine.setState("move-left");
             }
@@ -199,8 +200,6 @@ export default class FireWalkerController implements Creature {
 
         events.off(this.name + '-stomped', this.handleStomped, this);
         this.sprite.play('dead');
-        this.sprite.setStatic(true);
-        this.sprite.setCollisionCategory(0);
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.cleanup();
         });

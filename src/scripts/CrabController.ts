@@ -161,7 +161,7 @@ export default class CrabController implements Creature {
         this.strength = this.attackPower;
         this.attackDuration = Phaser.Math.Between(2000,5500); 
         if(this.heart === undefined) {
-            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height + 32, 'beware',3).setScale(0.75,0.75);
+            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height + 32, 'beware').setScale(0.75,0.75);
             const tweenConfig = {
                 targets: this.heart,
                 scaleX: 1.25,
@@ -399,7 +399,12 @@ export default class CrabController implements Creature {
         if (this.sprite.active == false)
             return false;
 
-        if (!CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0) && this.sprite.body?.velocity.y == 0) {
+        let floorAhead = CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0);
+        let wallAhead = CreatureLogic.hasTileInFront(map, this.scene.cameras.main, this.sprite, true, 0);
+
+
+        //if (!CreatureLogic.hasTileAhead(map, this.scene.cameras.main, this.sprite, true, 0) && this.sprite.body?.velocity.y == 0) {
+        if( !floorAhead || wallAhead ) {
             this.slumber(true);
             return true;
         }

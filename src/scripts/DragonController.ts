@@ -10,7 +10,7 @@ export default class DragonController implements Creature {
     private player: PlayerController;
 
     private moveTime = 0;
-    private velocityX = 5;
+    private velocityX = 3.5;
     private name;
     private garbage: boolean = false;
     private myMoveTime = 0;
@@ -155,8 +155,6 @@ export default class DragonController implements Creature {
 
         events.off(this.name + '-stomped', this.handleStomped, this);
         this.sprite.play('dead');
-        this.sprite.setStatic(true);
-        this.sprite.setCollisionCategory(0);
         this.sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.cleanup();
         });

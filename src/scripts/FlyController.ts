@@ -109,7 +109,7 @@ export default class FlyController implements Creature {
             
         const direction = (this.sprite.body.velocity.y > 0) ? 1 : -1;
         let y = this.sprite.body.position.y;
-        y += (direction * 64);
+        y += (direction * 128);
         
         const tile = map.getTileAtWorldXY(this.sprite.body.x, y, undefined, this.scene.cameras.main, 'ground');
             
@@ -148,7 +148,7 @@ export default class FlyController implements Creature {
         this.sprite?.play('flying');
 
         if(this.heart === undefined) {
-            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height, 'beware',3).setScale(0.75,0.75);
+            this.heart = this.scene.add.image( this.sprite.x, this.sprite.y - this.sprite.height, 'beware').setScale(0.75,0.75);
             const tweenConfig = {
                 targets: this.heart,
                 scaleX: 1.25,

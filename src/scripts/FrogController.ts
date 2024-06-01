@@ -51,7 +51,7 @@ export default class FrogController implements Creature {
         events.off(this.name + '-blocked', this.handleBlocked, this);
         events.off(this.name + '-stomped', this.handleStomped, this);
 
-        this.sprite.destroy();
+        this.cleanup();
     }
 
     update(deltaTime: number) {
@@ -158,6 +158,7 @@ export default class FrogController implements Creature {
            this.stateMachine.destroy();
         }
         this.sprite = undefined;
+        this.garbage = true;
     }
 
     private createAnim(name: string, startFrame: number, endFrame: number, fps: number) { 
