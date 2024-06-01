@@ -20,7 +20,6 @@ interface NftCollections {
 const chainData: ChainData = {
   "1": {
     hallOfFameContract: "0x4227Ba2Be772Ff4B505696eBDaDaEc0a7149d5c7",
-
     hoppaCardsContract: "0x5AeB855344077073474e7d5b81df45242C2fD468",
     hoppaArtist: "0xe941e3adA31bF3e6300eBcfeB8D12BA7AFE8EA2b",
   },
@@ -283,17 +282,17 @@ export async function findCards() {
   }
 
   const c = new ethers.Contract(globalThis.currentChainData.hoppaCardsContract, abi , globalThis.signer );
-  let cards: string[] = new Array(10);
+  let cards: string[] = new Array(16);
 
   // zero out array
-  for( let i = 0; i < 9; i ++ ) {
+  for( let i = 0; i < 16; i ++ ) {
     cards[i] = "0";
   }
 
-  for( let i = 0; i < 9; i ++ ) {
+  for( let i = 0; i < 16; i ++ ) {
     let balance;
     if(globalThis.chainId == 56 ) {
-      balance = await c.balanceOf( globalThis.selectedAddress, (i+1) ); // old erc1155
+      balance = ( i < 9 ? await c.balanceOf( globalThis.selectedAddress, (i+1) ) : 0 ); // old erc1155
     }
     else {
       balance = await c.getAssetCount( globalThis.selectedAddress, i ); // new erc721
