@@ -47,10 +47,7 @@ export default class Inventory extends Phaser.Scene {
         });
 
         this.balances = new Array(10).fill(0);
-        let data = window.localStorage.getItem( 'ra8bit.cards' );
-        if( data != null ) {
-            this.balances = JSON.parse(data);
-        }
+
     }
 
     destroy() {
@@ -179,6 +176,8 @@ export default class Inventory extends Phaser.Scene {
 
         this.gridIndex = id;
         this.lastUpdate = time + 120; 
+
+
     }
 
     create() {
@@ -225,6 +224,11 @@ export default class Inventory extends Phaser.Scene {
         
         let id = 0;
         let haveBalance = false;
+
+        let data = window.localStorage.getItem( 'ra8bit.cards' );
+        if( data != null ) {
+            this.balances = JSON.parse(data);
+        }
 
         for( let j = 0; j < numRows; j ++ ) {
             for( let i = 0; i < numCols; i ++ ) {
